@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ez Music Creator</title>
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/ani.css">
+    <script src="script/basic.js"></script>
+    <script src="script/sheetPlayer.js"></script>
+    <script src="script/randomSheet.js"></script>
+</head>
+<body>
+    <canvas id="fftCanvas"></canvas>
+    <div id="playerController">
+        <div id="playButton">
+
+        </div>
+    </div>
+    <div id="formBasic">
+        <div class="stuffed" ani="breathing">
+            <div id="formPaper">
+                <fieldset>
+                    <legend>風格</legend>
+                    <select name="argStyle" id="argStyle">
+                        <option value="unset">無</option>
+                        <option value="sorrowful">悲傷</option>
+                        <option value="arabic">阿拉伯風</option>
+                        <option value="magical">魔幻</option>
+                        <option value="chinese">中國風</option>
+                        <option value="japanese">日本風 1</option>
+                        <option value="japanese2">日本風 2</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <legend>顏色</legend>
+                    <input name="argColor" id="argColor" type="color">
+                </fieldset>
+                <fieldset>
+                    <legend>音波</legend>
+                    <select name="argFftAniType" id="argFftAniType">
+                        <option value="none">無</option>
+                        <option value="topWave">波浪(上)</option>
+                        <option value="bottomWave">波浪(下)</option>
+                        <option value="leftWave">波浪(左)</option>
+                        <option value="rightWave">波浪(右)</option>
+                        <option value="middleWave">波浪(中)</option>
+                        <option value="dotWave">波浪(點)</option>
+                        <option value="verticalAlphaLine">閃動(直)</option>
+                        <option value="horizontalAlphaLine">閃動(橫)</option>
+                    </select>
+                </fieldset>
+                <div id="createButton"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script/main.js"></script>
+</body>
+</html>

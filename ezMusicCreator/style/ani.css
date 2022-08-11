@@ -1,0 +1,19 @@
+@keyframes breathing {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(calc(var(--formWidth) * -0.05));
+    }
+}
+[ani="breathing"] {
+    animation-name: breathing;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.41, 0, 0.58, 0.98);
+    animation-direction: alternate;
+    animation-play-state: running;
+}
+[ani="breathing"]:hover {
+    animation-play-state: paused;
+}

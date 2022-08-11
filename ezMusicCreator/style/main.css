@@ -1,0 +1,120 @@
+* {
+    --formWidth: min(calc(100vw / 1.2), 50vh);
+    outline: none;
+    user-select: none;
+}
+html, body {
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: #9bd5ff;
+    overflow: hidden;
+}
+fieldset {
+    border-style: solid;
+    border-color: gray;
+    border-radius: 100vmax;
+    padding:
+        0px
+        calc(var(--formWidth) * 0.03)
+        calc(var(--formWidth) * 0.03)
+        calc(var(--formWidth) * 0.03)
+    ;
+}
+fieldset * {
+    font-size: calc(var(--formWidth) * 0.05);
+}
+fieldset legend {
+    font-weight: bold;
+}
+fieldset select {
+    width: 100%;
+    border: none;
+}
+fieldset input[type="color"] {
+    border: none;
+    background: none;
+    width: 100%;
+}
+.flexCenter {
+    display: flex;
+}
+.stuffed {
+    width: 100%;
+    height: 100%;
+}
+#formBasic {
+    --width: calc(1 * var(--formWidth));
+    --height: calc(8 / 5 * var(--formWidth));
+    --borderRadius: calc(0.1 * var(--formWidth));
+    width: var(--width);
+    height: var(--height);
+    position: fixed;
+    left: calc(50vw - var(--width) / 2);
+    top: calc(50vh - var(--height) / 2);
+    transform: scale(0);
+    transition: 1s;
+}
+#formPaper {
+    --padding: calc(var(--width) * 0.05);
+    padding: var(--padding);
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: var(--borderRadius);
+    box-sizing: border-box;
+    transition: 1s;
+}
+#formPaper:hover {
+    transform: scale(1.1);
+}
+#createButton {
+    --backgroundColor: hsl(205deg 30% 50%);
+    --hover_backgroundColor: hsl(205deg 40% 30%);
+    width: calc(var(--width) * 0.9);
+    height: calc(var(--height) * 0.2);
+    position: absolute;
+    bottom: var(--padding);
+    background-color: var(--backgroundColor);
+    background-image: url('../image/play.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    border-radius: var(--borderRadius);
+    transition: 0.5s;
+}
+#createButton:hover {
+    background-color: var(--hover_backgroundColor);
+}
+#fftCanvas {
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.5;
+}
+#playerController {
+    --playerController_padding: 3vmin;
+    padding: var(--playerController_padding);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+}
+#playButton {
+    opacity: 0;
+    pointer-events: none;
+    width: 10vmin;
+    height: 10vmin;
+    position: absolute;
+    left: var(--playerController_padding);
+    bottom: var(--playerController_padding);
+    background-image: url("../image/play.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+#playButton:hover {
+    transform: scale(1.1) rotateZ(-20deg);
+}
