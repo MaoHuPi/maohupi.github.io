@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>ImgGod-相片濾鏡處理器</title>
+    <style>
+        * {
+            user-select: none;
+            outline: none;
+        }
+        html,body {
+            height: 100%;
+            margin: 0px;
+        }
+        #workSpace {
+            width: 60vw;
+            height:35vw;
+            background: repeating-conic-gradient(#ffffff 0, #ffffff 90deg,#909090 90deg,#909090 180deg);
+            background-size: 40px 40px;
+            top: 1vw;
+            left: 1vw;
+            position: fixed;
+            box-sizing: border-box;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0.3vw 0.3vw 0vw 0vw #7d7d7d, 0px 0px 100px 2px black inset, 0px 0px 0px 2px black inset;
+
+        }
+        #img_canvas {
+            position: relative;
+        }
+        #img_canvas2 {
+            display: none;
+            opacity: 0;
+        }
+        #fileUD {
+            width: 60vw;
+            height:100.5px;
+            background-color: black;
+            top: 37vw;
+            left: 1vw;
+            position: fixed;
+            padding: 3.14px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            box-shadow: 0.3vw 0.3vw 0vw 0vw #7d7d7d;
+
+        }
+        #imgBtn {
+            width: 37vw;
+            height:36vw;
+            background-color: black;
+            top: 1vw;
+            left: 62vw;
+            position: fixed;
+            padding: 3.14px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: 0.3vw 0.3vw 0vw 0vw #7d7d7d;
+        }
+        .WButton {
+            margin: 3.14px;
+            width: 100%;
+            height: 25px;
+            border-radius: 4px;
+            color: black;
+            background-color: white;
+        }
+        .WButton:hover {
+            color: white;
+            background-color: grey;
+        }
+        #DIBtns {
+            display: grid;
+            grid-template-columns: 49.5% 49.5%;
+            grid-gap: 1%;
+            background-color: black;
+        }
+        #DIBtns:hover {
+            background-color: black;
+        }
+        #DJBtn {
+            grid-area: 1/1/2/2;
+            color: black;
+            background-color: white;
+            border-radius: 4px;
+
+        }
+        #DPBtn {
+            grid-area: 1/2/2/3;
+            color: black;
+            background-color: white;
+            border-radius: 4px;
+
+        }
+        #DJBtn:hover {
+            color: white;
+            background-color: grey;
+        }
+        #DPBtn:hover {
+            color: white;
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div id="How"></div> -->
+    <div id="workSpace">
+        <canvas id="img_canvas"></canvas>
+        <canvas id="img_canvas2"></canvas>
+    </div>
+    <div id="fileUD">
+        <input type="file" multiple="multiple" onchange="loadFile(this);" class="WButton"><br>
+        <button onclick="loadFile();" class="WButton">重載圖檔</button><br>
+        <btns class="WButton" id="DIBtns"><button onclick="downloadJImage();" id="DJBtn">下載jpg</button><button onclick="downloadPImage();" id="DPBtn">下載png</button></btns>
+        <a id="downloadA"></a>
+    </div>
+    <div id="imgBtn">
+        <button class="WButton" onclick="invertColor()">顏色反向</button>
+        <button class="WButton" onclick="extremeRGB()">極端五色</button>
+        <button class="WButton" onclick="allR()">全部紅色</button>
+        <button class="WButton" onclick="allG()">全部綠色</button>
+        <button class="WButton" onclick="allB()">全部藍色</button>
+        <button class="WButton" onclick="allBToW()">灰階處理</button>
+        <button class="WButton" onclick="allBToW2()">灰階處理2</button>
+        <button class="WButton" onclick="turnLight()">圖片調亮</button>
+        <button class="WButton" onclick="turnLight2()">圖片調亮2</button>
+        <button class="WButton" onclick="turnDark()">圖片調暗</button>
+        <button class="WButton" onclick="turnDark2()">圖片調暗2</button>
+        <button class="WButton" onclick="AphaP()">透明度增</button>
+        <button class="WButton" onclick="AphaP2()">透明度增2</button>
+        <button class="WButton" onclick="AphaM()">透明度減</button>
+        <button class="WButton" onclick="AphaM2()">透明度減2</button>
+        <button class="WButton" onclick="oW()">十字漂白</button>
+        <button class="WButton" onclick="oB()">十字染黑</button>
+        <button class="WButton" onclick="OW()">四角漂白</button>
+        <button class="WButton" onclick="OB()">四角染黑</button>
+        <button class="WButton" onclick="reWatermark()">移除水印</button>
+        <button class="WButton" onclick="reWotB()">文本去背</button>
+        <button class="WButton" onclick="fade()">淡化黑色</button>
+        <button class="WButton" onclick="fade([255, 255, 255])">淡化白色</button>
+        <button class="WButton" onclick="fade([255, 0, 0])">淡化紅色</button>
+        <button class="WButton" onclick="fade([0, 255, 0])">淡化綠色</button>
+        <button class="WButton" onclick="fade([0, 0, 255])">淡化藍色</button>
+    </div>
+    <script>
+        document.body.oncontextmenu = () => {self.event.returnValue=false};
+        const iM = 3;
+        const cvs = document.querySelector('#img_canvas');
+        const ctx = cvs.getContext('2d');
+        const cvs2 = document.querySelector('#img_canvas2');
+        const ctx2 = cvs2.getContext('2d');
+        const wsp = document.querySelector('#workSpace');
+        document.body.onload = function(){
+            var WBtns = document.getElementsByClassName('WButton');
+            for (i=0;i<WBtns.length;i++){
+                var WBtn = WBtns[i];
+                WBtn.style.width = WBtn.offsetWidth-3.14*2+"px";
+            }
+            var imgBtn = document.querySelector('#imgBtn');
+            imgBtn.style.height = imgBtn.offsetHeight+100.5+"px";
+        }
+        function invertColor(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i] = 255 - data[i];
+                data[i+1] = 255 - data[i+1];
+                data[i+2] = 255 - data[i+2];
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function allR(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i] = (data[i]+data[i+1]+data[i+2])/3;
+                data[i+1] = 0;
+                data[i+2] = 0;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function allG(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i] = 0;
+                data[i+1] = (data[i]+data[i+1]+data[i+2])/3;
+                data[i+2] = 0;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function allB(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i] = 0;
+                data[i+1] = 0;
+                data[i+2] = (data[i]+data[i+1]+data[i+2])/3;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function extremeRGB(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                if (data[i]>data[i+1] && data[i]>data[i+2]){
+                    data[i] = 255;data[i+1] = 0;data[i+2] = 0;
+                }
+                else if (data[i+1]>data[i] && data[i+1]>data[i+2]){
+                    data[i] = 0;data[i+1] = 255;data[i+2] = 0;
+                }
+                else if (data[i+2]>data[i] && data[i+2]>data[i+1]){
+                    data[i] = 0;data[i+1] = 0;data[i+2] = 255;
+                }
+                else if (data[i] == data[i+1] && data[i+1] == data[i+2] && data[i] >= 112.5){
+                    data[i] = 255;data[i+1] = 255;data[i+2] = 255;
+                }
+                else if (data[i] == data[i+1] && data[i+1] == data[i+2] && data[i] < 112.5){
+                    data[i] = 0;data[i+1] = 0;data[i+2] = 0;
+                }
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function allBToW(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                rgbE = (data[i]+data[i+1]+data[i+2])/3;
+                data[i] = rgbE;
+                data[i+1] = rgbE;
+                data[i+2] = rgbE;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function turnLight(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i] = data[i]+10;
+                data[i+1] = data[i+1]+10;
+                data[i+2] = data[i+2]+10;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function turnLight2(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i] = data[i]*1.1;
+                data[i+1] = data[i+1]*1.1;
+                data[i+2] = data[i+2]*1.1;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function turnDark(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i] = data[i]-10;
+                data[i+1] = data[i+1]-10;
+                data[i+2] = data[i+2]-10;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function turnDark2(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i] = data[i]/1.1;
+                data[i+1] = data[i+1]/1.1;
+                data[i+2] = data[i+2]/1.1;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function allBToW2(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                rgbE = Math.pow((data[i]*data[i+1]*data[i+2]), 1/3);
+                data[i] = rgbE;
+                data[i+1] = rgbE;
+                data[i+2] = rgbE;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function AphaP(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i+3] = data[i+3]+10;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function AphaM(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i+3] = data[i+3]-10;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function AphaP2(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i+3] = data[i+3]*1.1;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function AphaM2(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                data[i+3] = data[i+3]/1.1;
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function oW(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                var iTL = Math.pow(Math.pow((((i+3)/4)/cvs.width), 2)+Math.pow((((i+3)/4)%cvs.width), 2), 1/2);
+                var iTR = Math.pow(Math.pow((((i+3)/4)/cvs.width), 2)+Math.pow(cvs.width-(((i+3)/4)%cvs.width), 2), 1/2);
+                var iBL = Math.pow(Math.pow(cvs.height-(((i+3)/4)/cvs.width), 2)+Math.pow((((i+3)/4)%cvs.width), 2), 1/2);
+                var iBR = Math.pow(Math.pow(cvs.height-(((i+3)/4)/cvs.width), 2)+Math.pow(cvs.width-(((i+3)/4)%cvs.width), 2), 1/2);
+                if (iTL < iTR && iTL < iBL && iTL < iBR){
+                    data[i] += iTL/iM;
+                    data[i+1] += iTL/iM;
+                    data[i+2] += iTL/iM;
+                }
+                else if (iTR < iTL && iTR < iBL && iTR < iBR){
+                    data[i] += iTR/iM;
+                    data[i+1] += iTR/iM;
+                    data[i+2] += iTR/iM;
+                }
+                else if (iBL < iTL && iBL < iTR && iBL < iBR){
+                    data[i] += iBL/iM;
+                    data[i+1] += iBL/iM;
+                    data[i+2] += iBL/iM;
+                }
+                else if (iBR < iTL && iBR < iBL && iBR < iTR){
+                    data[i] += iBR/iM;
+                    data[i+1] += iBR/iM;
+                    data[i+2] += iBR/iM;
+                }
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function OW(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                var oTL = Math.pow(Math.pow(cvs.width, 2)+Math.pow(cvs.height, 2), 1/2)/2;
+                var iTL = Math.pow(Math.pow((((i+3)/4)/cvs.width), 2)+Math.pow((((i+3)/4)%cvs.width), 2), 1/2);
+                var iTR = Math.pow(Math.pow((((i+3)/4)/cvs.width), 2)+Math.pow(cvs.width-(((i+3)/4)%cvs.width), 2), 1/2);
+                var iBL = Math.pow(Math.pow(cvs.height-(((i+3)/4)/cvs.width), 2)+Math.pow((((i+3)/4)%cvs.width), 2), 1/2);
+                var iBR = Math.pow(Math.pow(cvs.height-(((i+3)/4)/cvs.width), 2)+Math.pow(cvs.width-(((i+3)/4)%cvs.width), 2), 1/2);
+                if (iTL < iTR && iTL < iBL && iTL < iBR){
+                    data[i] += (oTL-iTL)/iM;
+                    data[i+1] += (oTL-iTL)/iM;
+                    data[i+2] += (oTL-iTL)/iM;
+                }
+                else if (iTR < iTL && iTR < iBL && iTR < iBR){
+                    data[i] += (oTL-iTR)/iM;
+                    data[i+1] += (oTL-iTR)/iM;
+                    data[i+2] += (oTL-iTR)/iM;
+                }
+                else if (iBL < iTL && iBL < iTR && iBL < iBR){
+                    data[i] += (oTL-iBL)/iM;
+                    data[i+1] += (oTL-iBL)/iM;
+                    data[i+2] += (oTL-iBL)/iM;
+                }
+                else if (iBR < iTL && iBR < iBL && iBR < iTR){
+                    data[i] += (oTL-iBR)/iM;
+                    data[i+1] += (oTL-iBR)/iM;
+                    data[i+2] += (oTL-iBR)/iM;
+                }
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function oB(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                var iTL = Math.pow(Math.pow((((i+3)/4)/cvs.width), 2)+Math.pow((((i+3)/4)%cvs.width), 2), 1/2);
+                var iTR = Math.pow(Math.pow((((i+3)/4)/cvs.width), 2)+Math.pow(cvs.width-(((i+3)/4)%cvs.width), 2), 1/2);
+                var iBL = Math.pow(Math.pow(cvs.height-(((i+3)/4)/cvs.width), 2)+Math.pow((((i+3)/4)%cvs.width), 2), 1/2);
+                var iBR = Math.pow(Math.pow(cvs.height-(((i+3)/4)/cvs.width), 2)+Math.pow(cvs.width-(((i+3)/4)%cvs.width), 2), 1/2);
+                if (iTL < iTR && iTL < iBL && iTL < iBR){
+                    data[i] -= iTL/iM;
+                    data[i+1] -= iTL/iM;
+                    data[i+2] -= iTL/iM;
+                }
+                else if (iTR < iTL && iTR < iBL && iTR < iBR){
+                    data[i] -= iTR/iM;
+                    data[i+1] -= iTR/iM;
+                    data[i+2] -= iTR/iM;
+                }
+                else if (iBL < iTL && iBL < iTR && iBL < iBR){
+                    data[i] -= iBL/iM;
+                    data[i+1] -= iBL/iM;
+                    data[i+2] -= iBL/iM;
+                }
+                else if (iBR < iTL && iBR < iBL && iBR < iTR){
+                    data[i] -= iBR/iM;
+                    data[i+1] -= iBR/iM;
+                    data[i+2] -= iBR/iM;
+                }
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function OB(){
+            pixis = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            data = pixis.data;
+            for(i = 0; i < data.length; i += 4){
+                var oTL = Math.pow(Math.pow(cvs.width, 2)+Math.pow(cvs.height, 2), 1/2)/2;
+                var iTL = Math.pow(Math.pow((((i+3)/4)/cvs.width), 2)+Math.pow((((i+3)/4)%cvs.width), 2), 1/2);
+                var iTR = Math.pow(Math.pow((((i+3)/4)/cvs.width), 2)+Math.pow(cvs.width-(((i+3)/4)%cvs.width), 2), 1/2);
+                var iBL = Math.pow(Math.pow(cvs.height-(((i+3)/4)/cvs.width), 2)+Math.pow((((i+3)/4)%cvs.width), 2), 1/2);
+                var iBR = Math.pow(Math.pow(cvs.height-(((i+3)/4)/cvs.width), 2)+Math.pow(cvs.width-(((i+3)/4)%cvs.width), 2), 1/2);
+                if (iTL < iTR && iTL < iBL && iTL < iBR){
+                    data[i] -= (oTL-iTL)/iM;
+                    data[i+1] -= (oTL-iTL)/iM;
+                    data[i+2] -= (oTL-iTL)/iM;
+                }
+                else if (iTR < iTL && iTR < iBL && iTR < iBR){
+                    data[i] -= (oTL-iTR)/iM;
+                    data[i+1] -= (oTL-iTR)/iM;
+                    data[i+2] -= (oTL-iTR)/iM;
+                }
+                else if (iBL < iTL && iBL < iTR && iBL < iBR){
+                    data[i] -= (oTL-iBL)/iM;
+                    data[i+1] -= (oTL-iBL)/iM;
+                    data[i+2] -= (oTL-iBL)/iM;
+                }
+                else if (iBR < iTL && iBR < iBL && iBR < iTR){
+                    data[i] -= (oTL-iBR)/iM;
+                    data[i+1] -= (oTL-iBR)/iM;
+                    data[i+2] -= (oTL-iBR)/iM;
+                }
+            }
+            ctx.putImageData(pixis, 0, 0);
+        }
+        function loadFile(input = document.querySelector('input[type=file]')){
+            var file = input.files[0];
+            var src = URL.createObjectURL(file);
+            var img = new Image();
+            img.src = src;
+            img.onload = function(){
+                cvs.width = img.width;
+                cvs.height = img.height;
+                if (img.width / wsp.style.width > img.height / wsp.style.height){
+                    cvs.style.width = wsp.offsetWidth+"px";
+                }
+                else{
+                    cvs.style.height = wsp.offsetHeight+"px";
+                }
+                cvs.style.top = (wsp.offsetHeight-cvs.offsetHeight)/2+"px";
+                cvs.style.left = (wsp.offsetWidth-cvs.offsetWidth)/2+"px";
+                ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+            };
+            var file2 = input.files[1];
+            var src2 = URL.createObjectURL(file2);
+            var img2 = new Image();
+            img2.src = src2;
+            img2.onload = function(){
+                cvs2.width = img2.width;
+                cvs2.height = img2.height;
+                ctx2.drawImage(img2, 0, 0, cvs2.width, cvs2.height);
+            };
+        }
+        function downloadJImage(){
+            var link = document.querySelector('#downloadA');
+            var file = document.querySelector('input[type=file]').files[0].name;
+            link.download = file+".jpg";
+            link.href = cvs.toDataURL('image/jpeg');
+            link.click();
+        }
+        function downloadPImage(){
+            var link = document.querySelector('#downloadA');
+            var file = document.querySelector('input[type=file]').files[0].name;
+            link.download = file+".png";
+            link.href = cvs.toDataURL('image/png');
+            link.click();
+        }
+        function DCFI(DCFInum=0, DCFItype="jpeg"){
+            DCFItype = DCFItype.toLowerCase();
+            DCFIcvss = document.getElementsByTagName('canvas')
+            if (DCFInum != 0){
+                var DCFIcvs = DCFIcvss[DCFInum-1];
+                var DCFIlink = document.createElement('a');
+                if (DCFItype == "png"){
+                    DCFIlink.download = "DCFI"+(i+1)+".png";
+                    DCFIlink.href = DCFIcvs.toDataURL('image/png');
+                }
+                else {
+                    DCFIlink.download = "DCFI"+(i+1)+".jpg";
+                    DCFIlink.href = DCFIcvs.toDataURL('image/jpeg');
+                }
+                DCFIlink.click();
+            }
+            else {
+                for (i=0;i<DCFIcvss.length;i++){
+                    var DCFIcvs = DCFIcvss[i];
+                    var DCFIlink = document.createElement('a');
+                    if (DCFItype == "png"){
+                        DCFIlink.download = "DCFI"+(i+1)+".png";
+                        DCFIlink.href = DCFIcvs.toDataURL('image/png');
+                    }
+                    else {
+                        DCFIlink.download = "DCFI"+(i+1)+".jpg";
+                        DCFIlink.href = DCFIcvs.toDataURL('image/jpeg');
+                    }
+                    DCFIlink.click();
+                }
+            }
+        }
+        function reWatermark(h = 200){
+            $a = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            $b = $a.data;
+            for(let i = 0; i < $b.length; i+=4){
+                if(
+                    $b[i] > h && 
+                    $b[i+1] > h && 
+                    $b[i+2] > h
+                ){
+                    $b[i] = 255;
+                    $b[i+1] = 255;
+                    $b[i+2] = 255;
+                    $b[i+3] = 255;
+                }
+            }
+            ctx.putImageData($a, 0, 0);
+        }
+        function reWotB(h = 200){
+            $a = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            $b = $a.data;
+            for(let i = 0; i < $b.length; i+=4){
+                if(
+                    $b[i] > h && 
+                    $b[i+1] > h && 
+                    $b[i+2] > h
+                ){
+                    $b[i] = 0;
+                    $b[i+1] = 0;
+                    $b[i+2] = 0;
+                    $b[i+3] = 0;
+                }else{$b[i] = 0;
+                    $b[i+1] = 0;
+                    $b[i+2] = 0;
+                    $b[i+3] = 255;}
+            }
+            ctx.putImageData($a, 0, 0);
+         }
+        function fade(cData = [0, 0, 0]){
+            $a = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            $b = $a.data;
+            for(let i = 0; i < $b.length; i+=4){
+                $b[i+3] -= 255 - (Math.abs($b[i]-cData[0]) + Math.abs($b[i+1]-cData[1]) + Math.abs($b[i+2]-cData[2]))/3;
+            }
+            ctx.putImageData($a, 0, 0);
+        }
+    </script>
+</body>
+</html>
