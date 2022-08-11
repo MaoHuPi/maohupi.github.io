@@ -1,6 +1,6 @@
 {
   "imggod": {
-    "name": "Img GodGod｜圖片之神", 
+    "name": "Img God｜圖片之神", 
     "description": "用各種神奇的效果來為你的圖片增添個人風格！"
   }, 
   "notepaper": {
@@ -14,5 +14,9 @@
   "ezMusicCreator": {
     "name": "Ez Music Creator｜快速音樂生成器", 
     "description": "使用Ez Music Creator生成屬於你，且有感情的音樂！"
+  }, 
+  "jslib": {
+    "name": "JSLib｜JS函式庫", 
+    "description": "JSLib幫你美化、自動化身邊的事物！"
   }
 }
