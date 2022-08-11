@@ -7,7 +7,40 @@
     <title>Auto Creater</title>
 </head>
 <body>
-    <a href="imggod/">imggod</a><hr>
-    <a href="notepaper/">imggod</a><hr>
+    <script>
+        const $ = function(c, f = document){return(f.querySelector(c));}
+        const $$ = function(c, f = document){return(f.querySelectorAll(c));}
+        const $element = function(n){return(document.createElement(n));}
+        const $exec = function(command, ui, ...args){return(document.execCommand(command, ui, ...args))};
+        function sendXmlhttp(name = '', value = '', responseFunction = t => {console.log(t);}, type = 'get'){
+            let xmlhttp = new XMLHttpRequest();
+            let rf = function (){
+                if (xmlhttp.readyState==4) {
+                    responseFunction(xmlhttp.responseText);
+                }
+            }
+            type = type.toLowerCase();
+            xmlhttp.addEventListener("load", rf);
+            if(type == 'get'){
+                xmlhttp.open("GET", name+value);
+                xmlhttp.send();
+            }
+            else if(type == 'post'){
+                xmlhttp.open("POST", name,true);
+                xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xmlhttp.send(value);
+            }
+        }
+        sendXmlhttp('data_/project.json', '', json => {
+            let projects = JSON.parse(json);
+            for(projectId in projects){
+                var a = $element('a');
+                a.innerText = projectId;
+                a.href = `${projectId}/`;
+                $('body').appendChild(a);
+                $('body').appendChild($element('hr'));
+            }
+        }, 'get');
+    </script>
 </body>
 </html>
