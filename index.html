@@ -54,7 +54,7 @@
                 box.className = 'box';
                 title.innerText = projects[projectId]['name'];
                 content.innerText = projects[projectId]['description'];
-                box.onclick = () => {location.href = `${projectId}/`};
+                box.onclick = () => {location.href = projectId};
                 box.appendChild(title);
                 box.appendChild(content);
                 $('body').appendChild(box);
