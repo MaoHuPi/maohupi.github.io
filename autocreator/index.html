@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Creater｜零級分作文製造機</title>
+    <style>
+        * {
+            font-size: 30px;
+        }
+        h1 {
+            font-size: 50px;
+        }
+        [type="submit"] {
+            margin: 0.5em 0px;
+            display: block;
+            margin-inline-start: 2px;
+            margin-inline-end: 2px;
+            padding-block-start: 0.25em;
+            padding-inline-start: 0.75em;
+            padding-inline-end: 0.75em;
+            padding-block-end: 0.25em;
+            min-inline-size: min-content;
+            border-width: 2px;
+            border-style: groove;
+            border-color: rgb(192, 192, 192);
+            border-image: initial;
+        }
+    </style>
+    <script>
+        const $_GET = {};
+        if(location.href.indexOf('?') > -1){
+            location.href.split('?')[1].split('&').forEach(kv => {
+                kv = kv.split('=');
+                $_GET[kv[0]] = kv[1];
+            });
+        }
+        const $ = function(c, f = document){return(f.querySelector(c));}
+        const $$ = function(c, f = document){return(f.querySelectorAll(c));}
+        const $element = function(n){return(document.createElement(n));}
+        const $exec = function(command, ui, ...args){return(document.execCommand(command, ui, ...args))};
+        function randint(a, b){return(Math.min(a, b) + Math.floor(Math.random()*Math.max(a, b)));};
+        function sendXmlhttp(name = '', value = '', responseFunction = t => {console.log(t);}, type = 'get'){
+            let xmlhttp = new XMLHttpRequest();
+            let rf = function (){
+                if (xmlhttp.readyState==4) {
+                    responseFunction(xmlhttp.responseText);
+                }
+            }
+            type = type.toLowerCase();
+            xmlhttp.addEventListener("load", rf);
+            if(type == 'get'){
+                xmlhttp.open("GET", name+value);
+                xmlhttp.send();
+            }
+            else if(type == 'post'){
+                xmlhttp.open("POST", name,true);
+                xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xmlhttp.send(value);
+            }
+        }
+        Object.prototype.keyOf = function(value){
+            return(Object.keys(this).find(key => this[key] === value));
+        }
+        String.prototype.sj = function(s, j){
+            return(this.split(s).join(j));
+        }
+    </script>
+</head>
+<body>
+    <h1>Auto Creater｜零級分作文製造機</h1>
+    <form action="" method="get">
+        <fieldset>
+            <legend>
+                <label for="inputKey">主題</label>
+            </legend>
+            <input type="text" id="inputKey" name="key">
+        </fieldset>
+        <fieldset>
+            <legend>
+                <label for="inputNum">字數</label>
+            </legend>
+            <input type="number" id="inputNum" name="num">
+        </fieldset>
+        <button type="submit">送出</button>
+    </form>
+    <script>
+        let key = $_GET['key'] ? decodeURI($_GET['key']) : '';
+        let num = $_GET['num'] ? Math.round(parseFloat(decodeURI($_GET['num']))) : 0;
+        $('#inputKey').value = key;
+        $('#inputNum').value = num;
+        sendXmlhttp('sentence.txt', '', data => {
+            let output = [];
+            data = data.sj('\r', '').split('\n');
+            data = data.map(line => line.sj('{=key}', key));
+            while(data.length > 0){
+                let deltaNum =  num - output.join('').length;
+                let useable = data.filter(line => line.length <= deltaNum);
+                if(deltaNum <= 0 || useable.length <= 0){
+                    break;
+                }
+                let maxLength = Math.max(...useable.map(line => line.length));
+                console.log(useable, maxLength);
+                for(line of useable){
+                    if(line.length == maxLength){
+                        output.push(line);
+                        console.log(output, deltaNum);
+                        data.splice(data.keyOf(line), 1);
+                        break;
+                    }
+                }
+            }
+            let p = $element('p');
+            for(line of output){
+                p.innerText += line;
+            }
+            $('body').appendChild(p);
+            let p2 = $element('p');
+            p2.innerText += `字數(含標點符號)：${output.join('').length}字`;
+            $('body').appendChild(p2);
+        }, 'get');
+    </script>
+</body>
+</html>
