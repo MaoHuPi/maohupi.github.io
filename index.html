@@ -56,7 +56,7 @@
                 box.setAttribute('project-id', projectId);
                 title.innerText = projects[projectId]['name'];
                 content.innerText = projects[projectId]['description'];
-                box.onclick = function(){location.href = this.getAttribute('project-id')};
+                box.onclick = function(){window.open(this.getAttribute('project-id'))};
                 box.appendChild(title);
                 box.appendChild(content);
                 $('body').appendChild(box);
