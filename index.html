@@ -5,6 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Creater</title>
+    <style>
+        html, body {
+            margin: 0px;
+            background-color: gray;
+        }
+        .box {
+            width: 80%;
+            margin: 1vw auto;
+            background-color: #ffffff;
+            border-radius: 2vw;
+        }
+    </style>
 </head>
 <body>
     <script>
@@ -34,11 +46,16 @@
         sendXmlhttp('data_/project.json', '', json => {
             let projects = JSON.parse(json);
             for(projectId in projects){
-                var a = $element('a');
-                a.innerText = projectId;
-                a.href = `${projectId}/`;
-                $('body').appendChild(a);
-                $('body').appendChild($element('hr'));
+                var box = $element('div'), 
+                    title = $element('h2'), 
+                    content = $element('p');
+                box.className = 'box';
+                title.innerText = projects[projectId]['name'];
+                content.innerText = projects[projectId]['description'];
+                box.onclick = () => {location.href = `${projectId}/`};
+                box.appendChild(title);
+                box.appendChild(content);
+                $('body').appendChild(box);
             }
         }, 'get');
     </script>
