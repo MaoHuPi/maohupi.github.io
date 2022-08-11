@@ -1,0 +1,160 @@
+* {
+    outline: none;
+    user-select: none;
+    text-decoration: none;
+}
+body {
+    background: url('image/image.png') center center;
+    background-attachment: fixed;
+    padding: 0px;
+    margin: 0px;
+}
+center {
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    position: fixed;
+    max-height: 53.8vw;
+    grid-template-columns: auto 50% auto;
+    /* grid-template-rows: 25vh 50vh 25vh; */
+}
+#background_icon_png {
+    grid-area: 2/2/3/3;
+    /* height: 100%; */
+    width: 100%;
+}
+#postbody {
+    position: relative;
+    left: 0px;
+    background-color: #ffffff;
+    width: 100vw;
+    padding: 1vw;
+    box-sizing: border-box;
+}
+#title_mask {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    background-color: #ffffff88;
+    top: 0px;
+    left: 0px;
+    max-height: 53.8vw;
+}
+#title_text {
+    text-align: center;
+    position: absolute;
+    top: 20%;
+    width: 100vw;
+    background:radial-gradient(circle at 35% 25%,#fff 0,#ccc 20%,#999 40%,#000 90%,#666 95%,#999 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: #00000000;
+}
+h1 {
+    font-size: 3vw;
+}
+#title_text2 {
+    text-align: center;
+    position: absolute;
+    top: 20%;
+    width: 100vw;
+    text-shadow: 0.3vw 0.3vw 0vw #000000;
+    color: #00000000;
+}
+#title_btn {
+    position: absolute;
+    top: 60%;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: auto 25vw 25vw auto;
+    grid-template-rows: 7vw;
+    grid-gap: 5vw;
+}
+#title_btn a {
+    border-radius: 2vw;
+    font-size: 2.8vw;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #252526;
+    color: #cccccc;
+    box-sizing: border-box;
+    border-width: 0.3vw;
+    border-color: #cccccc;
+    border-style: solid;
+    text-align: center;
+}
+#title_btn a:hover, #title_btn a:active {
+    border-width: 0.5vw;
+}
+#title_btn a#title_btn1:hover {
+    border-color: #cbcc00;
+}
+#title_btn a#title_btn1:active {
+    border-color: #cbcc00;
+    background-color: #444400;
+}
+#title_btn a#title_btn2:hover {
+    border-color: #5699bd;
+}
+#title_btn a#title_btn2:active {
+    border-color: #5699bd;
+    background-color: #294757;
+}
+#title_btn1 icon {
+    display: none;
+    font-size: 1.8vw;
+    position: absolute;
+    color: #cbcc00;
+}
+#title_btn2 icon {
+    display: none;
+    font-size: 1.8vw;
+    position: absolute;
+    color: #5699bd;
+}
+#title_btn1:hover icon, #title_btn2:hover icon, #title_btn1:active icon, #title_btn2:active icon {
+    display: block;
+    left: 2vw;
+    top: 2vw;
+}
+#title_btn1 {
+    grid-area: 1/2/2/3;
+}
+#title_btn2 {
+    grid-area: 1/3/2/4;
+}
+article {
+    border-radius: 1.4vw;
+    background-color: #ffffff;
+    padding: 1vw;
+    text-align: center;
+    width: 80vw;
+    margin: 1vw auto 1vw auto;
+    position: relative;
+    border-width: 0.3vw;
+    border-color: #000000;
+    border-style: solid;
+}
+article > a[type="name"] {
+    font-size: 2vw;
+    color: #000000;
+}
+article > a[type="poster"] {
+    font-size: 1vw;
+    position: absolute;
+    bottom: 0.6vw;
+    right: 0.6vw;
+    color: #000000;
+}
+text {
+    position: absolute;
+    top: 1.3vw;
+    width: 100%;
+    left: 0px;
+}
+#title_btn1:hover text, #title_btn2:hover text {
+    top: 1.1vw;
+}

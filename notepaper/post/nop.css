@@ -1,0 +1,147 @@
+* {
+    border-top: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    border-left: 0px;
+}
+nop {
+    background-color: #285842;
+    color: #e0e0e0;
+    text-align: center;
+}
+nop n {
+    border-top: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    border-left: 0px;
+}
+nop n {
+    border-color: #e0e0e0;
+}
+t2 {
+    font-size: 10px;
+    padding: 0px;
+    margin: 0px;
+}
+t1 {
+    font-size: 20px;
+    padding: 0px;
+    margin: 0px;
+}
+t0p2 {
+    font-size: 40px;
+    padding: 0px;
+    margin: 0px;
+}
+t1p5 {
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+}
+.box {
+    border: 2px solid;
+}
+.line1 {
+    border-top: 2px;
+    border-style: solid;
+}
+line1 {
+    border-top: 2px;
+    border-style: solid;
+}
+.line2 {
+    border-right: 2px;
+    border-style: solid;
+}
+line2 {
+    border-right: 2px;
+    border-style: solid;
+}
+.line3 {
+    border-bottom: 2px;
+    border-style: solid;
+}
+line3 {
+    border-bottom: 2px;
+    border-style: solid;
+}
+.line4 {
+    border-left: 2px;
+    border-style: solid;
+}
+line4 {
+    border-left: 2px;
+    border-style: solid;
+}
+.shape_0 {
+    border-radius: 50px;
+}
+.hw1 {
+    height: 20px;
+    width: 20px;
+    font-size: 10px;
+}
+cR {
+    color: #da4141;
+    border-color: #da4141;
+}
+.cR {
+    color: #da4141;
+    border-color: #da4141;
+}
+cO {
+    color: #f09000;
+    border-color: #f09000;
+}
+.cO {
+    color: #f09000;
+    border-color: #f09000;
+}
+cY {
+    color: #eeee00;
+    border-color: #eeee00;
+}
+.cY {
+    color: #eeee00;
+    border-color: #eeee00;
+}
+cG {
+    color: #95e261;
+    border-color: #95e261;
+}
+.cG {
+    color: #95e261;
+    border-color: #95e261;
+}
+cW {
+    color: #e0e0e0;
+    border-color: #e0e0e0;
+}
+.cW {
+    color: #e0e0e0;
+    border-color: #e0e0e0;
+}
+.tl {
+    text-align: left;
+}
+.tc {
+    text-align: center;
+}
+.tr {
+    text-align: right;
+}
+.tL {
+    text-align: left;
+}
+.tC {
+    text-align: center;
+}
+.tR {
+    text-align: right;
+}
+bDO {
+    background:repeating-linear-gradient(-45deg, #00000000 0, #00000000 7px, #f09000 7px, #f09000 10px);
+}
+.bDO {
+    background:repeating-linear-gradient(-45deg, #00000000 0, #00000000 7px, #f09000 7px, #f09000 10px);
+}
