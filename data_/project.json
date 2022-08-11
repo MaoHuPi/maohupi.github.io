@@ -10,5 +10,9 @@
   "autocreator": {
     "name": "Auto Creator｜零級分作文製造機", 
     "description": "Auto Creator能幫助您生成札記內容、閱讀心得及書面報告！"
+  }, 
+  "ezMusicCreator": {
+    "name": "Ez Music Creator｜快速音樂生成器", 
+    "description": "使用Ez Music Creator生成屬於你，且有感情的音樂！"
   }
 }
