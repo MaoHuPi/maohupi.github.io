@@ -18,5 +18,9 @@
   "jslib": {
     "name": "JSLib｜JS函式庫", 
     "description": "JSLib幫你美化、自動化身邊的事物！"
+  }, 
+  "notesPage": {
+    "name": "notesPage｜筆記展間", 
+    "description": "快速將筆記分類並呈現之！"
   }
 }
