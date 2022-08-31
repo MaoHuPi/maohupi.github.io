@@ -1,75 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh" styleName="dark">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MaoHuPi's Web Tool</title>
-    <style>
-        html, body {
-            margin: 0px;
-            background-color: #1d1d1d;
-        }
-        body > * {
-            filter: drop-shadow(0px 0px 0.5vw white);
-        }
-        h1 {
-                margin: 3vw auto;
-                width: 80%;
-                color: #ffffff;
-        }
-        .box {
-            width: 80%;
-            padding: 1vw 2vw;
-            margin: 1vw auto;
-            background-color: #ffffff;
-            border-radius: 2vw;
-            box-sizing: border-box;
-        }
-    </style>
+    <title>ImgGod++ | 圖像之神</title>
+    <link rel="stylesheet" href="style/main.css">
+    <script src="script/basic.js"></script>
+    <script src="script/effect.js"></script>
+    <link rel="stylesheet" href="style/dark.css">
+    <link rel="stylesheet" href="style/bright.css">
 </head>
 <body>
-    <h1>MaoHuPi's Web Tool</h1>
-    <script>
-        const $ = function(c, f = document){return(f.querySelector(c));}
-        const $$ = function(c, f = document){return(f.querySelectorAll(c));}
-        const $element = function(n){return(document.createElement(n));}
-        const $exec = function(command, ui, ...args){return(document.execCommand(command, ui, ...args))};
-        function sendXmlhttp(name = '', value = '', responseFunction = t => {console.log(t);}, type = 'get'){
-            let xmlhttp = new XMLHttpRequest();
-            let rf = function (){
-                if (xmlhttp.readyState==4) {
-                    responseFunction(xmlhttp.responseText);
-                }
-            }
-            type = type.toLowerCase();
-            xmlhttp.addEventListener("load", rf);
-            if(type == 'get'){
-                xmlhttp.open("GET", name+value);
-                xmlhttp.send();
-            }
-            else if(type == 'post'){
-                xmlhttp.open("POST", name,true);
-                xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xmlhttp.send(value);
-            }
-        }
-        sendXmlhttp('data_/project.json', '', json => {
-            let projects = JSON.parse(json);
-            for(projectId in projects){
-                var box = $element('div'), 
-                    title = $element('h2'), 
-                    content = $element('p');
-                box.className = 'box';
-                box.setAttribute('project-id', projectId);
-                title.innerText = projects[projectId]['name'];
-                content.innerText = projects[projectId]['description'];
-                box.onclick = function(){window.open(this.getAttribute('project-id'))};
-                box.appendChild(title);
-                box.appendChild(content);
-                $('body').appendChild(box);
-            }
-        }, 'get');
-    </script>
+    <div id="container-out" styleName="dark">
+        <div id="container-in-1">
+            <canvas id="imageCanvas"></canvas>
+        </div>
+        <div id="container-in-2">
+            <div id="effect-type"></div>
+            <div id="effect-category"></div>
+        </div>
+        <div id="container-in-3"></div>
+        <div id="container-line-1_2" controlProperty="--line_1_2" controlType="y"></div>
+        <div id="container-line-12_3" controlProperty="--line_12_3" controlType="x"></div>
+    </div>
+    <script src="script/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,66 @@
+{
+    "color": [
+        {
+            "name": "invertColor", 
+            "function": "invertColor", 
+            "parameter": {
+                "flipAxis": ["number({\"max\": \"255\", \"min\": \"0\"})", 127.5]
+            }
+        }, 
+        {
+            "name": "extremeRGB", 
+            "function": "extremeRGB", 
+            "parameter": {
+            }
+        }, 
+        {
+            "name": "turnToColor", 
+            "function": "turnToColor", 
+            "parameter": {
+                "color": ["select([\"red\", \"green\", \"blue\", \"black\"])", "red"]
+            }
+        }, 
+        {
+            "name": "turnToGray", 
+            "function": "turnToGray", 
+            "parameter": {
+                "mode": ["select([\"addition\", \"multiplication\"])", "addition"]
+            }
+        }
+    ], 
+    "overall": [
+        {
+            "name": "brightnessAdjustment", 
+            "function": "brightnessAdjustment", 
+            "parameter": {
+                "mode": ["select([\"addition\", \"subtraction\", \"multiplication\", \"division\", \"power\", \"remainder\"])", "addition"], 
+                "value": ["number({\"min\": 1, \"max\": 1000})", 10]
+            }
+        }, 
+        {
+            "name": "alphaAdjustment", 
+            "function": "alphaAdjustment", 
+            "parameter": {
+                "mode": ["select([\"addition\", \"subtraction\", \"multiplication\", \"division\", \"power\", \"remainder\"])", "addition"], 
+                "value": ["number({\"min\": 1, \"max\": 1000})", 10]
+            }
+        }
+    ], 
+    "zoom": [
+        {
+            "name": "turnToPixel", 
+            "function": "turnToPixel", 
+            "parameter": {
+                "wideCuts": ["number({\"min\": 1, \"max\": 1000})", 10]
+            }
+        }, 
+        {
+            "name": "soul", 
+            "function": "soul", 
+            "parameter": {
+                "mode": ["number({\"min\": 0, \"max\": 3})", 0], 
+                "stagger": ["number({\"min\": 1, \"max\": 1000})", 10]
+            }
+        }
+    ]
+}
