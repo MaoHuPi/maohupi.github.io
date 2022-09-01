@@ -1,11 +1,23 @@
 {
+  "jslib": {
+    "name": "JSLib｜JS函式庫", 
+    "description": "JSLib幫你美化、自動化身邊的事物！"
+  }, 
   "imggod": {
-    "name": "Img God｜圖片之神", 
+    "name": "Img God｜相片濾鏡處理器", 
     "description": "用各種神奇的效果來為你的圖片增添個人風格！"
+  }, 
+  "imggod++": {
+    "name": "Img God ++｜圖像之神", 
+    "description": "調整參數，用各種神奇的效果來為你的圖片增添個人風格！"
   }, 
   "notepaper": {
     "name": "Note Paper｜電子筆記", 
     "description": "使用Note-Paper，快速地以標籤語言做筆記整理！"
+  }, 
+  "notesPage": {
+    "name": "notesPage｜筆記展間", 
+    "description": "快速將筆記分類並呈現之！"
   }, 
   "autocreator": {
     "name": "Auto Creator｜零級分作文製造機", 
@@ -14,13 +26,5 @@
   "ezMusicCreator": {
     "name": "Ez Music Creator｜快速音樂生成器", 
     "description": "使用Ez Music Creator生成屬於你，且有感情的音樂！"
-  }, 
-  "jslib": {
-    "name": "JSLib｜JS函式庫", 
-    "description": "JSLib幫你美化、自動化身邊的事物！"
-  }, 
-  "notesPage": {
-    "name": "notesPage｜筆記展間", 
-    "description": "快速將筆記分類並呈現之！"
   }
 }
