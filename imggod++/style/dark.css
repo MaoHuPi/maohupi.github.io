@@ -1,0 +1,77 @@
+[styleName="dark"] * {
+    scrollbar-color: #00000055 #48484855;
+}
+[styleName="dark"] *:hover {
+    scrollbar-color: white #484848;
+}
+*::-webkit-scrollbar-thumb {
+    background: #00000055;
+}
+*::-webkit-scrollbar {
+    background-color: #48484855;
+}
+*:hover::-webkit-scrollbar-thumb {
+    background: white;
+}
+*:hover::-webkit-scrollbar {
+    background-color: #484848;
+}
+html[styleName="dark"], [styleName="dark"] body {
+    color: black;
+    background-color: black;
+}
+[styleName="dark"] #container-out {
+    background-color: black;
+}
+[styleName="dark"] #container-in-1 {
+    background-color: #222222;
+}
+[styleName="dark"] #container-in-2 {
+    background-color: #222222;
+}
+[styleName="dark"] #container-in-3 {
+    background-color: #222222;
+}
+[styleName="dark"] #container-line-1_2 {
+    background-color: #000000;
+}
+[styleName="dark"] #container-line-12_3 {
+    background-color: #000000;
+}
+[styleName="dark"] #container-line-1_2:hover {
+    background-color: #209bff;
+}
+[styleName="dark"] #container-line-12_3:hover {
+    background-color: #209bff;
+}
+[styleName="dark"] #effect-category > button {
+    background-color: #80808088;
+    border-color: black;
+}
+[styleName="dark"] #effect-category > button:hover {
+    background-color: #808080;
+}
+[styleName="dark"] #effect-category > button[select] {
+    background-color: #808080;
+    border-color: #ffffff88;
+}
+[styleName="dark"] .effect-type-box {
+    background-color: #80808088;
+    border-color: black;
+}
+[styleName="dark"] .effect-type-box:hover {
+    background-color: #808080;
+}
+[styleName="dark"] .effect-type-box[select] {
+    background-color: #808080;
+    border-color: #ffffff88;
+}
+[styleName="dark"] #container-in-3 label{
+    color: white;
+}
+[styleName="dark"] #container-in-3 input{
+    color: black;
+}
+[styleName="dark"] #container-in-3 button{
+    color: black;
+}
