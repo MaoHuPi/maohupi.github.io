@@ -30,5 +30,18 @@
     "power": "power", 
     "remainder": "remainder", 
     "alphaAdjustment": "alpha adjustment", 
-    "flipAxis": "flip axis"
+    "flipAxis": "flip axis", 
+    "soulTranslation": "soul translation", 
+    "stagger": "stagger", 
+    "channel": "channel", 
+    "NO_SELECTED_EFFECT": "No effect has been selected!", 
+    "magic": "magic", 
+    "density": "density", 
+    "gradationNoise": "gradation noise", 
+    "interference": "interference", 
+    "fade": "fade", 
+    "cornerStaining": "corner staining", 
+    "side": "side", 
+    "inner": "inner", 
+    "outer": "outer"
 }

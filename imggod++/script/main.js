@@ -36,6 +36,12 @@ window.addEventListener('keydown', (event) => {
                 keys['Control'] = false;
                 keys['o'] = false;
                 break;
+            case 's':
+                event.preventDefault();
+                imageSave();
+                keys['Control'] = false;
+                keys['s'] = false;
+                break;
             case '0':
                 event.preventDefault();
                 canvasReposition();
@@ -53,11 +59,17 @@ const containerOut = $('#container-out');
 $$('[id|="container-line"]').forEach(containerLine => {
     containerLine.move = false;
     containerLine.moveFun = function(){
+        let controlTypeIsX = this.getAttribute('controlType') == 'x'
+        let unit = controlTypeIsX ? vw() : vh(), 
+            value = controlTypeIsX ? MX : MY;
         containerOut.style.setProperty(
             this.getAttribute('controlProperty'), 
-            Math.max(
-                0, 
-                this.getAttribute('controlType') == 'x' ? (MX - 0.25*vw())/vw() : (MY - 0.25*vw())/vh()
+            Math.min(
+                Math.max(
+                    0, 
+                    (value - 0.25*vw())/unit
+                ), 
+                100 - (0.5 * vw())/unit
             )
         );
         if(this.move){
@@ -75,6 +87,22 @@ $$('[id|="container-line"]').forEach(containerLine => {
     });
 });
 
+/************/
+/* language */
+/************/
+let langData = {};
+changeLang('zh-TW');
+function changeLang(langName){
+    sendXmlhttp(`json/lang/${langName}.json`, '', t => {
+        langData = JSON.parse(t);
+        langMessageInit();
+        setEffect();
+    }, 'get');
+}
+function lang(textId){
+    return(textId in langData ? langData[textId] : textId);
+}
+
 /********/
 /* in-1 */
 /********/
@@ -83,6 +111,7 @@ const cvs = $('#imageCanvas'),
     ctx = cvs.getContext('2d');
 ctx.imageSmoothingEnabled = false;
 // image
+let fileNow = undefined;
 function imageOpen(){
     let input = document.createElement('input');
     input.type = 'file';
@@ -91,7 +120,11 @@ function imageOpen(){
     input.onchange = () => {
         if('files' in input && input['files'].length > 0){
             let file = input.files[0];
-            imageLoad(file);
+            try{
+                imageLoad(file);
+                fileNow = file;
+            }
+            catch(e){console.error(e);}
         }
     }
 }
@@ -116,6 +149,12 @@ function imageReload(){
         ctx.drawImage(cvs.image, 0, 0, cvs.width, cvs.height);
         canvasReposition();
     }
+}
+function imageSave(){
+    var link = document.createElement('a');
+    link.download = fileNow ? fileNow.name : 'download.png';
+    link.href = cvs.toDataURL(fileNow ? fileNow.type : 'image/png');
+    link.click();
 }
 function canvasReposition(){
     let container = $('#container-in-1'), 
@@ -260,6 +299,7 @@ function setEffect(){
                                 case 'number':
                                     input.max = 'max' in settings ? settings['max'] : false;
                                     input.min = 'min' in settings ? settings['min'] : false;
+                                    input.step = 'step' in settings ? settings['step'] : 1;
                                     break;
                             }
                             break;
@@ -330,19 +370,11 @@ function exitPreview(){
     previewing = false;
 }
 
-/************/
-/* language */
-/************/
-let langData = {};
-changeLang('zh-TW');
-function changeLang(langName){
-    sendXmlhttp(`json/lang/${langName}.json`, '', t => {
-        langData = JSON.parse(t);
-        setEffect();
-    }, 'get');
-}
-function lang(textId){
-    return(textId in langData ? langData[textId] : textId);
+/********/
+/* in-3 */
+/********/
+function langMessageInit(){
+    $('#container-in-3').innerHTML = `<label>${lang('NO_SELECTED_EFFECT')}</label>`;
 }
 
 /*******/

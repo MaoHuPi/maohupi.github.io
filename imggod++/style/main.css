@@ -87,6 +87,27 @@ html, body {
     /* background-size: calc(1% * var(--pixelPercentageWidth)) calc(1% * var(--pixelPercentageHeight)); */
     background-size: 50px 50px;
 }
+#image-view-file-bar {
+    display: flex;
+    gap: 1vw;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 1vw;
+    left: 1vw;
+    z-index: 999;
+}
+.image-view-button {
+    margin-right: 2vw;
+    width: 4vw;
+    height: 4vw;
+    font-size: 3vw;
+    border-style: solid;
+    border-width: 0.15vw;
+    border-radius: 50%;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
 #effect-category {
     padding: 1vw;
     width: 100%;

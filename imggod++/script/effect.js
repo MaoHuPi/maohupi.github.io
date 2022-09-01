@@ -130,7 +130,7 @@ class effect{
         }
         this.ctx.putImageData(pixis, 0, 0);
     }
-    soul(argv){
+    soulTranslation(argv){
         if(!('mode' in argv) || !('stagger' in argv)){
             return;
         }
@@ -147,128 +147,62 @@ class effect{
         }
         this.ctx.putImageData(pixis, 0, 0);
     }
-    oW(argv){
+    gradationNoise(argv){
+        if(!('mode' in argv) || !('density' in argv)){
+            return;
+        }
         let pixis = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
-            data = pixis.data;
+            data = pixis.data, 
+            data2 = [...data];
+        let density = parseFloat(argv['density']);
+        // let h = cvs.width*4 + value, w = 4 + value;
         for(let i = 0; i < data.length; i += 4){
-            var iTL = Math.pow(Math.pow((((i+3)/4)/this.cvs.width), 2)+Math.pow((((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iTR = Math.pow(Math.pow((((i+3)/4)/this.cvs.width), 2)+Math.pow(this.cvs.width-(((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iBL = Math.pow(Math.pow(this.cvs.height-(((i+3)/4)/this.cvs.width), 2)+Math.pow((((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iBR = Math.pow(Math.pow(this.cvs.height-(((i+3)/4)/this.cvs.width), 2)+Math.pow(this.cvs.width-(((i+3)/4)%this.cvs.width), 2), 1/2);
-            if (iTL < iTR && iTL < iBL && iTL < iBR){
-                data[i] += iTL/iM;
-                data[i+1] += iTL/iM;
-                data[i+2] += iTL/iM;
-            }
-            else if (iTR < iTL && iTR < iBL && iTR < iBR){
-                data[i] += iTR/iM;
-                data[i+1] += iTR/iM;
-                data[i+2] += iTR/iM;
-            }
-            else if (iBL < iTL && iBL < iTR && iBL < iBR){
-                data[i] += iBL/iM;
-                data[i+1] += iBL/iM;
-                data[i+2] += iBL/iM;
-            }
-            else if (iBR < iTL && iBR < iBL && iBR < iTR){
-                data[i] += iBR/iM;
-                data[i+1] += iBR/iM;
-                data[i+2] += iBR/iM;
+            for(let j = i; j < i + 3; j++){
+                switch(argv['mode']){
+                    case 'fade':
+                        data[j] = data[j] + (i/data.length*density)%255;
+                        break;
+                    case 'interference':
+                        data[j] = (data[j] + i/data.length*density)%255;
+                        break;
+                }
             }
         }
         this.ctx.putImageData(pixis, 0, 0);
     }
-    OW(argv){
-        let pixis = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
-            data = pixis.data;
-        for(let i = 0; i < data.length; i += 4){
-            var oTL = Math.pow(Math.pow(this.cvs.width, 2)+Math.pow(this.cvs.height, 2), 1/2)/2;
-            var iTL = Math.pow(Math.pow((((i+3)/4)/this.cvs.width), 2)+Math.pow((((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iTR = Math.pow(Math.pow((((i+3)/4)/this.cvs.width), 2)+Math.pow(this.cvs.width-(((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iBL = Math.pow(Math.pow(this.cvs.height-(((i+3)/4)/this.cvs.width), 2)+Math.pow((((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iBR = Math.pow(Math.pow(this.cvs.height-(((i+3)/4)/this.cvs.width), 2)+Math.pow(this.cvs.width-(((i+3)/4)%this.cvs.width), 2), 1/2);
-            if (iTL < iTR && iTL < iBL && iTL < iBR){
-                data[i] += (oTL-iTL)/iM;
-                data[i+1] += (oTL-iTL)/iM;
-                data[i+2] += (oTL-iTL)/iM;
-            }
-            else if (iTR < iTL && iTR < iBL && iTR < iBR){
-                data[i] += (oTL-iTR)/iM;
-                data[i+1] += (oTL-iTR)/iM;
-                data[i+2] += (oTL-iTR)/iM;
-            }
-            else if (iBL < iTL && iBL < iTR && iBL < iBR){
-                data[i] += (oTL-iBL)/iM;
-                data[i+1] += (oTL-iBL)/iM;
-                data[i+2] += (oTL-iBL)/iM;
-            }
-            else if (iBR < iTL && iBR < iBL && iBR < iTR){
-                data[i] += (oTL-iBR)/iM;
-                data[i+1] += (oTL-iBR)/iM;
-                data[i+2] += (oTL-iBR)/iM;
-            }
+    cornerStaining(argv){
+        if(!('mode' in argv) || !('side' in argv)){
+            return;
         }
-        this.ctx.putImageData(pixis, 0, 0);
-    }
-    oB(argv){
         let pixis = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
             data = pixis.data;
-        for(let i = 0; i < data.length; i += 4){
-            var iTL = Math.pow(Math.pow((((i+3)/4)/this.cvs.width), 2)+Math.pow((((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iTR = Math.pow(Math.pow((((i+3)/4)/this.cvs.width), 2)+Math.pow(this.cvs.width-(((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iBL = Math.pow(Math.pow(this.cvs.height-(((i+3)/4)/this.cvs.width), 2)+Math.pow((((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iBR = Math.pow(Math.pow(this.cvs.height-(((i+3)/4)/this.cvs.width), 2)+Math.pow(this.cvs.width-(((i+3)/4)%this.cvs.width), 2), 1/2);
-            if (iTL < iTR && iTL < iBL && iTL < iBR){
-                data[i] -= iTL/iM;
-                data[i+1] -= iTL/iM;
-                data[i+2] -= iTL/iM;
-            }
-            else if (iTR < iTL && iTR < iBL && iTR < iBR){
-                data[i] -= iTR/iM;
-                data[i+1] -= iTR/iM;
-                data[i+2] -= iTR/iM;
-            }
-            else if (iBL < iTL && iBL < iTR && iBL < iBR){
-                data[i] -= iBL/iM;
-                data[i+1] -= iBL/iM;
-                data[i+2] -= iBL/iM;
-            }
-            else if (iBR < iTL && iBR < iBL && iBR < iTR){
-                data[i] -= iBR/iM;
-                data[i+1] -= iBR/iM;
-                data[i+2] -= iBR/iM;
-            }
+        let mode = '+';
+        switch(argv['mode']){
+            case 'addition': mode = '+'; break;
+            case 'subtraction': mode = '-'; break;
+            case 'multiplication': mode = '*'; break;
+            case 'division': mode = '/'; break;
+            case 'power': mode = '**'; break;
+            case 'remainder': mode = '%'; break;
         }
-        this.ctx.putImageData(pixis, 0, 0);
-    }
-    OB(argv){
-        let pixis = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
-            data = pixis.data;
         for(let i = 0; i < data.length; i += 4){
-            var oTL = Math.pow(Math.pow(this.cvs.width, 2)+Math.pow(this.cvs.height, 2), 1/2)/2;
-            var iTL = Math.pow(Math.pow((((i+3)/4)/this.cvs.width), 2)+Math.pow((((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iTR = Math.pow(Math.pow((((i+3)/4)/this.cvs.width), 2)+Math.pow(this.cvs.width-(((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iBL = Math.pow(Math.pow(this.cvs.height-(((i+3)/4)/this.cvs.width), 2)+Math.pow((((i+3)/4)%this.cvs.width), 2), 1/2);
-            var iBR = Math.pow(Math.pow(this.cvs.height-(((i+3)/4)/this.cvs.width), 2)+Math.pow(this.cvs.width-(((i+3)/4)%this.cvs.width), 2), 1/2);
-            if (iTL < iTR && iTL < iBL && iTL < iBR){
-                data[i] -= (oTL-iTL)/iM;
-                data[i+1] -= (oTL-iTL)/iM;
-                data[i+2] -= (oTL-iTL)/iM;
-            }
-            else if (iTR < iTL && iTR < iBL && iTR < iBR){
-                data[i] -= (oTL-iTR)/iM;
-                data[i+1] -= (oTL-iTR)/iM;
-                data[i+2] -= (oTL-iTR)/iM;
-            }
-            else if (iBL < iTL && iBL < iTR && iBL < iBR){
-                data[i] -= (oTL-iBL)/iM;
-                data[i+1] -= (oTL-iBL)/iM;
-                data[i+2] -= (oTL-iBL)/iM;
-            }
-            else if (iBR < iTL && iBR < iBL && iBR < iTR){
-                data[i] -= (oTL-iBR)/iM;
-                data[i+1] -= (oTL-iBR)/iM;
-                data[i+2] -= (oTL-iBR)/iM;
+            let value = 0;
+            var oTL = argv['side'] == 'outer' ? Math.pow(Math.pow(this.cvs.width, 2)+Math.pow(this.cvs.height, 2), 1/2)/2 : 0;
+            var iD = [((i+3)/4), this.cvs.width];
+            iD[2] = iD[0]/iD[1];
+            iD[3] = iD[0]%iD[1];
+            var iT = Math.pow(iD[2], 2);
+            var iB = Math.pow(this.cvs.height - iD[2], 2);
+            var iL = Math.pow(iD[3], 2);
+            var iR = Math.pow(this.cvs.width - iD[3], 2);
+            var iTL = Math.pow(iT + iL, 1/2);
+            var iTR = Math.pow(iT + iR, 1/2);
+            var iBL = Math.pow(iB + iL, 1/2);
+            var iBR = Math.pow(iB + iR, 1/2);
+            value = Math.min(iTL, iTR, iBL, iBR);
+            value = (argv['side'] == 'outer' ? oTL - value : value)/3;
+            for(let j = i; j < i+3; j++){
+                data[j] = eval(`${data[j]}${mode}${value}`);
             }
         }
         this.ctx.putImageData(pixis, 0, 0);

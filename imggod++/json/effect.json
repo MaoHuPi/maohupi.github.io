@@ -26,6 +26,14 @@
             "parameter": {
                 "mode": ["select([\"addition\", \"multiplication\"])", "addition"]
             }
+        }, 
+        {
+            "name": "cornerStaining", 
+            "function": "cornerStaining", 
+            "parameter": {
+                "mode": ["select([\"addition\", \"subtraction\", \"multiplication\", \"division\", \"power\", \"remainder\"])", "addition"], 
+                "side": ["select([\"inner\", \"outer\"])", "inner"]
+            }
         }
     ], 
     "overall": [
@@ -53,13 +61,25 @@
             "parameter": {
                 "wideCuts": ["number({\"min\": 1, \"max\": 1000})", 10]
             }
-        }, 
+        }
+    ], 
+    "channel": [
         {
-            "name": "soul", 
-            "function": "soul", 
+            "name": "soulTranslation", 
+            "function": "soulTranslation", 
             "parameter": {
                 "mode": ["number({\"min\": 0, \"max\": 3})", 0], 
                 "stagger": ["number({\"min\": 1, \"max\": 1000})", 10]
+            }
+        }
+    ], 
+    "magic": [
+        {
+            "name": "gradationNoise", 
+            "function": "gradationNoise", 
+            "parameter": {
+                "mode": ["select([\"fade\", \"interference\"])", "fade"], 
+                "density": ["number({\"min\": 100, \"max\": 1000000, \"step\": 100})", 2000]
             }
         }
     ]

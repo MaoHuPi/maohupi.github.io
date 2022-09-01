@@ -44,6 +44,13 @@ html[styleName="dark"], [styleName="dark"] body {
 [styleName="dark"] #container-line-12_3:hover {
     background-color: #209bff;
 }
+[styleName="dark"] .image-view-button {
+    background-color: #80808088;
+    border-color: black;
+}
+[styleName="dark"] .image-view-button:hover {
+    background-color: #808080;
+}
 [styleName="dark"] #effect-category > button {
     background-color: #80808088;
     border-color: black;

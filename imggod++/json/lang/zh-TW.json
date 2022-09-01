@@ -30,5 +30,18 @@
     "power": "次方", 
     "remainder": "餘數", 
     "alphaAdjustment": "透明度調整", 
-    "flipAxis": "翻轉軸"
+    "flipAxis": "翻轉軸", 
+    "soulTranslation": "靈魂平移", 
+    "stagger": "錯開", 
+    "channel": "通道", 
+    "NO_SELECTED_EFFECT": "尚未選擇效果", 
+    "magic": "魔法", 
+    "density": "密度", 
+    "gradationNoise": "漸層雜訊", 
+    "interference": "干擾", 
+    "fade": "褪色", 
+    "cornerStaining": "角落染色", 
+    "side": "側", 
+    "inner": "內側", 
+    "outer": "外側"
 }
