@@ -23,31 +23,19 @@ window.addEventListener('keydown', (event) => {
                 keys[key] = false;
             }
         }
+        let preventControl = false;
+        let isHotKey = true;
         switch(event.key){
-            case 'r':
-                event.preventDefault();
-                imageReload();
-                keys['Control'] = false;
-                keys['r'] = false;
-                break;
-            case 'o':
-                event.preventDefault();
-                imageOpen();
-                keys['Control'] = false;
-                keys['o'] = false;
-                break;
-            case 's':
-                event.preventDefault();
-                imageSave();
-                keys['Control'] = false;
-                keys['s'] = false;
-                break;
-            case '0':
-                event.preventDefault();
-                canvasReposition();
-                keys['Control'] = false;
-                keys['0'] = false;
-                break;
+            case 'r': imageReload(); break;
+            case 'o': imageOpen(); break;
+            case 's': imageSave(); break;
+            case '0': canvasReposition(); break;
+            default: isHotKey = false; break;
+        }
+        if(isHotKey){
+            event.preventDefault();
+            if(preventControl){keys['Control'] = false;}
+            keys[event.key] = false;
         }
     }
 });
@@ -300,6 +288,8 @@ function setEffect(){
                                     input.max = 'max' in settings ? settings['max'] : false;
                                     input.min = 'min' in settings ? settings['min'] : false;
                                     input.step = 'step' in settings ? settings['step'] : 1;
+                                    break;
+                                case 'color':
                                     break;
                             }
                             break;

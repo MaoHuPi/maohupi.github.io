@@ -34,6 +34,23 @@
                 "mode": ["select([\"addition\", \"subtraction\", \"multiplication\", \"division\", \"power\", \"remainder\"])", "addition"], 
                 "side": ["select([\"inner\", \"outer\"])", "inner"]
             }
+        }, 
+        {
+            "name": "fadeColor", 
+            "function": "fadeColor", 
+            "parameter": {
+                "mode": ["select([\"fade-transparent\", \"hold\"])", "fade-transparent"], 
+                "color": ["color({})", "#00ff00"]
+            }
+        }, 
+        {
+            "name": "textRemoveBackground", 
+            "function": "textRemoveBackground", 
+            "parameter": {
+                "mode": ["select([\"bright\", \"dark\"])", "bright"], 
+                "gate": ["number({\"min\": 1, \"max\": 255})", 200], 
+                "background": ["select([\"transparent\", \"white\", \"black\"])", "transparent"]
+            }
         }
     ], 
     "overall": [
@@ -78,7 +95,7 @@
             "name": "gradationNoise", 
             "function": "gradationNoise", 
             "parameter": {
-                "mode": ["select([\"fade\", \"interference\"])", "fade"], 
+                "mode": ["select([\"fade-white\", \"interference\"])", "fade-white"], 
                 "density": ["number({\"min\": 100, \"max\": 1000000, \"step\": 100})", 2000]
             }
         }

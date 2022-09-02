@@ -39,9 +39,16 @@
     "density": "密度", 
     "gradationNoise": "漸層雜訊", 
     "interference": "干擾", 
-    "fade": "褪色", 
+    "fade-white": "褪色", 
     "cornerStaining": "角落染色", 
     "side": "側", 
     "inner": "內側", 
-    "outer": "外側"
+    "outer": "外側", 
+    "hold": "保留", 
+    "fade-transparent": "淡化", 
+    "fadeColor": "顏色淡化", 
+    "gate": "閾值", 
+    "background": "背景", 
+    "textRemoveBackground": "文本去背", 
+    "transparent": "透明"
 }

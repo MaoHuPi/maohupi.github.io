@@ -39,9 +39,16 @@
     "density": "density", 
     "gradationNoise": "gradation noise", 
     "interference": "interference", 
-    "fade": "fade", 
+    "fade-white": "fade", 
     "cornerStaining": "corner staining", 
     "side": "side", 
     "inner": "inner", 
-    "outer": "outer"
+    "outer": "outer", 
+    "hold": "hold", 
+    "fade-transparent": "fade", 
+    "fadeColor": "fade color", 
+    "gate": "gate", 
+    "background": "background", 
+    "textRemoveBackground": "text remove background", 
+    "transparent": "transparent"
 }

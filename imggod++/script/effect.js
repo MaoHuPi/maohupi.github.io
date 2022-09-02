@@ -3,6 +3,18 @@ class effect{
         this.cvs = canvas;
         this.ctx = canvas.getContext('2d');
     }
+    HexToCData(color){
+        color = color.toString();
+        color = color.replace('#', '');
+        let cData = [];
+        for(let i = 0; i < color.length; i += 2){
+            let value = color[i];
+            value += i + 1 < color.length ? color[i + 1] : '';
+            value = parseInt(value, 16);
+            cData.push(value);
+        }
+        return(cData);
+    }
     invertColor(argv){
         if(!('flipAxis' in argv)){
             return;
@@ -159,7 +171,7 @@ class effect{
         for(let i = 0; i < data.length; i += 4){
             for(let j = i; j < i + 3; j++){
                 switch(argv['mode']){
-                    case 'fade':
+                    case 'fade-white':
                         data[j] = data[j] + (i/data.length*density)%255;
                         break;
                     case 'interference':
@@ -207,52 +219,57 @@ class effect{
         }
         this.ctx.putImageData(pixis, 0, 0);
     }
-    reWatermark(argv){
+    textRemoveBackground(argv){
+        if(!('mode' in argv) || !('gate' in argv) || !('background' in argv)){
+            return;
+        }
         let h = 200, 
-            $a = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
-            $b = $a.data;
-        for(let i = 0; i < $b.length; i+=4){
+            pixis = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
+            data = pixis.data;
+        h = argv['gate'];
+        h = argv['mode'] == 'dark' ? 255 - h : h;
+        let mode = argv['mode'] == 'dark' ? '<' : '>';
+        let background = [0, 0];
+        switch(argv['background']){
+            case 'transparent': background = [[0, 255], [0, 0]]; break;
+            case 'white': background = [[0, 255], [255, 255]]; break;
+            case 'black': background = [[255, 255], [0, 255]]; break;
+        }
+        for(let i = 0; i < data.length; i += 4){
             if(
-                $b[i] > h && 
-                $b[i+1] > h && 
-                $b[i+2] > h
+                eval(`
+                    ${data[i]} ${mode} ${h} && 
+                    ${data[i+1]} ${mode} ${h} && 
+                    ${data[i+2]} ${mode} ${h}
+                `)
             ){
-                $b[i] = 255;
-                $b[i+1] = 255;
-                $b[i+2] = 255;
-                $b[i+3] = 255;
+                data[i] = data[i+1] = data[i+2] = background[1][0];
+                data[i+3] = background[1][1];
+            }else{
+                data[i] = data[i+1] = data[i+2] = background[0][0];
+                data[i+3] = background[0][1];
             }
         }
-        this.ctx.putImageData($a, 0, 0);
+        this.ctx.putImageData(pixis, 0, 0);
     }
-    reWotB(argv){
-        let h = 200, 
-            $a = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
-            $b = $a.data;
-        for(let i = 0; i < $b.length; i+=4){
-            if(
-                $b[i] > h && 
-                $b[i+1] > h && 
-                $b[i+2] > h
-            ){
-                $b[i] = 0;
-                $b[i+1] = 0;
-                $b[i+2] = 0;
-                $b[i+3] = 0;
-            }else{$b[i] = 0;
-                $b[i+1] = 0;
-                $b[i+2] = 0;
-                $b[i+3] = 255;}
+    fadeColor(argv){
+        if(!('mode' in argv) || !('color' in argv)){
+            return;
         }
-        this.ctx.putImageData($a, 0, 0);
-     }
-    fade(argv){
-        let cData = [0, 0, 0], 
-            $a = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
-            $b = $a.data;
-        for(let i = 0; i < $b.length; i+=4){
-            $b[i+3] -= 255 - (Math.abs($b[i]-cData[0]) + Math.abs($b[i+1]-cData[1]) + Math.abs($b[i+2]-cData[2]))/3;
+        let color = [0, 0, 0], 
+            pixis = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
+            data = pixis.data;
+        color = this.HexToCData(argv['color']);
+        for(let i = 0; i < data.length; i+=4){
+            switch(argv['mode']){
+                case 'fade-transparent':
+                    data[i+3] -= 255 - (Math.abs(data[i]-color[0]) + Math.abs(data[i+1]-color[1]) + Math.abs(data[i+2]-color[2]))/3;
+                    break;
+                case 'hold':
+                    data[i+3] -= (Math.abs(data[i]-color[0]) + Math.abs(data[i+1]-color[1]) + Math.abs(data[i+2]-color[2]))/3;
+                    break;
+            }
         }
-        this.ctx.putImageData($a, 0, 0);
+        this.ctx.putImageData(pixis, 0, 0);
     }
 }
