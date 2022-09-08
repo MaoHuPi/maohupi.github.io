@@ -318,7 +318,8 @@ function setEffect(){
                     for(let key in box.parameters){
                         parameters[key] = box.parameters[key].value;
                     }
-                    preview(() => {cvsEffect[typeData['function']](parameters);});
+                    // preview(() => {cvsEffect[typeData['function']](parameters);});
+                    preview(() => {cvsEffect.render(typeData['function'], parameters);});
                 }
                 applyButton.style.gridArea = `${lineNum+2}/1/${lineNum+3}/3`;
                 applyButton.onclick = () => {
@@ -327,7 +328,8 @@ function setEffect(){
                     for(let key in box.parameters){
                         parameters[key] = box.parameters[key].value;
                     }
-                    cvsEffect[typeData['function']](parameters);
+                    // cvsEffect[typeData['function']](parameters);
+                    cvsEffect.render(typeData['function'], parameters);
                 }
                 in_3.appendChild(viewButton);
                 in_3.appendChild(applyButton);
