@@ -1,0 +1,220 @@
+@viewport {
+    width: device-width;
+    height: device-height;
+    initial-scale: 1;
+}
+
+* {
+    outline: none;
+    box-sizing: border-box;
+}
+*:not(input) {
+    user-select: none;
+}
+html {
+    --headerHeight: 5vw;
+}
+html, body {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: #272727;
+    overflow: hidden;
+}
+[center] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5vw;
+    width: 100vw;
+    height: var(--headerHeight);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    color: white;
+    font-size: 4vw;
+    font-weight: bold;
+    background-color: black;
+    z-index: 999;
+}
+#header > input {
+    padding: 0.5vw;
+    height: 100%;
+    width: 30%;
+    color: white;
+    font-size: 3vw;
+    font-weight: bold;
+    background-color: #272727;
+    border-style: ridge;
+    border-width: 0.5vw;
+    border-color: gray;
+}
+#container {
+    --moveTakes: 0.5s;
+    position: relative;
+    top: var(--headerHeight);
+    left: 0px;
+    height: calc(100vh - var(--headerHeight));
+    background-color: #272727;
+}
+#container > .card {
+    --gap: 0.5vw;
+    --gapNum: 5;
+    --width: 30vw;
+    --height: 40vw;
+    user-select: none;
+    width: var(--width);
+    height: var(--height);
+    position: absolute;
+    font-size: 5vw;
+    font-weight: bold;
+    border-radius: 3vw;
+    background-color: white;
+    box-shadow: 0px 0px 1vw 0px black;
+    overflow: hidden;
+    /* transform: translate(calc(var(--gap)*5)); */
+    transform: translate(calc(var(--gap)*var(--gapNum)), calc(var(--gap)*var(--gapNum)));
+    transition: var(--moveTakes);
+    transition-timing-function: cubic-bezier(0.66, 0.33, 0.33, 0.66);
+    opacity: 0;
+}
+@media screen and (max-height: 50vw) {
+    #container > .card {
+        max-height: 50%;
+    }
+}
+#container > .card:hover {
+    transform: rotateZ(-5deg) !important;
+}
+#container > .card > * {
+    width: var(--width);
+    text-align: center;
+    overflow-wrap: break-word;
+}
+#container > .card:nth-child(1) {
+    transform: translate(0px);
+    z-index: 10;
+}
+#container > .card:nth-child(2) {
+    --gapNum: 1;
+    z-index: 9;
+}
+#container > .card:nth-child(3) {
+    --gapNum: 2;
+    z-index: 8;
+}
+#container > .card:nth-child(4) {
+    --gapNum: 3;
+    z-index: 7;
+}
+#container > .card:nth-child(5) {
+    --gapNum: 4;
+    z-index: 6;
+}
+#container > .card:nth-child(n + 1):nth-child(-n + 5) {
+    opacity: 1;
+}
+#container > .card[card-turnOver] {
+    transform: rotateY(-90deg) !important;
+}
+#container > .card[card-turnOvering] ~ .card {
+    pointer-events: none;
+}
+#container > .card[card-deleted] {
+    transform: translate(calc(-50vw - 30vw)) !important;
+}
+#control-buttons {
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    /* justify-content: flex-end; */
+    gap: 2vw;
+    padding: 2vw;
+    /* height: calc(100vh - 5vw); */
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    text-align: center;
+    z-index: 999;
+}
+@media screen and (min-width: 200vh) {
+    #control-buttons {
+        flex-direction: row;
+    }
+}
+#control-buttons > button {
+    padding: 0px;
+    width: 5vw;
+    height: 5vw;
+    color: black;
+    font-size: 3vw;
+    font-weight: bold;
+    border-style: solid;
+    border-width: 0vw;
+    box-shadow: 0px 0px 0.5vw 0px black;
+    border-color: #2c2c2c;
+    border-radius: 50%;
+    background-color: #ffffff88;
+    transition: 0.5s;
+    box-sizing: border-box;
+}
+#control-buttons > button:hover {
+    background-color: white;
+    border-radius: 50% 0.5vw 0.5vw 50%;
+}
+
+@media screen and (min-height: 150vw) {
+    html {
+        --headerHeight: 35vw;
+    }
+    #header {
+        flex-direction: column;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        font-size: 10vw;
+        opacity: 0.8;
+        z-index: 999999;
+    }
+    #header > input{
+        width: 100%;
+        font-size: 8vw;
+    }
+    #counters {
+        font-weight: lighter;
+    }
+    #control-buttons > button {
+        height: 100vh;
+        width: 15vw;
+        height: 15vw;
+        font-size: 8vw;
+        text-align: center;
+    }
+    #container > .card {
+        --width: 80vw;
+        --height: 100vw;
+        font-size: 15vw;
+    }
+    #container {
+        height: 60vh;
+    }
+    #container > .card:hover {
+        transform: rotateZ(0deg) !important;
+    }
+    #container > .card[card-turnOver] {
+        transform: scaleX(0) !important;
+    }
+    #container > .card[card-deleted] {
+        transform: translate(calc(-50vw - 30vw)) !important;
+    }
+}
