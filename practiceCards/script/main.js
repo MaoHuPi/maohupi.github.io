@@ -1,3 +1,6 @@
+/*
+ * 2022 © MaoHuPi
+ */
 'use strict';
 const container = $('#container'), 
     counter_deleteCount = $('#counter-deleteCount'), 
