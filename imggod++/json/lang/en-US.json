@@ -52,5 +52,8 @@
     "textRemoveBackground": "text remove background", 
     "transparent": "transparent", 
     "alert-button-okay": "okay", 
-    "alert-button-cancel": "cancel"
+    "alert-button-cancel": "cancel", 
+    "pixelThrow": "pixel throw", 
+    "distortion": "distortion", 
+    "magnification": "magnification"
 }

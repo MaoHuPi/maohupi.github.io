@@ -81,20 +81,26 @@ class effect{
         let cvs = msgArgs.cvs;
         
         for(let i = 0; i < data.length; i += 4){
-            if (data[i]>data[i+1] && data[i]>data[i+2]){
-                data[i] = 255;data[i+1] = 0;data[i+2] = 0;
+            let max = Math.max(data[i], data[i+1], data[i+2]);
+            if(data[i] == data[i+1] && data[i+1] == data[i+2]){
+                if(data[i] >= 112.5){
+                    data[i] = data[i+1] = data[i+2] = 255;
+                }
+                else{
+                    data[i] = data[i+1] = data[i+2] = 0;
+                }
             }
-            else if (data[i+1]>data[i] && data[i+1]>data[i+2]){
-                data[i] = 0;data[i+1] = 255;data[i+2] = 0;
+            else if(max = data[i]){
+                data[i+1] = data[i+2] = 0;
+                data[i] = 255;
             }
-            else if (data[i+2]>data[i] && data[i+2]>data[i+1]){
-                data[i] = 0;data[i+1] = 0;data[i+2] = 255;
+            else if(max = data[i+1]){
+                data[i] = data[i+2] = 0;
+                data[i+1] = 255; 
             }
-            else if (data[i] == data[i+1] && data[i+1] == data[i+2] && data[i] >= 112.5){
-                data[i] = 255;data[i+1] = 255;data[i+2] = 255;
-            }
-            else if (data[i] == data[i+1] && data[i+1] == data[i+2] && data[i] < 112.5){
-                data[i] = 0;data[i+1] = 0;data[i+2] = 0;
+            else if(max = data[i+2]){
+                data[i] = data[i+1] = 0;
+                data[i+2] = 255;
             }
             self.postMessage({progress: (i/data.length)});
         }
@@ -125,14 +131,15 @@ class effect{
         let sqWidth = parseInt(cvs.width / argv['wideCuts']);
         for(let i = 0; i < cvs.width; i += sqWidth){
             for(let j = 0; j < cvs.height; j += sqWidth){
-                let data = this.ctx.getImageData(
-                    i+sqWidth/2 < cvs.width ? i+sqWidth/2 : i, 
-                    j+sqWidth/2 < cvs.height ? j+sqWidth/2 : j, 
-                    1, 
-                    1
-                ).data;
-                this.ctx.fillStyle = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3]})`;
-                this.ctx.fillRect(i, j, sqWidth, sqWidth);
+                let nth = (Math.floor(j+sqWidth/2 < cvs.height ? j+sqWidth/2 : j)*cvs.width + Math.floor(i+sqWidth/2 < cvs.width ? i+sqWidth/2 : i))*4;
+                for(let k = i; k < i + sqWidth; k++){
+                    for(let l = j; l < j + sqWidth; l++){
+                        nthInSq = Math.floor(l*cvs.width + k)*4;
+                        for(m = 0; m < 4; m++){
+                            data[nthInSq + m] = data[nth + m];
+                        }
+                    }
+                }
             }
             self.postMessage({progress: (i/cvs.width)});
         }
@@ -320,5 +327,44 @@ class effect{
             }
             self.postMessage({progress: (i/data.length)});
         }
+    }
+    pixelThrow = (msgArgs) => {
+        let data = msgArgs.data;
+        let argv = msgArgs.argv;
+        let cvs = msgArgs.cvs;
+        if(!('magnification' in argv)){
+            return;
+        }
+        let magnification = argv['magnification'];
+        let newData = [...data];
+        for(let i = 0; i < data.length; i+=4){
+            data[i]
+            let nth = Math.floor(i/4);
+            let y = Math.floor(nth/cvs.width), 
+                x = nth%cvs.width;
+            let ny = Math.min(y, cvs.height - y), 
+                nx = Math.min(x, cvs.width - x);
+            let l = Math.min(ny, nx);
+            switch((x - cvs.width/2 > 0 ? '+' : '-') + (y - cvs.height/2 > 0 ? '+' : '-')){
+                case '--':
+                    x += l*magnification;
+                    break;
+                case '+-':
+                    y += l*magnification;
+                    break;
+                case '++':
+                    x -= l*magnification;
+                    break;
+                case '-+':
+                    y -= l*magnification;
+                    break;
+            }
+            let j = (y*cvs.width + x)*4;
+            for(let k = 0; k < 4; k++){
+                newData[j + k] = data[i + k];
+            }
+            self.postMessage({progress: (i/data.length)});
+        }
+        msgArgs.data = newData;
     }
 }
