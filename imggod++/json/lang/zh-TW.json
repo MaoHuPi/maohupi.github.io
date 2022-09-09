@@ -50,5 +50,7 @@
     "gate": "閾值", 
     "background": "背景", 
     "textRemoveBackground": "文本去背", 
-    "transparent": "透明"
+    "transparent": "透明", 
+    "alert-button-okay": "確定", 
+    "alert-button-cancel": "取消"
 }

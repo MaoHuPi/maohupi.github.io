@@ -50,5 +50,7 @@
     "gate": "gate", 
     "background": "background", 
     "textRemoveBackground": "text remove background", 
-    "transparent": "transparent"
+    "transparent": "transparent", 
+    "alert-button-okay": "okay", 
+    "alert-button-cancel": "cancel"
 }

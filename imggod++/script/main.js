@@ -369,6 +369,78 @@ function langMessageInit(){
     $('#container-in-3').innerHTML = `<label>${lang('NO_SELECTED_EFFECT')}</label>`;
 }
 
+/*********/
+/* alert */
+/*********/
+class alertBox{
+    static maskElement = $('#container-mask');
+    static visible(open = true){
+        open = open.toString();
+        this.maskElement.setAttribute('open', open);
+        this.maskElement.setAttribute('open', open);
+    }
+    static setInnerElement(nameList = ['buttons', 'rightButton']){
+        nameList.push('box');
+        nameList = Array.from(new Set(nameList));
+        let innerElements = $$('*', this.maskElement);
+        for(let innerElement of innerElements){
+            if(nameList.indexOf(innerElement.getAttribute('id').replace('alert-', '')) > -1){
+                innerElement.removeAttribute('hidden');
+            }
+            else{
+                innerElement.setAttribute('hidden', '');
+            }
+        }
+    }
+    static setButton(name = 'true', text = '確定', buttonFunction = () => {console.log('click!');}){
+        let button = $(`#alert-${name}Button`, this.maskElement);
+        if(text != false && text != undefined){
+            button.innerText = text;
+        }
+        button.onclick = buttonFunction;
+    }
+    static setContent(content){
+        $(`#alert-content`, this.maskElement).innerText = content;
+    }
+    static setProgress(progress = 0){
+        progress = parseFloat(progress);
+        progress = Math.floor(progress*100);
+        progress = `${progress}%`;
+        let progressBar = $(`#alert-progressBar`, this.maskElement);
+        progressBar.style.setProperty('--progress', progress);
+        progressBar.style.setProperty('--progressString', `"${progress}"`);
+    }
+    static alert(content = '', doneFunction = () => {this.visible(false);}){
+        this.setInnerElement(['buttons', 'rightButton', 'content']);
+        this.setContent(content);
+        this.setButton('right', langData['alert-button-okay'], doneFunction);
+        this.visible(true);
+    }
+    static confirm(content = '', doneFunction = (result) => {console.log(result); this.visible(false);}, cancelFunction = undefined){
+        let innerElements = ['buttons', 'leftButton', 'rightButton'];
+        if(content != '' && content != undefined && content != false){
+            innerElements.push('content');
+        }
+        this.setInnerElement(innerElements);
+        this.setContent(content);
+        this.setButton('left', langData['alert-button-okay'], () => {doneFunction(true);});
+        if(cancelFunction != false && cancelFunction != undefined){
+            this.setButton('right', langData['alert-button-cancel'], () => {cancelFunction(false);});
+        }
+        else{
+            this.setButton('right', langData['alert-button-cancel'], () => {doneFunction(false);});
+        }
+        this.visible(true);
+    }
+    static progress(content = '', cancelFunction = (result) => {console.log(result); this.visible(false);}){
+        this.setInnerElement(['buttons', 'rightButton', 'content', 'progressBar']);
+        this.setProgress(0);
+        this.setContent(content);
+        this.setButton('right', langData['alert-button-cancel'], () => {cancelFunction(false);});
+        this.visible(true);
+    }
+}
+
 /*******/
 /* all */
 /*******/

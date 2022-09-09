@@ -172,3 +172,89 @@ html, body {
     font-size: calc((100 - var(--line_1_2)) * 1vh * 0.1);
     /*  */
 }
+#container-mask {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 999;
+    background-color: #00000088;
+    transition: 0.5s;
+    opacity: 0;
+    pointer-events: none;
+}
+#container-mask:where([open=""], [open="true"]) {
+    opacity: 1;
+    pointer-events: auto;
+}
+#alert-box {
+    margin: 0px;
+    padding: 2vw;
+    min-width: 20%;
+    /* height: 80%; */
+    background-color: #ffffff;
+    border-radius: 2vw;
+    box-shadow: 
+        0px 0px 1vw 0px black, 
+        1vw 1vw 0.5vw 0px #aaaaaa88, 
+        -1vw -1vw 0.5vw 0px #eeeeee88
+    ;
+}
+#alert-buttons {
+    height: 3vw;
+    position: relative;
+    bottom: 0px;
+    right: 0px;
+}
+.alert-button {
+    padding: 0.5vw 1vw;
+    /* margin-left: 2vw; */
+    position: absolute;
+    font-size: 1.5vw;
+    border-style: solid;
+    border-width: 0.15vw;
+    border-radius: 1vw;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.progressBar {
+    --progress: 5%;
+    --progressString: "5%";
+    margin-bottom: 2vw;
+    /* height: 2vw; */
+    width: 100%;
+    background: 
+        linear-gradient(to right, transparent calc(var(--progress) - 10%), white var(--progress)), 
+        repeating-linear-gradient(45deg, #b4b4b4 0%, #b4b4b4 5%, #eeeeee 5%, #eeeeee 10%);
+    ;
+    /* background-color: white; */
+    border-style: solid;
+    border-width: 0.15vw;
+    border-radius: 100vw;
+    font-size: 1.5vw;
+}
+.progressBar::after {
+    margin-left: 1vw;
+    content: var(--progressString);
+    width: 100%;
+    color: black;
+    font-size: 1.5vw;
+    text-align: center;
+}
+#alert-content {
+    margin-bottom: 2vw;
+    font-size: 1.5vw;
+}
+#alert-leftButton{
+    left: 0px;
+}
+#alert-rightButton{
+    right: 0px;
+}

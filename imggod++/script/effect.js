@@ -5,15 +5,25 @@ class effect{
     }
     render(name, argv){
         let pixis = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height), 
-            data = pixis.data;
+        data = pixis.data;
         const worker = new Worker("./script/worker.js");
+        alertBox.progress(langData[name], () => {
+            worker.terminate();
+            alertBox.visible(false);
+        });
         // let data1 = JSON.stringify(data);
         worker.onmessage = (msg) => {
-            for(let i = 0; i < pixis.data.length; i++){
-                pixis.data[i] = msg.data.data[i];
+            if(msg.data.progress == 'done'){
+                for(let i = 0; i < pixis.data.length; i++){
+                    pixis.data[i] = msg.data.data[i];
+                }
+                this.ctx.putImageData(pixis, 0, 0);
+                // console.log(msg.data.data);
+                alertBox.visible(false);
             }
-            this.ctx.putImageData(pixis, 0, 0);
-            // console.log(msg.data.data);
+            else{
+                alertBox.setProgress(msg.data.progress);
+            }
         };
         worker.postMessage({
             data: data, 
@@ -47,6 +57,7 @@ class effect{
             data[i] = mirror*2 - data[i];
             data[i+1] = mirror*2 - data[i+1];
             data[i+2] = mirror*2 - data[i+2];
+            self.postMessage({progress: (i/data.length)});
         }
     }
     turnToColor = (msgArgs) => {
@@ -61,6 +72,7 @@ class effect{
             data[i] = color == 'red' ? (data[i]+data[i+1]+data[i+2])/3 : 0;
             data[i+1] = color == 'green' ? (data[i]+data[i+1]+data[i+2])/3 : 0;
             data[i+2] = color == 'blue' ? (data[i]+data[i+1]+data[i+2])/3 : 0;
+            self.postMessage({progress: (i/data.length)});
         }
     }
     extremeRGB = (msgArgs) => {
@@ -84,6 +96,7 @@ class effect{
             else if (data[i] == data[i+1] && data[i+1] == data[i+2] && data[i] < 112.5){
                 data[i] = 0;data[i+1] = 0;data[i+2] = 0;
             }
+            self.postMessage({progress: (i/data.length)});
         }
     }
     turnToGray = (msgArgs) => {
@@ -99,6 +112,7 @@ class effect{
             data[i] = rgbE;
             data[i+1] = rgbE;
             data[i+2] = rgbE;
+            self.postMessage({progress: (i/data.length)});
         }
     }
     turnToPixel = (msgArgs) => {
@@ -120,6 +134,7 @@ class effect{
                 this.ctx.fillStyle = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3]})`;
                 this.ctx.fillRect(i, j, sqWidth, sqWidth);
             }
+            self.postMessage({progress: (i/cvs.width)});
         }
     }
     brightnessAdjustment = (msgArgs) => {
@@ -144,6 +159,7 @@ class effect{
             data[i] = eval(`${data[i]}${mode}${value}`);
             data[i+1] = eval(`${data[i+1]}${mode}${value}`);
             data[i+2] = eval(`${data[i+2]}${mode}${value}`);
+            self.postMessage({progress: (i/data.length)});
         }
     }
     alphaAdjustment = (msgArgs) => {
@@ -166,6 +182,7 @@ class effect{
         
         for(let i = 0; i < data.length; i += 4){
             data[i+3] = eval(`${data[i+3]}${mode}${value}`);
+            self.postMessage({progress: (i/data.length)});
         }
     }
     soulTranslation = (msgArgs) => {
@@ -183,6 +200,7 @@ class effect{
             for(let j = i; j < i + 3; j++){
                 data[j] = (data2[j - h] + data2[j + h] + data2[j - w] + data2[j + w])/4;
             }
+            self.postMessage({progress: (i/data.length)});
         }
     }
     gradationNoise = (msgArgs) => {
@@ -206,6 +224,7 @@ class effect{
                         break;
                 }
             }
+            self.postMessage({progress: (i/data.length)});
         }
     }
     cornerStaining = (msgArgs) => {
@@ -243,6 +262,7 @@ class effect{
             for(let j = i; j < i+3; j++){
                 data[j] = eval(`${data[j]}${mode}${value}`);
             }
+            self.postMessage({progress: (i/data.length)});
         }
     }
     textRemoveBackground = (msgArgs) => {
@@ -276,6 +296,7 @@ class effect{
                 data[i] = data[i+1] = data[i+2] = background[0][0];
                 data[i+3] = background[0][1];
             }
+            self.postMessage({progress: (i/data.length)});
         }
         
     }
@@ -297,6 +318,7 @@ class effect{
                     data[i+3] -= (Math.abs(data[i]-color[0]) + Math.abs(data[i+1]-color[1]) + Math.abs(data[i+2]-color[2]))/3;
                     break;
             }
+            self.postMessage({progress: (i/data.length)});
         }
     }
 }
