@@ -19,6 +19,10 @@
     "name": "Notes Page｜筆記展間", 
     "description": "快速將筆記分類並呈現之！"
   }, 
+  "practiceCards": {
+    "name": "Practice Cards｜記憶卡片", 
+    "description": "以瀏覽字卡的方式快速測驗記憶成果！"
+  }, 
   "autocreator": {
     "name": "Auto Creator｜零級分作文製造機", 
     "description": "Auto Creator能幫助您生成札記內容、閱讀心得及書面報告！"
