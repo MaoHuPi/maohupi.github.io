@@ -68,6 +68,11 @@ function deleteCard(card){
 }
 
 if($_GET['id']){
+    $_GET['id'] = decodeURI($_GET['id']);
+    for(let inputId of $$('[name="id"]')){
+        inputId.value = $_GET['id'];
+    }
+    $_GET['id'] = $_GET['id'].replaceByObj(hiraganaToRomanization, katakanaToRomanization);
     sendXmlhttp(`json/${$_GET['id']}.json`, '', json => {
         let data = JSON.parse(json);
         setTotalNum(data.cards.length);

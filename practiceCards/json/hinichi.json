@@ -1,0 +1,21 @@
+{
+    "link": "https://www.youtube.com/watch?v=FpiMfUIqnUI", 
+    "cards": [
+        {"front": "ついたち", "back": "1日"}, 
+        {"front": "ふつか", "back": "2日"}, 
+        {"front": "みっか", "back": "3日"}, 
+        {"front": "よっか", "back": "4日"}, 
+        {"front": "いつか", "back": "5日"}, 
+        {"front": "むいか", "back": "6日"}, 
+        {"front": "なのか", "back": "7日"}, 
+        {"front": "ようか", "back": "8日"}, 
+        {"front": "ここのか", "back": "9日"}, 
+        {"front": "とおか", "back": "10日"}, 
+        {"front": "じゅういちにち", "back": "11日"}, 
+        {"front": "じゅうににち", "back": "12日"}, 
+        {"front": "じゅうよっか", "back": "14日"}, 
+        {"front": "にじゅうよっか", "back": "24日"}, 
+        {"front": "じゅうくにち", "back": "19日"}, 
+        {"front": "にじゅうくにち", "back": "29日"}
+    ]
+}
