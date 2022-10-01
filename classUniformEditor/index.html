@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Uniform Editor</title>
+    <link rel="shortcut icon" href="image/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style/main.css">
+    <script src="script/basic.js"></script>
+    <script src="script/rotate.js"></script>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+</head>
+<body id="frame">
+    <div id="threeDViewer" class="center">
+        <div class="camera">
+            <div id="threeDViewerRotate" class="space">
+                <div class="main-front">
+                    <div class="clothes mask">
+                        <div class="line backgroundCenter"></div>
+                        <canvas class="front"></canvas>
+                        <canvas class="right"></canvas>
+                        <canvas class="left"></canvas>
+                    </div>
+                </div>
+                <div class="main-back">
+                    <div class="clothes mask">
+                        <div class="line backgroundCenter"></div>
+                        <canvas class="back"></canvas>
+                        <canvas class="right"></canvas>
+                        <canvas class="left"></canvas>
+                    </div>
+                </div>
+                <div class="clothes mask">
+                    <div class="main"></div>
+                </div>
+            </div>
+        </div>
+        <div id="controlButton" class="flex">
+            <button id="logoButton" class="logo" disabled></button>
+            <button id="openButton" title="open project" onclick="openProject();">O</button>
+            <button id="saveButton" title="save project" onclick="saveProject();">S</button>
+            <button id="saveButton" title="export image" onclick="exportImage();">E</button>
+        </div>
+        <div id="viewerInfo">
+            theme(<span class="theme">default</span>), 
+            size(<span class="size">100</span>%), 
+            rotation(x: <span class="rotationX">0</span>, y: <span class="rotationY">0</span>), 
+            layer(<span class="layer">0</span>)
+        </div>
+    </div>
+    <div id="themeBar" class="flex">
+    </div>
+    <div id="colorBar" class="flex">
+        <input type="number" id="splitRange" onchange="splitRangeChange(event);" value="0" min="0">
+        <!-- <input type="color"> -->
+    </div>
+    <div id="container-mask">
+        <div id="alert-box">
+            <div id="alert-progressBar" class="progressBar"></div>
+            <div id="alert-content">處理中...</div>
+            <div id="alert-buttons">
+                <button id="alert-leftButton" class="alert-button">確認</button>
+                <button id="alert-rightButton" class="alert-button">取消</button>
+            </div>
+        </div>
+    </div>
+    <script src="script/main.js"></script>
+    <script src="script/canvas.js"></script>
+</body>
+</html>
