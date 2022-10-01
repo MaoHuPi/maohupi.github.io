@@ -4,6 +4,15 @@ function newImage(url){
     return(image);
 }
 
+window.todoList = [];
+window.todo = function todo(){
+    if(window.todoList.length > 0){
+        let fun = window.todoList[0];
+        window.todoList.shift();
+        fun();
+    }
+}
+
 let pxPerVw = 50;
 let pixiOptions = {
     width: 1080, 
@@ -192,26 +201,39 @@ function newMaterial(target, url, options){
     materialData = {...{
         url: url, 
         target: target, 
-        sprite: PIXI.Sprite.from(url), 
+        sprite: false, 
         image: newImage(url), 
         position: {x: 22.2*pxPerVw/2, y: 30.6*pxPerVw/2}, 
         size: {w: 1000, h: 1000, s: 1}
     }, ...options};
-    materialData.sprite.interactive = true;
-    materialData.image.onload = () => {
-        console.log(materialData.sprite.height, materialData.sprite.width);
-        materialData.size.h = materialData.image.height / materialData.image.width * 1000;
-        [materialData.sprite.width, materialData.sprite.height] = [materialData.size.w, materialData.size.h];
-        [materialData.sprite.x, materialData.sprite.y] = [materialData.position.x, materialData.position.y];
+
+    var loader = PIXI.Loader.shared;
+    if(!(url in loader.resources)){
+        loader
+            .add(url)
+            .load(loaded);
+    }
+    else{
+        loaded();
+    }
+    function loaded(){
+        materialData.sprite = new PIXI.Sprite(loader.resources[url].texture);
+        
         materialData.sprite.anchor.set(0.5, 0.5);
+        materialData.size.h = materialData.sprite.height / materialData.sprite.width * materialData.size.w;
+        [materialData.sprite.x, materialData.sprite.y] = [materialData.position.x, materialData.position.y];
+        [materialData.sprite.width, materialData.sprite.height] = [materialData.size.w*materialData.size.s, materialData.size.h*materialData.size.s];
+        
+        materials.push(materialData);
+        clothes[target].stage.addChild(materialData.sprite);
         window.update = true;
-    };
-    materials.push(materialData);
-    clothes[target].stage.addChild(materialData.sprite);
-    /* 因為呈現的部分是用額外的canvas故無法直接使用PIXI的事件功能來偵目標素材 */
-    // clothes[target].stage.interactive = materialData.sprite.mouseover = function(){
-    //     console.log(this);
-    // }
+        /* 因為呈現的部分是用額外的canvas故無法直接使用PIXI的事件功能來偵目標素材 */
+        // materialData.sprite.interactive = true;
+        // clothes[target].stage.interactive = materialData.sprite.mouseover = function(){
+        //     console.log(this);
+        // }
+        window.todo();
+    }
 }
 
 let modelImage = {
@@ -320,12 +342,21 @@ function openProject(){
                 $('#viewerInfo .theme').innerText = themeData.code;
                 $('#threeDViewer .clothes .main').style.setProperty('--color', themeData.color);
                 window.theme = themeData.color;
+                window.todoList.length = 0;
                 for(let materialData of data.materials){
                     let options = {...materialData};
                     delete options['sprite'];
                     delete options['image'];
-                    newMaterial(materialData.target, materialData.url, options);
+                    window.todoList.push(() => {
+                        newMaterial(materialData.target, materialData.url, options);
+                    });
                 }
+                window.todoList.push(() => {
+                    window.newColors = data.colors;
+                    $('#splitRange').value = data.colors.length;
+                    splitRangeChange({target: {value: data.colors.length}}, data.colors.map(color => `#${color.slice(0, 3).map(n => fullString(n.toString(16), 2, '0', 'left')).join('')}`));
+                });
+                // window.todo();
             }
             reader.readAsText(file);
         }
@@ -334,6 +365,7 @@ function openProject(){
 function saveProject(){
     let data = {
         theme: (colorData[colorData.map(color => color.color).indexOf(window.theme)] || defaultColor).code, 
+        colors: window.newColors, 
         materials: materials.map(materialData => ({...materialData, sprite: false}))
     };
     let json = JSON.stringify(data, true, 4);
@@ -446,7 +478,7 @@ function saveProject(){
 //     }
 // }
 
-function splitRangeChange(event){
+function splitRangeChange(event, colorValues = []){
     let splitRange = parseInt(event.target.value);
     let colorBar = $('#colorBar');
     for(let input of $$('input[type="color"]', colorBar)){
@@ -455,21 +487,26 @@ function splitRangeChange(event){
     for(let i = 0; i < splitRange; i++){
         let input = $create('input');
         input.type = 'color';
-        let deg = (360/splitRange*i)%360;
-        let color = [0, 0, 0];
-        let first = Math.floor((deg%360)/120);
-        let offsetDeg = deg%360 - Math.floor((deg%360)/120)*120;
-        let second = (first + (offsetDeg >= 0 ? 1 : -1))%3;
-        second = second == -1 ? 2 : second;
-        if(Math.abs(offsetDeg) > 60){
-            [first, second] = [second, first];
-            offsetDeg = 60 - offsetDeg%60;
+        if(colorValues.length > i){
+            input.value = colorValues[i];
         }
-        color[first] = 255;
-        color[second] = Math.abs(offsetDeg)/60*255;
-        // console.log(deg, offsetDeg, second);
-        input.value = `#${color.slice(0, 3).map(n => fullString(Math.floor(n).toString(16), 2, '0', 'left')).join('')}`;
-        // console.log(`#${color.slice(0, 3).map(n => fullString(Math.floor(n).toString(16), 2, '0', 'left')).join('')}`);
+        else{
+            let deg = (360/splitRange*i)%360;
+            let color = [0, 0, 0];
+            let first = Math.floor((deg%360)/120);
+            let offsetDeg = deg%360 - Math.floor((deg%360)/120)*120;
+            let second = (first + (offsetDeg >= 0 ? 1 : -1))%3;
+            second = second == -1 ? 2 : second;
+            if(Math.abs(offsetDeg) > 60){
+                [first, second] = [second, first];
+                offsetDeg = 60 - offsetDeg%60;
+            }
+            color[first] = 255;
+            color[second] = Math.abs(offsetDeg)/60*255;
+            // console.log(deg, offsetDeg, second);
+            input.value = `#${color.slice(0, 3).map(n => fullString(Math.floor(n).toString(16), 2, '0', 'left')).join('')}`;
+            // console.log(`#${color.slice(0, 3).map(n => fullString(Math.floor(n).toString(16), 2, '0', 'left')).join('')}`);
+        }
         input.addEventListener('change', colorInputChange);
         colorBar.appendChild(input);
     }
@@ -555,13 +592,5 @@ function colorTransform(cvs, newColors = [[0, 0, 0]]){
         });
 
         ctx.putImageData(pixis, 0, 0);
-    }
-}
-
-window.todoList = [];
-window.todo = function todo(){
-    if(window.todoList.length > 0){
-        window.todoList[0]();
-        window.todoList.shift();
     }
 }
