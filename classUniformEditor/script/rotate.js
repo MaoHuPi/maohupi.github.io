@@ -1,3 +1,8 @@
+/*
+ * 2022 © MaoHuPi
+ * classUniformEditor/script/rotate.js
+ */
+
 function deg2rad(deg){
     return deg*(Math.PI/180);
 }

@@ -1,3 +1,8 @@
+/*
+ * 2022 © MaoHuPi
+ * classUniformEditor/script/colorTransformWorker.js
+ */
+
 self.addEventListener('message', function(msg){
     for(let [k, v] in msg.data){
         this.self[k] = v;

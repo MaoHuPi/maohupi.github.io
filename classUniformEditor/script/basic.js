@@ -1,3 +1,8 @@
+/*
+ * 2022 © MaoHuPi
+ * classUniformEditor/script/basic.js
+ */
+
 const keys = {}, 
 $_GET = {}, 
 $_COOKIE = {}, 

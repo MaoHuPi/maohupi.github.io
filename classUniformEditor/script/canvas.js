@@ -1,3 +1,8 @@
+/*
+ * 2022 © MaoHuPi
+ * classUniformEditor/script/canvas.js
+ */
+
 function newImage(url){
     let image = new Image();
     image.src = url;
@@ -293,6 +298,15 @@ function exportImage(){
         ctx.font = `${3*pxPerVw}px serif`;
         ctx.fillText(data.text, 0, gap + data.image.height + 3*pxPerVw);
     }
+    drawColor = (data = {}) => {
+        // 色塊
+        ctx.fillStyle = data.color;
+        ctx.fillRect(0, 0, 4*pxPerVw, 3*pxPerVw);
+        // 文字
+        ctx.fillStyle = 'black';
+        ctx.font = `${2*pxPerVw}px serif`;
+        ctx.fillText(data.color, gap + 4*pxPerVw, 2*pxPerVw);
+    }
 
     ctx.save();
     ctx.translate(gap, gap);
@@ -313,6 +327,13 @@ function exportImage(){
     for(let borderImage of borderImageData){
         drawBorderImage(borderImage);
         ctx.translate(gap + borderImage.image.width, 0);
+    }
+    ctx.translate(gap, 0);
+    for(let color of window.newColors){
+        drawColor({
+            color: `#${color.slice(0, 3).map(n => fullString(n.toString(16), 2, '0', 'left')).join('')}`
+        });
+        ctx.translate(0, gap + 3*pxPerVw);
     }
     ctx.restore();
 
@@ -356,7 +377,7 @@ function openProject(){
                     $('#splitRange').value = data.colors.length;
                     splitRangeChange({target: {value: data.colors.length}}, data.colors.map(color => `#${color.slice(0, 3).map(n => fullString(n.toString(16), 2, '0', 'left')).join('')}`));
                 });
-                // window.todo();
+                window.todo();
             }
             reader.readAsText(file);
         }

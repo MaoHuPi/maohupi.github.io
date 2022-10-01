@@ -1,3 +1,8 @@
+/*
+ * 2022 © MaoHuPi
+ * classUniformEditor/script/main.js
+ */
+
 let colorData = `
 T01 白色 #e2ecfb
 T02 粉紅 #f1b8c5
