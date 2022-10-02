@@ -147,7 +147,8 @@ function viewerInit(){
                         window.layer = targetIndex + 1;
                         keys[`${canvasId}-${event.key}`] = true;
                     }
-                    if(cmo && targetMaterial && ['Delete'].indexOf(event.key) > -1){
+                    console.log(event.key)
+                    if(cmo && targetMaterial && ['Delete', 'Backspace'].indexOf(event.key) > -1){
                         targetMaterial.sprite.destroy();
                         materials = materials.filter(materialData => materialData != targetMaterial);
                         targetMaterial = false;
