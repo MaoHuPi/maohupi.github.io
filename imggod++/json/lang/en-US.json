@@ -55,5 +55,11 @@
     "alert-button-cancel": "cancel", 
     "pixelThrow": "pixel throw", 
     "distortion": "distortion", 
-    "magnification": "magnification"
+    "magnification": "magnification", 
+    "originalSample": "original sample", 
+    "correspondSample": "correspond sample", 
+    "eampleCorrespond": "eample correspond", 
+    "singleSampling": "single sampling", 
+    "multipleSampling": "multiple sampling", 
+    "eample": "eample"
 }

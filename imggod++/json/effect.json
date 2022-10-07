@@ -108,5 +108,16 @@
                 "magnification": ["number({\"min\": 1, \"max\": 10000, \"step\": 1})", 100]
             }
         }
+    ], 
+    "eample": [
+        {
+            "name": "eampleCorrespond", 
+            "function": "eampleCorrespond", 
+            "parameter": {
+                "mode": ["select([\"singleSampling\", \"multipleSampling\"])", "multipleSampling"], 
+                "originalSample": ["file({\"accept\": \"image/*\", \"multiple\": false})"], 
+                "correspondSample": ["file({\"accept\": \"image/*\", \"multiple\": false})"]
+            }
+        }
     ]
 }

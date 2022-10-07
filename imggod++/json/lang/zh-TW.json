@@ -55,5 +55,11 @@
     "alert-button-cancel": "取消", 
     "pixelThrow": "像素投擲", 
     "distortion": "扭曲", 
-    "magnification": "倍率"
+    "magnification": "倍率", 
+    "originalSample": "原始樣本", 
+    "correspondSample": "對應樣本", 
+    "eampleCorrespond": "樣本對應", 
+    "singleSampling": "單一取樣", 
+    "multipleSampling": "多重取樣", 
+    "eample": "樣本"
 }
