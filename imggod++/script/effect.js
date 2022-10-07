@@ -367,4 +367,100 @@ class effect{
         }
         msgArgs.data = newData;
     }
+    eampleCorrespond = (msgArgs) => {
+        let data = msgArgs.data;
+        let argv = msgArgs.argv;
+        let cvs = msgArgs.cvs;
+        if(!('mode' in argv) || !('originalSample' in argv) || !('correspondSample' in argv)){
+            return;
+        }
+        if(!(argv['originalSample'][0]) || !(argv['correspondSample'][0])){
+            return;
+        }
+        function scaleImageData(imageData, width, height){
+            let xRatio = width/imageData.width;
+            let yRatio = height/imageData.height;
+            let oldData = [...imageData.data];
+            let newData = new Array(width*height*4);
+            for(let y = 0; y < height; y++){
+                for(let x = 0; x < width; x++){
+                    let i = (y*width + x)*4;
+                    let ratioI = (Math.floor(y/yRatio)*argv['correspondSample'][0].width + Math.floor(x/xRatio))*4;
+                    [newData[i], newData[i+1], newData[i+2], newData[i+3]] = oldData.slice(ratioI, ratioI+4);
+                }
+                // console.log(y/height);
+            }
+            return(newData);
+        }
+        let originalSample = argv['originalSample'][0].data;
+        let correspondSample_Pixis = argv['correspondSample'][0];
+        let correspondSample = scaleImageData(correspondSample_Pixis, argv['originalSample'][0].width, argv['originalSample'][0].height);
+        let colors = {};
+        let nearbyColors = {};
+        let singalCorrespond = argv['mode'] == 'singleSampling';
+        for(let i = 0; i < originalSample.length; i += 4){
+            let oldColor_text = originalSample.slice(i, i + 3).join(',');
+            if(singalCorrespond){
+                if(!(oldColor_text in colors)){
+                    colors[oldColor_text] = correspondSample.slice(i, i + 3);
+                }
+            }
+            else{
+                if(!(oldColor_text in colors)){
+                    colors[oldColor_text] = {colors: [], index: 0};
+                }
+                colors[oldColor_text]['colors'].push(correspondSample.slice(i, i + 3));
+            }
+        }
+        for(let i = 0; i < data.length; i += 4){
+            if(data[i + 4] != 0){
+                let color = data.slice(i, i + 3);
+                let color_text = color.join(',');
+                if(color_text in colors){
+                    if(singalCorrespond){
+                        [data[i], data[i + 1], data[i + 2]] = colors[color_text];
+                    }
+                    else{
+                        [data[i], data[i + 1], data[i + 2]] = colors[color_text]['colors'][colors[color_text]['index']];
+                        colors[color_text]['index']++;
+                        if(colors[color_text]['index'] > colors[color_text]['colors'].length - 1){
+                            colors[color_text]['index'] = 0;
+                        }
+                    }
+                }
+                // else if(color_text in nearbyColors){
+                //     color_text = nearbyColors[color_text];
+                // }
+                // else{
+                //     let colorMax = Object.entries(colors)
+                //         .map(oldColor_text => [
+                //             oldColor_text[0], 
+                //             oldColor_text[0]
+                //                 .split(',')
+                //                 .map(color => parseInt(color))
+                //         ])
+                //         .map(oldColor => [
+                //             oldColor[0], 
+                //             Math.abs(oldColor[1][0] - color[0]) + Math.abs(oldColor[1][1] - color[1]) + Math.abs(oldColor[1][1] - color[1]), 
+                //         ]);
+                //     let colorMax_value = colorMax.map(arr => arr[1]);
+                //     colorMax = colorMax[colorMax_value.indexOf(Math.max(colorMax_value))];
+                //     nearbyColors[color_text] = colorMax[0];
+                //     color_text = colorMax[0];
+                // }
+                // if(singalCorrespond){
+                //     [data[i], data[i + 1], data[i + 2]] = colors[color_text];
+                // }
+                // else{
+                //     [data[i], data[i + 1], data[i + 2]] = colors[color_text]['colors'][colors[color_text]['index']];
+                //     colors[color_text]['index']++;
+                //     if(colors[color_text]['index'] > colors[color_text]['colors'].length - 1){
+                //         colors[color_text]['index'] = 0;
+                //     }
+                // }
+            }
+            self.postMessage({progress: (i/data.length)});
+        }
+        msgArgs.data = data;
+    }
 }

@@ -261,7 +261,7 @@ function setEffect(){
                     lineNum ++;
                     let type = typeData['parameter'][text][0].split('(')[0], 
                         settings = typeData['parameter'][text][0], 
-                        value = typeData['parameter'][text][1], 
+                        value = typeData['parameter'][text][1] ? typeData['parameter'][text][1] : null, 
                         lable = document.createElement('label'),  
                         inputName = type == 'select' ? 'select' : 'input', 
                         input = document.createElement(inputName);
@@ -291,6 +291,10 @@ function setEffect(){
                                     break;
                                 case 'color':
                                     break;
+                                case 'file':
+                                    input.accept = 'accept' in settings ? settings['accept'] : false;
+                                    input.multiple = 'multiple' in settings ? settings['multiple'] : false;
+                                    break;
                             }
                             break;
                         case 'select':
@@ -302,7 +306,9 @@ function setEffect(){
                             });
                             break;
                     }
-                    input.value = value;
+                    if(value != null){
+                        input.value = value;
+                    }
                     lable.style.gridArea = `${lineNum}/1/${lineNum+1}/2`;
                     input.style.gridArea = `${lineNum}/2/${lineNum+1}/3`;
                     in_3.appendChild(lable);
@@ -312,31 +318,99 @@ function setEffect(){
                     applyButton = document.createElement('button');
                 viewButton.innerText = lang('preview');
                 applyButton.innerText = lang('apply');
-                viewButton.style.gridArea = `${lineNum+1}/1/${lineNum+2}/3`;
-                viewButton.onclick = () => {
-                    let parameters = {}
-                    for(let key in box.parameters){
-                        parameters[key] = box.parameters[key].value;
+                let getParameters = async () => {
+                    try{
+                        exitPreview();
+                        let parameters = {}
+                        for(let key in box.parameters){
+                            if(box.parameters[key].type == 'file'){
+                                let imageDataPromiseList = Array.from(box.parameters[key].files).map(file => 
+                                    fileToDataURL(file)
+                                        .then(url => URLToImage(url))
+                                        .then(image => imageToImageData(image))
+                                );
+                                let imageDatas = await Promise.all(imageDataPromiseList);
+                                parameters[key] = imageDatas;
+                            }
+                            else{
+                                parameters[key] = box.parameters[key].value;
+                            }
+                        }
+                        // resolve(parameters);
+                        return(parameters);
                     }
+                    catch(error){
+                        // reject(error);
+                    }
+                }
+                viewButton.style.gridArea = `${lineNum+1}/1/${lineNum+2}/3`;
+                viewButton.onclick = async () => {
+                    let parameters = await getParameters();
                     // preview(() => {cvsEffect[typeData['function']](parameters);});
                     preview(() => {cvsEffect.render(typeData['function'], parameters);});
-                }
+                };
                 applyButton.style.gridArea = `${lineNum+2}/1/${lineNum+3}/3`;
-                applyButton.onclick = () => {
-                    exitPreview();
-                    let parameters = {}
-                    for(let key in box.parameters){
-                        parameters[key] = box.parameters[key].value;
-                    }
+                applyButton.onclick = async () => {
+                    let parameters = await getParameters();
                     // cvsEffect[typeData['function']](parameters);
                     cvsEffect.render(typeData['function'], parameters);
-                }
+                };
                 in_3.appendChild(viewButton);
                 in_3.appendChild(applyButton);
             };
             div.appendChild(box);
         });
     }
+}
+async function fileToDataURL(file){
+    return(new Promise((resolve, reject) => {
+        let reader = new FileReader();
+        reader.onload = async () => {
+            try {
+                resolve(reader.result);
+            }
+            catch(error){
+                reject(error);
+            }
+        };
+        reader.onerror = (error) => {
+            reject(error);
+        };
+        reader.readAsDataURL(file);
+    }));
+}
+async function URLToImage(dataURL){
+    return(new Promise((resolve, reject) => {
+        let image = new Image();
+        image.onload = async () => {
+            try {
+                resolve(image);
+            }
+            catch(error){
+                reject(error);
+            }
+        };
+        image.onerror = (error) => {
+            reject(error);
+        };
+        image.src = dataURL;
+    }));
+}
+async function imageToImageData(image){
+    return(new Promise((resolve, reject) => {
+        try {
+            let cvs = document.createElement('canvas');
+            let ctx = cvs.getContext('2d');
+            cvs.width = image.width;
+            cvs.height = image.height;
+            ctx.drawImage(image, 0, 0);
+            let imageData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+            resolve(imageData);
+        }
+        catch(error){
+            reject(error);
+        }
+    }));
 }
 // preview
 let oldCvs = document.createElement('canvas');
