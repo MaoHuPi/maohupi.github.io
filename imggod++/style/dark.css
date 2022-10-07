@@ -79,6 +79,9 @@ html[styleName="dark"], [styleName="dark"] body {
 [styleName="dark"] #container-in-3 input{
     color: black;
 }
+[styleName="dark"] #container-in-3 input[type="file"]{
+    color: white;
+}
 [styleName="dark"] #container-in-3 button{
     color: black;
 }
