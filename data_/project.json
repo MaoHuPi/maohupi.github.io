@@ -34,5 +34,9 @@
   "ezMusicCreator": {
     "name": "Ez Music Creator｜快速音樂生成器", 
     "description": "使用Ez Music Creator生成屬於你，且有感情的音樂！"
+  }, 
+  "chargedSimulator": {
+    "name": "Charged Simulator｜帶電模擬器", 
+    "description": "快讓Charged Simulator帶你在吸引與排斥力中遨遊！"
   }
 }
