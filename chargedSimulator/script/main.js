@@ -62,6 +62,14 @@ class Vector{
         this.y = Math.abs(this.y);
         return(this);
     }
+    static determinant(...vectorList){
+        var value = 0;
+        for(let i = 0; i < vectorList.length - 1; i++){
+            value += vectorList[i].x*vectorList[i+1].y;
+            value -= vectorList[i].y*vectorList[i+1].x;
+        }
+        return(value);
+    }
     toDirectionVector(){
         var directionVector = {
             rad: 0, 
@@ -92,10 +100,16 @@ class Vector{
     copy(){
         return(new Vector(this.x, this.y));
     }
+    set(vector2){
+        this.x = vector2.x;
+        this.y = vector2.y;
+        return(this);
+    }
 }
 class Particle{
     constructor(parentList, x = 0, y = 0, q = 0, m = 0, size = 1, color = '#ffffff', forceList = []){
         this.position = new Vector(parseFloat(x), parseFloat(y));
+        this.nextPosition = new Vector(parseFloat(x), parseFloat(y));
         this.v = new Vector(0, 0);
         this.q = parseFloat(q);
         this.e == Math.abs(this.q) ? 1 : -1; // electrical
@@ -106,7 +120,7 @@ class Particle{
         this.parentList = parentList;
     }
     static K = 9*(10**9);
-    next(time){
+    next(time = 1){
         for(let parent of this.parentList){
             if(parent != this){
                 var directionVector = this.position.copy().minus(parent.position).toDirectionVector();
@@ -116,13 +130,60 @@ class Particle{
                 if(this.e != parent.e){
                     directionVector.rad = (directionVector.rad+Vector.degToRad(180))%Vector.degToRad(360);
                 }
-                this.v.plus(Vector.fromDirectionVector(directionVector.rad, a).copy().times(new Vector(time, time)));
+                this.v.plus(Vector.fromDirectionVector(directionVector.rad, a).times(new Vector(time, time)));
             }
         }
+        this.nextPosition.set(this.position).plus(this.v.copy().times(new Vector(time, time)));
     }
     update(time = 1){
-        this.position.plus(this.v.copy().times(new Vector(time, time)));
         viewCtx.fillStyle = this.color;
+        for(let parent of this.parentList){
+            if(parent != this){
+                // var directionVector = this.position.copy().minus(parent.position).toDirectionVector();
+                // var r = directionVector.value;
+                // var f = (Particle.K*this.q*parent.q)/(r**2);
+                // var a = f/this.m;
+                // if(this.e != parent.e){
+                //     directionVector.rad = (directionVector.rad+Vector.degToRad(180))%Vector.degToRad(360);
+                // }
+                // this.v.plus(Vector.fromDirectionVector(directionVector.rad, a).times(new Vector(time, time)));
+                var vAB = this.position.copy().minus(this.nextPosition);
+                var vCD = parent.position.copy().minus(parent.nextPosition);
+                var determinant = Vector.determinant(vAB, vCD);
+                if(determinant != 0){
+                    // var lCD = vCD.toDirectionVector().value
+                    var vCA = parent.position.copy().minus(this.position);
+                    var subDeterminant = Vector.determinant(vCD, vCA);
+                    var areaRatio = subDeterminant/determinant;
+                    if(areaRatio > 0 && areaRatio < 1){
+                        console.log('123');
+                        // var dAB = vAB.toDirectionVector();
+                        // var dCD = vCD.toDirectionVector();
+                        // this.nextPosition.set(this.position);
+                        // this.nextPosition.plus(Vector.fromDirectionVector(dAB.rad, dAB.value*areaRatio - this.size));
+                        // parent.nextPosition.set(parent.position);
+                        // parent.nextPosition.plus(Vector.fromDirectionVector(dCD.rad, dCD.value*areaRatio - parent.size));
+                        // viewCtx.fillStyle = 'green';
+                    }
+                }
+                else {
+                    var dAB = vAB.toDirectionVector();
+                    var dCD = vCD.toDirectionVector();
+                    if(dAB.rad == Vector.degToRad(Vector.radToDeg(dCD.rad) - 180)){
+                        var vAC = this.position.copy().minus(parent.position);
+                        var dAC = vAC.toDirectionVector();
+                        if(dAC < (dAB.value + dCD.value)){
+                            console.log('123');
+                            // lABlCD = dAB.value + dCD.value;
+                            // this.nextPosition.set(this.position);
+                            // this.nextPosition.plus(Vector.from(dAB.rad, dAC.value*(dAB.value/lABlCD)));
+                            // Vector.from(dCD.rad, dAC.value*(dCD.value/lABlCD))
+                        }
+                    }
+                }
+            }
+        }
+        this.position.set(this.nextPosition);
         // viewCtx.fillRect(50*VW + this.position.x - this.size/2, 50*VH + -this.position.y - this.size/2, this.size, this.size);
         viewCtx.beginPath();
         viewCtx.arc(50*VW + this.position.x, 50*VH + -this.position.y, this.size/2, 0, 2*Math.PI);
@@ -156,7 +217,7 @@ function update(){
     }
     for(let particle of particleList){
         particle.update(30/1000);
-        console.log(particle.v);
+        // console.log(particle.v);
     }
     setTimeout(update, 30);
 }
@@ -169,6 +230,11 @@ window.addEventListener('mousemove', event => {
     // console.log(mousePosition.x, mousePosition.y, mousePosition.toDirectionVector());
 });
 let inputQ = $('#inputQ');
+let prefabParticlesSettings = {
+    'p': {'inputQ': 0.01, 'inputM': 1836, 'inputSize': 50, 'inputColor': '#ff0000'}, 
+    'n': {'inputQ': 0, 'inputM': 1836, 'inputSize': 50, 'inputColor': '#00ccff'}, 
+    'e': {'inputQ': -0.01, 'inputM': 1, 'inputSize': 10, 'inputColor': '#ffff00'}
+}
 window.addEventListener('keydown', event => {
     switch(event.key){
         case '-':
@@ -178,11 +244,17 @@ window.addEventListener('keydown', event => {
             inputQ.value = parseFloat(Math.abs(inputQ.value));
             break;
     }
+    if(event.key in prefabParticlesSettings){
+        for(let id in prefabParticlesSettings[event.key]){
+            $(`#${id}`).value = prefabParticlesSettings[event.key][id];
+        }
+    }
 });
-let inputs = ['inputQ', 'inputM', 'inputSize', 'inputColor'].map(id => $(`#${id}`))
+let inputs = ['inputQ', 'inputM', 'inputSize', 'inputColor'].map(id => [id, $(`#${id}`)])
 viewCvs.addEventListener('click', event => {
     mousePosition.x = event.pageX - 50*VW;
     mousePosition.y = 50*VH - event.pageY;
     // particleList.push(new Particle(particleList, mousePosition.x, mousePosition.y, 1e-2, 1, 10))
-    particleList.push(new Particle(particleList, mousePosition.x, mousePosition.y, ...inputs.map(input => input.value)))
+    var settings = Object.fromEntries(inputs.map(([name, input]) => [name, input.value]));
+    particleList.push(new Particle(particleList, mousePosition.x, mousePosition.y, settings.inputQ, settings.inputM, settings.inputSize, settings.inputColor))
 });
