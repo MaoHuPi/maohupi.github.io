@@ -54,6 +54,9 @@
                 xmlhttp.send(value);
             }
         }
+        if('href' in $_GET){
+            window.open($_GET['href']);
+        }
         sendXmlhttp('data_/project.json', '', json => {
             let projects = JSON.parse(json);
             for(projectId in projects){
