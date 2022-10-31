@@ -70,7 +70,7 @@
             });
         }
         if('href' in $_GET){
-            window.open($_GET['href']);
+            location.href = $_GET['href'];
         }
         
         sendXmlhttp('data_/project.json', '', json => {
