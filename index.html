@@ -54,9 +54,25 @@
                 xmlhttp.send(value);
             }
         }
+        
+        const $_GET = {}, 
+        $_COOKIE = {};
+        if(location.href.indexOf('?') > -1){
+            location.href.split('?')[1].split('&').forEach(kv => {
+                kv = kv.split('=');
+                $_GET[kv[0]] = kv[1];
+            });
+        }
+        if(document.cookie !== ''){
+            document.cookie.split('; ').forEach(kv => {
+                kv = kv.split('=');
+                $_COOKIE[kv[0]] = kv[1];
+            });
+        }
         if('href' in $_GET){
             window.open($_GET['href']);
         }
+        
         sendXmlhttp('data_/project.json', '', json => {
             let projects = JSON.parse(json);
             for(projectId in projects){
