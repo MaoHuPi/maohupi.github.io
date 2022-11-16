@@ -58,8 +58,11 @@
     "magnification": "magnification", 
     "originalSample": "original sample", 
     "correspondSample": "correspond sample", 
-    "eampleCorrespond": "eample correspond", 
+    "sampleCorrespond": "sample correspond", 
     "singleSampling": "single sampling", 
     "multipleSampling": "multiple sampling", 
-    "eample": "eample"
+    "sample": "sample", 
+    "sampleLearning": "sample learning", 
+    "shallowLearning": "shallow learning", 
+    "deepLearning": "deep learning"
 }

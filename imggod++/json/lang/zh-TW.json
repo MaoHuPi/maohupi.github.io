@@ -58,8 +58,11 @@
     "magnification": "倍率", 
     "originalSample": "原始樣本", 
     "correspondSample": "對應樣本", 
-    "eampleCorrespond": "樣本對應", 
+    "sampleCorrespond": "樣本對應", 
     "singleSampling": "單一取樣", 
     "multipleSampling": "多重取樣", 
-    "eample": "樣本"
+    "sample": "樣本", 
+    "sampleLearning": "樣本學習", 
+    "shallowLearning": "淺度學習", 
+    "deepLearning": "深度學習"
 }
