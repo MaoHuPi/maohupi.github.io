@@ -1,3 +1,8 @@
+/*
+ * 2022 © MaoHuPi
+ * imggod++/script/main.js
+ */
+
 'use strict'
 
 /*******/

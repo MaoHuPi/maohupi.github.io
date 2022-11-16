@@ -118,6 +118,14 @@
                 "originalSample": ["file({\"accept\": \"image/*\", \"multiple\": false})"], 
                 "correspondSample": ["file({\"accept\": \"image/*\", \"multiple\": false})"]
             }
+        }, 
+        {
+            "name": "eampleCorrespond2", 
+            "function": "eampleCorrespond2", 
+            "parameter": {
+                "mode": ["select([\"singleSampling\", \"multipleSampling\"])", "multipleSampling"], 
+                "sample": ["file({\"accept\": \"image/*\", \"multiple\": false})"]
+            }
         }
     ]
 }

@@ -1,4 +1,10 @@
-// import './effect.js';
+/*
+ * 2022 © MaoHuPi
+ * imggod++/script/worker.js
+ */
+
+importScripts('./effect.js');
+importScripts('./ml.js');
 
 self.addEventListener('message', function(msg){
     for(let [k, v] in msg.data){

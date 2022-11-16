@@ -1,3 +1,8 @@
+/*
+ * 2022 © MaoHuPi
+ * imggod++/script/effect_old.js
+ */
+
 class effect{
     constructor(canvas){
         this.cvs = canvas;

@@ -1,3 +1,8 @@
+/*
+ * 2022 © MaoHuPi
+ * imggod++/script/effect.js
+ */
+
 class effect{
     constructor(canvas){
         this.cvs = canvas;
@@ -33,7 +38,7 @@ class effect{
         });
         this.ctx.putImageData(pixis, 0, 0);
     }
-    HexToCData(color){
+    static HexToCData(color){
         color = color.toString();
         color = color.replace('#', '');
         let cData = [];
@@ -44,6 +49,13 @@ class effect{
             cData.push(value);
         }
         return(cData);
+    }
+    static DataToGrayscale(data){
+        let grayscale = [...data];
+        for(let i = 0; i < grayscale.length; i += 4){
+            grayscale[i] = grayscale[i+1] = grayscale[i+2] = grayscale.slice(i, i+3).reduce((a, b) => a + b)/3;
+        }
+        return(grayscale);
     }
     invertColor = (msgArgs) => {
         let data = msgArgs.data;
@@ -315,7 +327,7 @@ class effect{
             return;
         }
         let color = [0, 0, 0];
-        color = this.HexToCData(argv['color']);
+        color = effect.HexToCData(argv['color']);
         for(let i = 0; i < data.length; i+=4){
             switch(argv['mode']){
                 case 'fade-transparent':
@@ -459,6 +471,51 @@ class effect{
                 //     }
                 // }
             }
+            self.postMessage({progress: (i/data.length)});
+        }
+        msgArgs.data = data;
+    }
+    eampleCorrespond2 = (msgArgs) => {
+        let data = msgArgs.data;
+        let argv = msgArgs.argv;
+        let cvs = msgArgs.cvs;
+        if(!('mode' in argv) || !('sample' in argv)){
+            return;
+        }
+        let sample = argv['sample'][0].data;
+        let models = new Array(3)
+            .fill(0)
+            .map(() => new ml_singleLayerPerceptron());
+        function binary(x){
+            return(x > 0 ? 1 : 0);
+        }
+        function sigmoid(z){
+            return 1 / (1 + Math.exp(-z));
+        }
+        models.forEach(m => m.actionFun = sigmoid);
+        function learn(sample){
+            let iDatas = new Array(3).fill(0).map(() => []);
+            for(let i = 0; i < sample.length; i += 4){
+                let input = sample.slice(i, i+3);
+                let output = input.reduce((a, b) => a + b)/3/256;
+                for(let j = 0; j < 3; j++){
+                    iDatas[j].push({'input': [input[j]], 'output': output});
+                }
+            }
+            models.map((n, i) => {
+                models[i].learn(iDatas[i]);
+                console.log(models[i].wList);
+            });
+        }
+        learn(sample);
+        function test(g){
+            return(models.map(m => m.test([g])));
+        }
+        // let grayscaleData = effect.DataToGrayscale(data);
+        for(let i = 0; i < data.length; i += 4){
+            let request = test(data.slice(i, i+3).reduce((a, b) => a + b)/3/256);
+            [data[i], data[i+1], data[i+2]] = request.map(n => n*256);
+            console.log(request);
             self.postMessage({progress: (i/data.length)});
         }
         msgArgs.data = data;
