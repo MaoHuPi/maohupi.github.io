@@ -120,6 +120,14 @@
             }
         }, 
         {
+            "name": "styleColoring", 
+            "function": "styleColoring", 
+            "parameter": {
+                "mode": ["select([\"singleSampling\", \"multipleSampling\"])", "multipleSampling"], 
+                "sample": ["file({\"accept\": \"image/*\", \"multiple\": false})"]
+            }
+        }, 
+        {
             "name": "sampleLearning", 
             "function": "sampleLearning", 
             "parameter": {

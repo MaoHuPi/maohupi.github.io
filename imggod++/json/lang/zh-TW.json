@@ -64,5 +64,6 @@
     "sample": "樣本", 
     "sampleLearning": "樣本學習", 
     "shallowLearning": "淺度學習", 
-    "deepLearning": "深度學習"
+    "deepLearning": "深度學習", 
+    "styleColoring": "風格填色"
 }
