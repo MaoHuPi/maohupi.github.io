@@ -1,0 +1,33 @@
+[
+  {
+    "code": "2022-SA-04", 
+    "content": "    <p>\u4e0b\u5716\u5448\u73fe\u6d77\u72f8\u57ce\u7684\u5730\u9435\u8def\u7dda\uff0c\u5716\u4e2d\u5713\u5708\u8868\u793a\u8eca\u7ad9\u4f4d\u7f6e\uff0c\u8def\u7dda\u4e0a\u7684\u6578\u5b57\u8868\u793a\u8eca\u7ad9\u4e4b\u9593\u7684\u884c\u99db\u6642\u9593\uff1b\u6b64\u5916\uff0c\u5217\u8eca\u65bc\u6bcf\u500b\u8eca\u7ad9\u505c\u7559\u6642\u9593\u7686\u70ba\u4e00\u5206\u9418\uff0c\u8db3\u4ee5\u4f9b\u6240\u6709\u4e58\u5ba2\u4e0a\u4e0b\u8eca\u6216\u8f49\u4e58\u5176\u4ed6\u8def\u7dda\u3002</p>\r\n    <p><img src=\"/static/bebras/2022/2022-SA-04_demo.svg\" style=\"width:450px\" /></p>\r\n    <p>\u6709\u516d\u96bb\u6d77\u72f8\u670b\u53cb\u6b63\u540c\u6642\u5f9e\u4e0d\u540c\u7684\u8eca\u7ad9\u4e0a\u8eca\uff08\u5716\u4e2d\u6a19\u793a\u516d\u8655<img src=\"/static/bebras/2022/2022-SA-04_circle.svg\" style=\"height:20px\" />\uff09\uff0c\u5e0c\u671b\u80fd\u5728\u77ed\u6642\u9593\u5167\u5230\u9054\u5730\u9435\u7684 A\u3001B\u3001C\u3001D \u5176\u4e2d\u4e00\u500b\u8eca\u7ad9\u6703\u5408\u3002 </p>\r\n<!-- \u9019\u908a\u662fD\u90e8\u5206\uff0c\u8981\u8cbc\u6b64\u5340\u584a\u8aaa\u660e\u5b78\u751f\u5c07\u5b8c\u6210\u7684\u4efb\u52d9 -->\r\n    <b><span style=\"color:#009393\">\u8acb\u554f\u6d77\u72f8\u670b\u53cb\u5011\u61c9\u8a72\u7d04\u5728\u54ea\u500b\u8eca\u7ad9\u898b\u9762\u624d\u80fd\u6700\u5feb\u5230\u9f4a\u5462\uff1f</span></b></p>", 
+    "id": 388, 
+    "next_task": null, 
+    "options": [
+      [
+        "2b80e9d41b88375ff55a0746e0794181", 
+        "B \u8eca\u7ad9"
+      ], 
+      [
+        "112622ad176815aedc60328d2f0d8473", 
+        ""
+      ], 
+      [
+        "166615a07405115d66fef80716de5030", 
+        "A \u8eca\u7ad9"
+      ], 
+      [
+        "660adfe948c92398f5b96b4330a05dcc", 
+        "C \u8eca\u7ad9"
+      ], 
+      [
+        "ab86fdc87a9af8be02cfcaa4322f1d1d", 
+        "D \u8eca\u7ad9"
+      ]
+    ], 
+    "prev_task": null, 
+    "title": "\u5730\u9435\u8def\u7dda\u5716", 
+    "type": "select"
+  }
+]

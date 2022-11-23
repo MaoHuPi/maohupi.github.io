@@ -1,0 +1,33 @@
+[
+  {
+    "code": "2022-LV-03", 
+    "content": "<p>\u4e95\u5b57\u904a\u6232\u662f\u5169\u4f4d\u73a9\u5bb6\u7684\u7d19\u7b46\u904a\u6232\uff0c\u5176\u898f\u5247\u70ba\uff1a\n    <ul><li>\u4e8c\u4f4d\u73a9\u5bb6\u5206\u5225\u4ee5 O \u8207 X \u70ba\u4ee3\u8868\u6a19\u8a18\uff0c\u8f2a\u6d41\u586b\u5165 3\u00d73 \u7684\u4e95\u5b57\u68cb\u683c\u4e2d\u3002\u7576\u67d0\u73a9\u5bb6\u7684\u4ee3\u8868\u6a19\u8a18\u65bc\u68cb\u683c\u9023\u7dda\u6210\u529f\u6642\uff08\u542b\u6c34\u5e73\u3001\u5782\u76f4\u6216\u5c0d\u89d2\u7dda\uff09\uff0c\u8a72\u73a9\u5bb6\u7372\u52dd\u3001\u904a\u6232\u96a8\u5373\u7d50\u675f\uff1b\u82e5\u6240\u6709\u68cb\u683c\u90fd\u88ab\u586b\u6eff\u537b\u7121\u73a9\u5bb6\u9023\u7dda\u6210\u529f\u6642\uff0c\u904a\u6232\u4ee5\u5e73\u624b\u7d50\u675f\u3002</li></p></ul>\n    <p>\u4e0b\u5217\u5404\u5716\u70ba\u67d0\u5c40\u904a\u6232\u904e\u7a0b\uff0c\u85cd\u5e95\u986f\u793a\u8a72\u6b21\u586b\u5165\u6a19\u8a18\u7684\u68cb\u683c\uff1a</p>\n    <p><img src=\"/static/bebras/2022/2022-LV-03_demo.svg\" style=\"width:500px\" /></p>\n    <p>\u5728\u6700\u53f3\u5074\u7684\u5716\u662f\u6b64\u5c40\u904a\u6232\u7d50\u675f\u7684\u68cb\u683c\u72c0\u614b\uff0c\u7531 X \u6a19\u8a18\u73a9\u5bb6\u7372\u52dd\u3002</p>\n<!-- \u9019\u908a\u662fD\u90e8\u5206\uff0c\u8981\u8cbc\u6b64\u5340\u584a\u8aaa\u660e\u5b78\u751f\u5c07\u5b8c\u6210\u7684\u4efb\u52d9 -->\n    <p><b><span style=\"color:#009393\">\u4ee5\u4e0b\u54ea\u4e00\u5f35\u5716\u662f\u7b26\u5408\u898f\u5247\u7684\u904a\u6232\u7d50\u675f\u68cb\u683c\u72c0\u614b\u5462\uff1f</span></b></p>", 
+    "id": 380, 
+    "next_task": null, 
+    "options": [
+      [
+        "b2ecfb9fa54912344f55fa7274e0197a", 
+        "<img src=\"/static/bebras/2022/2022-LV-03_C.svg\" style=\"width:80px\" />"
+      ], 
+      [
+        "90ef6d79685e23b346f864f05ccde701", 
+        "<img src=\"/static/bebras/2022/2022-LV-03_A.svg\" style=\"width:80px\" />"
+      ], 
+      [
+        "88ea8e4c7573a0627ceb160477a8992d", 
+        ""
+      ], 
+      [
+        "bc7129b7175654d4d3f6cabccf1ccd64", 
+        "<img src=\"/static/bebras/2022/2022-LV-03_B.svg\" style=\"width:80px\" />"
+      ], 
+      [
+        "f6e6ce127e4e51b29cdd25cff46bd6e3", 
+        "<img src=\"/static/bebras/2022/2022-LV-03_D.svg\" style=\"width:80px\" />"
+      ]
+    ], 
+    "prev_task": null, 
+    "title": "\u4e95\u5b57\u904a\u6232", 
+    "type": "select"
+  }
+]

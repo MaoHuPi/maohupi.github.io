@@ -1,0 +1,33 @@
+[
+  {
+    "code": "2022-NL-03", 
+    "content": "    <p>\u4e00\u5bb6\u5de5\u5ee0\u751f\u7522\u56db\u7a2e\u679c\u6c41\uff0c\u4f7f\u7528\u4e0d\u540c\u5c3a\u5bf8\u7684\u7279\u6b8a\u677f\u689d\u7bb1\u5305\u88dd\u3002\u4e0b\u9762\u5de6\u908a\u7684\u56db\u5f35\u5716\u7247\u5c55\u793a\u5f9e\u4e0a\u65b9\u770b\u9019\u4e9b\u677f\u689d\u7bb1\u7684\u6a23\u5b50\uff0c\u5176\u4e2d\u6700\u5927\u7684\u677f\u689d\u7bb1\u53ef\u653e 15 \u74f6\u3002\r\n    <br>\uff08\u53f3\u5716\u5247\u5c55\u793a\u4e00\u500b\u88dd 12 \u74f6\u7684\u7bb1\u5b50\uff0c\u5f9e\u5074\u9762\u770b\u7684\u6a23\u5b50\u3002\uff09</p>\r\n    <p><table style=\"text-align:center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:100%\">     \r\n      <tr>\r\n          <td><img src=\"/static/bebras/2022/2022-NL-03_demo1.svg\" style=\"height:75px\" /></td>\r\n          <td><img src=\"/static/bebras/2022/2022-NL-03_demo2.svg\" style=\"height:75px\" /></tr>\r\n    </table></p>\r\n    <p>\u4f60\u5fc5\u9808\u70ba\u7e3d\u7d71\u6e96\u5099\u4e00\u4efd\u7279\u5225\u5c3a\u5bf8\u7684\u79ae\u7269\u7bb1\uff0c\u64fa\u653e\u56db\u7a2e\u679c\u6c41\u7684\u677f\u689d\u7bb1\u5f8c\uff08\u4e0d\u80fd\u758a\u5728\u4e00\u8d77\uff09\uff0c\u5269\u4e0b\u7684\u7a7a\u9699\u6108\u5c0f\u6108\u597d\uff0c\u518d\u6dfb\u52a0\u55ae\u74f6\u586b\u6eff\u3002\r\n    <br>\u4f8b\u5982\uff0c\u5982\u679c\u4f7f\u7528\u4e0b\u5716\u5c3a\u5bf8\u79ae\u7269\u7bb1\u64fa\u653e\u56db\u7a2e\u677f\u689d\u7bb1\uff0c\u9808\u6dfb\u52a0 7 \u500b\u55ae\u74f6\u624d\u80fd\u586b\u6eff\u3002</p>\r\n    <p><img src=\"/static/bebras/2022/2022-NL-03_demo3.svg\" style=\"height:130px\" /></p>\r\n<!-- \u9019\u908a\u662fD\u90e8\u5206\uff0c\u8981\u8cbc\u6b64\u5340\u584a\u8aaa\u660e\u5b78\u751f\u5c07\u5b8c\u6210\u7684\u4efb\u52d9 -->\r\n    <p><b><span style=\"color:#009393\">\u82e5\u91cd\u65b0\u9078\u64c7\u9069\u5408\u5c3a\u5bf8\u7684\u79ae\u7269\u7bb1\uff0c\u64fa\u653e\u597d\u56db\u7a2e\u677f\u689d\u7bb1\u5f8c\uff0c\u6700\u5c11\u9808\u6dfb\u52a0\u591a\u5c11\u500b\u55ae\u74f6\u624d\u80fd\u88dd\u6eff\uff1f</span></b>\r\n    <br>\uff08\u8acb\u8f38\u5165\u7bc4\u570d [1~99] \u7684\u6574\u6578\uff0c\u53ea\u80fd\u8f38\u5165<u>\u534a\u5f62\u6578\u5b57</u>\u624d\u6703\u6b63\u78ba\u3002\uff09</p>", 
+    "id": 385, 
+    "next_task": null, 
+    "options": [
+      [
+        "478453b2e49463166c7bb0d63bf29ab4", 
+        null
+      ], 
+      [
+        "bd14392e02cdf15d89b7ed26ac478a76", 
+        null
+      ], 
+      [
+        "b3482616338e0de41401a4478db3c1ba", 
+        null
+      ], 
+      [
+        "9494797f49fe798d4ba65011922ba279", 
+        null
+      ], 
+      [
+        "f114e189b771d38e95acf857397081b9", 
+        null
+      ]
+    ], 
+    "prev_task": null, 
+    "title": "\u7d66\u7e3d\u7d71\u7684\u79ae\u7269", 
+    "type": "fill"
+  }
+]

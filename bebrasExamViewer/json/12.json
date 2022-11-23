@@ -1,0 +1,33 @@
+[
+  {
+    "code": "2022-LT-05", 
+    "content": "<p><img src=\"/static/bebras/2022/2022-LT-05_demo1.svg\" style=\"width:500px\" /></p>\n<p><u>\u6d77\u72f8\u5e02</u>\u6709<b>\u7d05\u83c7\u6751</b> <img src=\"/static/bebras/2022/2022-LT-05_R.svg\" style=\"width:20px\" />\u3001<b>\u7da0\u8349\u6751</b> <img src=\"/static/bebras/2022/2022-LT-05_G.svg\" style=\"width:20px\" />\u8207<b>\u863f\u8514\u6751</b> <img src=\"/static/bebras/2022/2022-LT-05_O.svg\" style=\"width:20px\" />\u4e09\u500b\u6751\u838a\uff0c\u540c\u500b\u6751\u838a\u7684\u623f\u5b50\u5f62\u72c0\u76f8\u540c\u3002\u4e0a\u5716\u70ba<u>\u6d77\u72f8\u5e02</u>\u7684\u623f\u5c4b\u8ddd\u96e2\u5716\uff0c\u5716\u4e0b\u65b9\u4e00\u500b\u523b\u5ea6\u4ee3\u8868 1 \u55ae\u4f4d\u8ddd\u96e2\u3002\u96a8\u8457\u65b0\u5c4b\u8b8a\u591a\uff0c\u6751\u838a\u7bc4\u570d\u958b\u59cb\u91cd\u758a\u3002\u5e02\u6c11\u5236\u5b9a\u4ee5\u4e0b\u6b65\u9a5f\u4f86\u6c7a\u5b9a\u65b0\u5c4b\u8a72\u5c6c\u65bc\u54ea\u500b\u6751\u838a\uff1a</p>\n    <ol>\n        <li>1.\u627e\u51fa\u8ddd\u96e2\u65b0\u5c4b\u6700\u8fd1\u7684 N \u9593\u623f\u5b50\uff0c\u8a08\u7b97\u9019\u4e9b\u623f\u5b50\u5c6c\u65bc\u54ea\u500b\u6751\u838a\uff08N \u70ba\u6574\u6578\uff09\u3002</li>\n        <li>2.\u65b0\u5c4b\u5c07\u5206\u914d\u7d66\u51fa\u73fe\u6700\u591a\u6b21\u7684\u6751\u838a\u3002</li>\n        <li>3.\u82e5\u51fa\u73fe\u6700\u591a\u6b21\u7684\u6751\u838a\u4e0d\u6b62\u4e00\u500b\uff0c\u5c07\u65b0\u5c4b\u5206\u914d\u7d66\u300c\u51fa\u73fe\u6700\u591a\u6b21\u6751\u838a\u4e2d\uff0c\u96e2\u65b0\u5c4b\u6700\u8fd1\u7684\u90a3\u500b\u6751\u838a\u300d\u3002</li>\n        <li>4.\u6578\u5b57 N \u6c7a\u5b9a\u5f8c\u4e0d\u518d\u8b8a\u52d5\u3002</li></ol>\n    <p>\u73fe\u5728<u>\u6d77\u72f8\u5e02</u>\u8981\u5728\u4e0b\u5716 <b>P</b> \u9ede\u84cb\u4e00\u9593\u65b0\u5c4b\uff08\u7c21\u7a31\u623f\u5c4b <b>P</b>\uff09\uff0c\u4e26\u5206\u914d\u623f\u5c4b <b>P</b> \u6240\u5c6c\u6751\u838a\u3002\n    <br><img src=\"/static/bebras/2022/2022-LT-05_demo2.svg\" style=\"width:500px\" /></p>\n    <p>\u63a5\u8457\u5728 <b>Q</b> \u9ede\u84cb\u4e00\u9593\u65b0\u5c4b\uff08\u7c21\u7a31\u623f\u5c4b <b>Q</b>\uff09\uff0c\u4e26\u5206\u914d\u623f\u5c4b <b>Q</b> \u6240\u5c6c\u6751\u838a\uff08\u6b64\u6642\u9700\u5c07\u623f\u5c4b <b>P</b> \u7684\u6751\u838a\u7d0d\u5165\u8a08\u7b97\uff09\u3002\n    <br><img src=\"/static/bebras/2022/2022-LT-05_demo3.svg\" style=\"width:500px\" /></p>\n<!-- \u9019\u908a\u662fD\u90e8\u5206\uff0c\u8981\u8cbc\u6b64\u5340\u584a\u8aaa\u660e\u5b78\u751f\u5c07\u5b8c\u6210\u7684\u4efb\u52d9 -->\n    <p><b><span style=\"color:#009393\">\u5982\u679c\u60f3\u8b93\u623f\u5c4b Q \u5206\u914d\u81f3\u7d05\u83c7\u6751 <img src=\"/static/bebras/2022/2022-LT-05_R.svg\" style=\"width:20px\" />\uff0c\u90a3\u9ebc N \u6700\u5c0f\u61c9\u8a72\u9078\u64c7\u54ea\u500b\u6578\u5b57\u5462\uff1f</span></b>\n    <br>\uff08\u8acb\u8f38\u5165\u7bc4\u570d [1~8] \u7684\u6574\u6578\uff0c\u53ea\u80fd\u8f38\u5165<u>\u534a\u5f62\u6578\u5b57</u>\u624d\u6703\u6b63\u78ba\u3002\uff09</p>", 
+    "id": 379, 
+    "next_task": null, 
+    "options": [
+      [
+        "533f3f8e8c85e0e71dfc74a6dced0f44", 
+        null
+      ], 
+      [
+        "07ee62afd92397702bd6452f71d73a98", 
+        null
+      ], 
+      [
+        "ae22560e23887ad57cd9cc326ccb0c22", 
+        null
+      ], 
+      [
+        "3a8531a25831c42e767d151efb57f5d4", 
+        null
+      ], 
+      [
+        "285fd4982960dc044f18988e46848b07", 
+        null
+      ]
+    ], 
+    "prev_task": null, 
+    "title": "\u91cd\u758a\u7684\u6751\u838a", 
+    "type": "fill"
+  }
+]

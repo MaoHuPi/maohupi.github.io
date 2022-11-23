@@ -1,0 +1,33 @@
+[
+  {
+    "code": "2022-ME-5B", 
+    "content": "    <p>\u4e0b\u5716\u662f\u67d0\u500b\u6ed1\u96ea\u5834\u7684\u6ed1\u96ea\u9053\u548c\u7e9c\u8eca\u8def\u7dda\uff0c\u5176\u4e2d\u767d\u8272\u662f\u6ed1\u96ea\u9053\uff0c\u7070\u8272\u76f4\u7dda\u662f\u7e9c\u8eca\u8def\u7dda\uff0c\u6a19\u8a18\u5b57\u6bcd A \u5230 H \u7684\u7d05\u8272\u65d7\u5b50\u8655\u7686\u662f\u6ed1\u96ea\u5834\u7684\u51fa\u5165\u53e3\u3002</p>\r\n    <p><img src=\"/static/bebras/2022/2022-ME-5b_demo.svg\" style=\"width:400px\" /></p>\r\n    <p>\u6ed1\u96ea\u5ba2\u82e5\u8981\u4e0a\u5c71\u53ea\u80fd\u642d\u4e58\u7e9c\u8eca\uff0c\u82e5\u8981\u4e0b\u5c71\u53ea\u80fd\u5faa\u6ed1\u96ea\u9053\u6ed1\u4e0b\u4f86\uff0c\u6545\u5206\u5225\u6709\uff1aA\u2192C, C\u2192B, C\u2192E, D\u2192F, F\u2192H, \u4ee5\u53ca G\u2192F \u5171\u4e5d\u689d\u79fb\u52d5\u8def\u7dda\u3002</p>\r\n<!-- \u9019\u908a\u662fD\u90e8\u5206\uff0c\u8981\u8cbc\u6b64\u5340\u584a\u8aaa\u660e\u5b78\u751f\u5c07\u5b8c\u6210\u7684\u4efb\u52d9 -->\r\n    <p><b><span style=\"color:#009393\">\u4ee5\u4e0a\u4e5d\u689d\u79fb\u52d5\u8def\u7dda\uff0c<u>\u5c0f\u667a</u>\u60f3\u8981\u5404\u8d70\u904e\u6070\u597d\u4e00\u6b21\uff0c\u8acb\u554f\u61c9\u8a72\u8981\u5f9e\u54ea\u4e00\u500b\u51fa\u5165\u53e3\u958b\u59cb\uff1f</span></b>\r\n    <br>\uff08\u8acb\u8f38\u5165\u82f1\u6587\u5b57\u6bcd [A, B, C, D, E, F, G \u6216 H]\uff0c\u53ea\u80fd\u8f38\u5165<u>\u534a\u5f62\u5927\u5beb\u5b57\u6bcd</u>\u624d\u6703\u6b63\u78ba\u3002\uff09</p>", 
+    "id": 382, 
+    "next_task": null, 
+    "options": [
+      [
+        "56ef5702e59d34c2f71e41ff798fb904", 
+        null
+      ], 
+      [
+        "80fb76e8ffc8450f9617b74c6d5236de", 
+        null
+      ], 
+      [
+        "2fadeb7f5711e46d2baf9a17aec3077f", 
+        null
+      ], 
+      [
+        "340e790d84c8730ef6298faf83590e0a", 
+        null
+      ], 
+      [
+        "5ae3532e755118e908c35c0b87fc5005", 
+        null
+      ]
+    ], 
+    "prev_task": null, 
+    "title": "\u6ed1\u96ea\u9053\u5730\u5716", 
+    "type": "fill"
+  }
+]

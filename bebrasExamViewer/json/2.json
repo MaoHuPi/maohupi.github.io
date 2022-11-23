@@ -1,0 +1,33 @@
+[
+  {
+    "code": "2022-CN-01", 
+    "content": "<p><u>\u5b89\u5a1c</u>\u6709\u4e00\u53f0\u6383\u5730\u6a5f\u5668\u4eba<u>\u5e03\u5947</u>\u6703\u4e0a\u4e0b\u5de6\u53f3\u79fb\u52d5\uff0c\u6bcf\u79fb\u52d5\u4e00\u683c\u7b97\u4e00\u6b65\u3002\n    <br><img src=\"/static/bebras/2022/2022-CN-01_demo1.svg\" style=\"width:120px\" />\n    <br><u>\u5e03\u5947</u>\u5de5\u4f5c\u6642\u6703\u91cd\u8907\u4ee5\u4e0b\u6b65\u9a5f\uff0c\u76f4\u5230\u6240\u6709\u5783\u573e\u64bf\u5b8c\u70ba\u6b62\uff1a\n    <ol><li>1.\u5075\u6e2c\u4e26\u8a08\u7b97\u6240\u6709\u5783\u573e\u7684\u8ddd\u96e2</li>\n        <li>2.\u79fb\u52d5\u5230\u6700\u63a5\u8fd1\uff08\u6b65\u6578\u6700\u5c11\uff09\u7684\u5783\u573e</li>\n        <li>3.\u64bf\u8d77\u5783\u573e</li></ol>\n    \u8209\u4f8b\u4f86\u8aaa\uff0c<u>\u5e03\u5947</u>\u6703\u5148\u79fb\u52d5\u5169\u6b65\u53bb\u64bf\u6bd4\u8f03\u8fd1\u7684\u7d19\u5718\uff08\u5982\u5716\u4e00\u7da0\u8272\u7dda\uff09\uff0c\u518d\u79fb\u52d5\u4e94\u6b65\u53bb\u64bf\u9999\u8549\u76ae\uff08\u5982\u4e0b\u5716\u4e8c\uff09\u3002\n    <br><img src=\"/static/bebras/2022/2022-CN-01_demo2_zh.svg\" style=\"width:200px\" /><img src=\"/static/bebras/2022/2022-CN-01_demo3_zh.svg\" style=\"width:200px\" /></p>   \n<!-- \u9019\u908a\u662fD\u90e8\u5206\uff0c\u8981\u8cbc\u6b64\u5340\u584a\u8aaa\u660e\u5b78\u751f\u5c07\u5b8c\u6210\u7684\u4efb\u52d9 -->\n    <p><b><span style=\"color:#009393\">\u67d0\u6b21\u6d3e\u5c0d\u7d50\u675f\u5f8c\u623f\u5167\u5448\u73fe\u4e0b\u5716\u7684\u72c0\u614b\u3002<u>\u5b89\u5a1c</u>\u555f\u52d5\u6a5f\u5668\u4eba<u>\u5e03\u5947</u>\u6253\u6383\uff0c\u8acb\u554f<u>\u5e03\u5947</u>\u6700\u5f8c\u64bf\u8d77\u4f86\u7684\u5783\u573e\u662f\u4ec0\u9ebc\uff1f</span></b>\n    <br><img src=\"/static/bebras/2022/2022-CN-01_Q.svg\" style=\"width:280px\" /></p>", 
+    "id": 366, 
+    "next_task": null, 
+    "options": [
+      [
+        "87b88ed5fceba5853aa75ad7e852ff0e", 
+        ""
+      ], 
+      [
+        "f27f8c42e4c166defb719fd9a613587e", 
+        "<img src=\"/static/bebras/2022/2022-CN-01_D.svg\" style=\"width:50px\" />"
+      ], 
+      [
+        "161086373c16b03fa8b3cd77c54625bc", 
+        "<img src=\"/static/bebras/2022/2022-CN-01_C.svg\" style=\"width:50px\" />"
+      ], 
+      [
+        "3684d9d57762b6be565b632147ec1d9f", 
+        "<img src=\"/static/bebras/2022/2022-CN-01_A.svg\" style=\"width:50px\" />"
+      ], 
+      [
+        "e6447c4523b8a822c2110d85f3e04593", 
+        "<img src=\"/static/bebras/2022/2022-CN-01_B.svg\" style=\"width:50px\" />"
+      ]
+    ], 
+    "prev_task": null, 
+    "title": "\u6d3e\u5c0d\u5f8c\u5927\u6383\u9664", 
+    "type": "select"
+  }
+]

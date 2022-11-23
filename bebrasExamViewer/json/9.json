@@ -1,0 +1,33 @@
+[
+  {
+    "code": "2022-UA-3A", 
+    "content": "    <p>\u6392\u6578\u5b57\u904a\u6232\u7684\u73a9\u5bb6\u9808\u7528 1\u30012\u30013\u30014\u30015\u30016 \u6392\u6210\u4e00\u500b\u516d\u4f4d\u6578\uff0c\u6bcf\u500b\u6578\u5b57\u53ea\u80fd\u51fa\u73fe\u4e00\u6b21\uff0c\u800c\u4e14\u6392\u5217\u7684\u9806\u5e8f\u5fc5\u9808\u7b26\u5408\u95dc\u4e3b\u8a02\u4e0b\u7684 <b>a\u2192b</b> \u689d\u4ef6\uff1b\u5176\u4e2d <b>a\u2192b</b> \u8868\u793a\u6578\u5b57 <b>a</b> \u5fc5\u9808\u4f4d\u65bc\u6578\u5b57 <b>b</b> \u7684\u5de6\u5074\uff0c<b>a</b> \u8207 <b>b</b> \u4e0d\u4e00\u5b9a\u8981\u76f8\u9130\u3002\u4f8b\u5982\uff1a\u82e5\u95dc\u4e3b\u8a2d\u5b9a\u5169\u500b\u689d\u4ef6\uff1a 2 \u2192 1 \u548c 6 \u2192 2\uff0c\u90a3\u9ebc 625143 \u5c31\u7b26\u5408\u689d\u4ef6\uff0c\u4f46 123456 \u4e0d\u7b26\u5408\u689d\u4ef6\u3002</p>\r\n    <p>\u73fe\u5728\u95dc\u4e3b\u8a2d\u5b9a\u7684\u689d\u4ef6\u5982\u4e0b\uff1a\r\n    <br>\u3000\u3000<b>4\u21921 \u3001 1\u21922 \u3001 4\u21925 \u3001 2\u21923 \u3001 5\u21922 \u3001 3\u21926</b></p>\r\n<!-- \u9019\u908a\u662fD\u90e8\u5206\uff0c\u8981\u8cbc\u6b64\u5340\u584a\u8aaa\u660e\u5b78\u751f\u5c07\u5b8c\u6210\u7684\u4efb\u52d9 -->\r\n    <p><strong class=\"text-info\"><span style=\"color:#009393\">\u8acb\u5beb\u51fa\u7b26\u5408\u95dc\u4e3b\u8a2d\u5b9a\u7684\u689d\u4ef6\u4e2d\uff0c\u6578\u503c<u>\u6700\u5c0f</u>\u7684\u516d\u4f4d\u6578\u3002</span></strong>\r\n    <br>\uff08\u8acb\u8f38\u5165\u7bc4\u570d [123456~654321] \u7684\u6574\u6578\uff0c\u53ea\u80fd\u8f38\u5165<u>\u534a\u5f62\u6578\u5b57</u>\u624d\u6703\u6b63\u78ba\uff08\u4f8b\u5982\uff1a123456\uff09\uff0c\u4e0d\u53ef\u4f7f\u7528\u5168\u5f62\uff08\u4f8b\u5982\uff1a\uff11\uff12\uff13\uff14\uff15\uff16\uff09\u3002\uff09</p>", 
+    "id": 397, 
+    "next_task": null, 
+    "options": [
+      [
+        "3b28107b5e8936bfc793ca0d92941f16", 
+        null
+      ], 
+      [
+        "c79ae03e10cc3c319c756f9979c62fd3", 
+        null
+      ], 
+      [
+        "bd49a4cdf4aa977698e3dcd754546d77", 
+        null
+      ], 
+      [
+        "800a2a9c1eaf9ded36c5b98a830b9880", 
+        null
+      ], 
+      [
+        "f9dea89bca926783a1604786dcc82d54", 
+        null
+      ]
+    ], 
+    "prev_task": null, 
+    "title": "\u6392\u6578\u5b57\u904a\u6232", 
+    "type": "fill"
+  }
+]
