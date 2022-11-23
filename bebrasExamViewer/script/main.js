@@ -52,4 +52,4 @@ sendXmlhttp(`json/${examNum}.json`, '', json => {
         optionElement.innerHTML = reHTML(option[1]);
         optionsElement.appendChild(optionElement);
     }
-}, 'POST');
+}, 'GET');
