@@ -43,6 +43,10 @@
     "name": "Charged Simulator｜帶電模擬器", 
     "description": "快讓Charged Simulator帶你在吸引與排斥力中遨遊！"
   }, 
+  "drawJSFunction": {
+    "name": "Draw JS Function｜JavaScript函式可視化", 
+    "description": "快讓Charged Simulator帶你在吸引與排斥力中遨遊！"
+  }, 
   "bebrasExamViewer": {
     "name": "Bebras Exam Viewer｜瀏覽Bebras的json題目檔", 
     "description": "有Bebras Exam Viewer在，就可以在測驗送出後繼續討論啦！"
