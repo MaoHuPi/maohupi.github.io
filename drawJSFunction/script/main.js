@@ -8,17 +8,29 @@ const body = document.body;
 const inputFunc = document.querySelector('#inputFunc');
 inputFunc.value = 
 `/* 2022 © maohupi */
-(x, time) => Math.abs((time+000)/100%40-20)*(x-500)**2 %color=hsl(\${(time/100+360/8*1)%(360*2)-360}deg,100%,65%) 
+
+(x, time) => Math.abs((time+000)/100%40-20)*(x-500)**2 
+%color=hsl(\${(time/100+360/8*1)%(360*2)-360}deg,100%,65%) 
 %end
-(x, time) => Math.abs((time+100)/100%40-20)*(x-600)**2 %color=hsl(\${(time/100+360/8*2)%(360*2)-360}deg,100%,65%) 
+
+(x, time) => Math.abs((time+100)/100%40-20)*(x-600)**2 
+%color=hsl(\${(time/100+360/8*2)%(360*2)-360}deg,100%,65%) 
 %end
-(x, time) => Math.abs((time+200)/100%40-20)*(x-700)**2 %color=hsl(\${(time/100+360/8*3)%(360*2)-360}deg,100%,65%) 
+
+(x, time) => Math.abs((time+200)/100%40-20)*(x-700)**2 
+%color=hsl(\${(time/100+360/8*3)%(360*2)-360}deg,100%,65%) 
 %end
-(x, time) => Math.abs((time+300)/100%40-20)*(x-800)**2 %color=hsl(\${(time/100+360/8*4)%(360*2)-360}deg,100%,65%) 
+
+(x, time) => Math.abs((time+300)/100%40-20)*(x-800)**2 
+%color=hsl(\${(time/100+360/8*4)%(360*2)-360}deg,100%,65%) 
 %end
-(x, time) => Math.abs((time+400)/100%40-20)*(x-900)**2 %color=hsl(\${(time/100+360/8*5)%(360*2)-360}deg,100%,65%) 
+
+(x, time) => Math.abs((time+400)/100%40-20)*(x-900)**2 
+%color=hsl(\${(time/100+360/8*5)%(360*2)-360}deg,100%,65%) 
 %end
-(x, time) => Math.abs((time+500)/100%40-20)*(x-1000)**2 %color=hsl(\${(time/100+360/8*6)%(360*2)-360}deg,100%,65%) 
+
+(x, time) => Math.abs((time+500)/100%40-20)*(x-1000)**2 
+%color=hsl(\${(time/100+360/8*6)%(360*2)-360}deg,100%,65%) 
 %end`;
 
 const resizeBar = document.querySelector('#resizeBar');
@@ -56,6 +68,8 @@ window.addEventListener('mousemove', event => {
     }
 });
 
+let drawReferenceGrid = true;
+let desSize = 30;
 function draw(){
     viewRect[2] = viewRect[0] + window.innerWidth*(1-0.02);
     viewRect[3] = viewRect[1] + window.innerHeight*(1-0.02) - inputFunc.offsetHeight - resizeBar.offsetHeight;
@@ -65,31 +79,86 @@ function draw(){
     ctx.fillStyle = '#151515';
     ctx.fillRect(0, 0, cvs.width, cvs.height);
     let time = new Date().getTime();
-    let colorRegex = /%color=(.[^ ]*)/g;
+    let settingsData = {
+        color: {regexp: /%(line)*[Cc]olor=(.[^ ]*)/g, default: 'white', method: (v => ctx.strokeStyle = v)}, 
+        dash: {regexp: /%(line)*[Dd]ash=(\[.[^ ]*\])/g, default: [], method: ctx.setLineDash.bind(ctx)}, 
+        transform: {regexp: /%(line)*[Tt]ransform=(\[.[^ ]*\])/g, default: [1, 0, 0, 1, 0, 0], method: ctx.setTransform.bind(ctx)}, 
+        width: {regexp: /%(line)*[Ww]idth=(.[^ ]*)/g, default: window.innerWidth*0.0025, method: (v => ctx.lineWidth = v)}, 
+        join: {regexp: /%(line)*[Jj]oin=(.[^ ]*)/g, default: 'round', method: (v => ctx.lineJoin = v)}
+    }
+    desSize = 30;
+    ctx.font = `${desSize}px serif`;
+    ctx.fillStyle = '#444444';
+    let desY = desSize;
+    for(let settingsType in settingsData){
+        var des = `%${settingsType}=${JSON.stringify(settingsData[settingsType]['default'])}`;
+        ctx.fillText(des, 0, desY);
+        desY += desSize;
+    }
+    for(let settingsType in settingsData){
+        (settingsData[settingsType]['method'])(settingsData[settingsType]['default']);
+    }
     let funcDataList = inputFunc.value
         .split('%end')
         .map(t => {
-            let text = t;
-            text = text.replaceAll(colorRegex, '');
-            let color = colorRegex.exec(t);
-            color = color && color.length > 0 ? color[1] : 'white';
-            return({
-                text: text, 
-                color: color
-            })
+            let settings = {text: t};
+            for(let settingsType in settingsData){
+                settings['text'] = settings['text']
+                    .replaceAll(settingsData[settingsType]['regexp'], '');
+                let s = settingsData[settingsType]['regexp'].exec(t.replaceAll('\n', ' '));
+                settings[settingsType] = s && s.length > 1 ? s[2] : JSON.stringify(settingsData[settingsType]['default']);
+            }
+            return(settings);
         });
+    
+    if(drawReferenceGrid){
+        ctx.save();
+        desSize = 25;
+        ctx.font = `${desSize}px serif`;
+        ctx.fillStyle = '#444444';
+        ctx.strokeStyle = '#888888';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.textAlign = 'right';
+        for(let i = viewRect[0]; i < viewRect[2]; i++){
+            if(i%100 == 0){
+                var x = i-viewRect[0];
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, cvs.height);
+                ctx.fillText(i, x, cvs.height);
+            }
+        }
+        for(let i = viewRect[1]; i < viewRect[3]; i++){
+            if(i%100 == 0){
+                var y = cvs.height - i+viewRect[1];
+                ctx.moveTo(0, y);
+                ctx.lineTo(cvs.width, y);
+                ctx.fillText(i, cvs.width, y);
+            }
+        }
+        ctx.stroke();
+        ctx.restore();
+    }
+
     for(let funcData of funcDataList){
         try{
             let func = (x) => eval(`(${funcData['text']})(x, time)`, x = x, time = time, canvas = cvs);
+            ctx.save();
+            for(let settingsType in settingsData){
+                try{
+                    (settingsData[settingsType]['method'])(JSON.parse(funcData[settingsType]));
+                }
+                catch(e){
+                    (settingsData[settingsType]['method'])(eval(`\`${funcData[settingsType]}\``, time = time));
+                }
+            }
             ctx.beginPath();
             for(let i = viewRect[0]; i < viewRect[2]; i++){
                 ctx.lineTo(i-viewRect[0], viewRect[1] + cvs.height - func(i));
             }
-            ctx.strokeStyle = eval(`\`${funcData['color']}\``, time = time);
-            ctx.lineWidth = window.innerWidth*0.0025;
             ctx.stroke();
-        }
-        catch(e){}
+            ctx.restore();
+        }catch(e){}
     }
 }
 function loop(){
