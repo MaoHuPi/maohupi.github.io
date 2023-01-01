@@ -2,6 +2,8 @@
  * 2022 © MaoHuPi
  */
 
+let debug = false;
+
 const viewRect = [0, 0, 100, 100]; // [xmin, ymin, xmax, ymax]
 
 const body = document.body;
@@ -62,7 +64,6 @@ window.addEventListener('mousemove', event => {
         body.style.setProperty('--resizeBarValue', (event.pageY-vw)/(100*vh - 2*vw));
     }
     else if(cvsMoving){
-        console.log(viewRect[0], cvsMove_actionViewRect[0] + event.pageX - cvsMove_actionMouse[0]);
         viewRect[0] = cvsMove_actionViewRect[0] - (event.pageX - cvsMove_actionMouse[0]);
         viewRect[1] = cvsMove_actionViewRect[1] + (event.pageY - cvsMove_actionMouse[1]);
     }
@@ -81,14 +82,39 @@ function draw(){
     let time = new Date().getTime();
     let settingsData = {
         color: {regexp: /%(line)*[Cc]olor=(.[^ ]*)/g, default: 'white', method: (v => ctx.strokeStyle = v)}, 
+        name: {regexp: /%(line)*[Nn]ame=(.[^ ]*)/g, default: '', method: ((v, p) => {
+            try{
+                ctx.save();
+                desSize = 35;
+                ctx.font = `${desSize}px serif bold`;
+                ctx.fillStyle = 'white';
+                ctx.fillText(v, ...(p ? p : [0, 0]));
+                // console.log([v, p]);
+                ctx.restore();
+            }catch(e){console.log(e)}
+        })}, 
         dash: {regexp: /%(line)*[Dd]ash=(\[.[^ ]*\])/g, default: [], method: ctx.setLineDash.bind(ctx)}, 
-        transform: {regexp: /%(line)*[Tt]ransform=(\[.[^ ]*\])/g, default: [1, 0, 0, 1, 0, 0], method: ctx.setTransform.bind(ctx)}, 
+        transform: {regexp: /%(line)*[Tt]ransform=(\[.[^ ]*\])/g, default: [1, 0, 0, 1, 0, 0], method: (v => ctx.setTransform(...v))}, 
+        rotate: {regexp: /%(line)*[Rr]otate=(\[.[^ ]*\])/g, default: [0, [0, 0]], method: function (v){
+            if(typeof(v) == 'string'){
+                v = JSON.parse(v);
+            }
+            let ori = v.length > 1 ? v[1] : [0, 0];
+            ori[1] *= -1;
+            let o = [-viewRect[0], cvs.height - (-viewRect[1])];
+            ctx.translate(o[0], o[1]);
+            ctx.translate(ori[0], ori[1]);
+            ctx.rotate(parseFloat(v[0]));
+            ctx.translate(-ori[0], -ori[1]);
+            ctx.translate(-o[0], -o[1]);
+        }}, 
         width: {regexp: /%(line)*[Ww]idth=(.[^ ]*)/g, default: window.innerWidth*0.0025, method: (v => ctx.lineWidth = v)}, 
-        join: {regexp: /%(line)*[Jj]oin=(.[^ ]*)/g, default: 'round', method: (v => ctx.lineJoin = v)}
+        join: {regexp: /%(line)*[Jj]oin=(.[^ ]*)/g, default: 'round', method: (v => ctx.lineJoin = v)}, 
+        note: {regexp: /%(line)*[Nn]ote=(.[^ ]*)/g, default: undefined, method: (v => undefined)}
     }
     desSize = 30;
     ctx.font = `${desSize}px serif`;
-    ctx.fillStyle = '#444444';
+    ctx.fillStyle = 'gray';
     let desY = desSize;
     for(let settingsType in settingsData){
         var des = `%${settingsType}=${JSON.stringify(settingsData[settingsType]['default'])}`;
@@ -98,24 +124,13 @@ function draw(){
     for(let settingsType in settingsData){
         (settingsData[settingsType]['method'])(settingsData[settingsType]['default']);
     }
-    let funcDataList = inputFunc.value
-        .split('%end')
-        .map(t => {
-            let settings = {text: t};
-            for(let settingsType in settingsData){
-                settings['text'] = settings['text']
-                    .replaceAll(settingsData[settingsType]['regexp'], '');
-                let s = settingsData[settingsType]['regexp'].exec(t.replaceAll('\n', ' '));
-                settings[settingsType] = s && s.length > 1 ? s[2] : JSON.stringify(settingsData[settingsType]['default']);
-            }
-            return(settings);
-        });
+    let funcDataText = inputFunc.value.split('%end');
     
     if(drawReferenceGrid){
         ctx.save();
         desSize = 25;
         ctx.font = `${desSize}px serif`;
-        ctx.fillStyle = '#444444';
+        ctx.fillStyle = 'gray';
         ctx.strokeStyle = '#888888';
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -140,16 +155,33 @@ function draw(){
         ctx.restore();
     }
 
-    for(let funcData of funcDataList){
+    for(let funcData of funcDataText){
         try{
-            let func = (x) => eval(`(${funcData['text']})(x, time)`, x = x, time = time, canvas = cvs);
             ctx.save();
+            let funcText = funcData
             for(let settingsType in settingsData){
-                try{
-                    (settingsData[settingsType]['method'])(JSON.parse(funcData[settingsType]));
-                }
-                catch(e){
-                    (settingsData[settingsType]['method'])(eval(`\`${funcData[settingsType]}\``, time = time));
+                funcText = funcText.replaceAll(settingsData[settingsType]['regexp'], '');
+            }
+            let func = (x) => eval(`(${funcText})(x, time)`, x = x, time = time, canvas = cvs);
+            for(let settingsType in settingsData){
+                let vList = funcData
+                    .replaceAll('\n', ' ')
+                    .match(settingsData[settingsType]['regexp']);
+                if(vList != null){
+                    vList = vList.map(r => {
+                        r = settingsData[settingsType]['regexp'].exec(r);
+                        settingsData[settingsType]['regexp'].exec('');
+                        return(r);
+                    });
+                    for(let v of vList){
+                        v = v && v.length > 1 ? v[2] : JSON.stringify(settingsData[settingsType]['default']);
+                        try{
+                            (settingsData[settingsType]['method'])(JSON.parse(v), [0, viewRect[1] + cvs.height - func(viewRect[0])]);
+                        }
+                        catch(e){
+                            (settingsData[settingsType]['method'])(eval(`\`${v}\``, time = time, deg = rad => rad/360*(Math.PI*2)), [0, viewRect[1] + cvs.height - func(viewRect[0])]);
+                        }
+                    }
                 }
             }
             ctx.beginPath();
@@ -158,7 +190,7 @@ function draw(){
             }
             ctx.stroke();
             ctx.restore();
-        }catch(e){}
+        }catch(e){debug && console.log(e);}
     }
 }
 function loop(){

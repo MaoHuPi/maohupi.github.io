@@ -1,5 +1,16 @@
 * {
     outline: none;
+    scrollbar-color: gray #48484855;
+}
+*::-webkit-scrollbar {
+    width: 0.5vw;
+    height: 0.5vw;
+    padding: 0vw;
+}
+*::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 100vw;
+    margin: 1px;
 }
 html, body {
     margin: 0px;
