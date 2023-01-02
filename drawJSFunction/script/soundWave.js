@@ -2,6 +2,7 @@ class soundWave{
     'use strict';
     constructor(){
         this.playing = false;
+        this.maxVolume = 0.5;
 
         this.context = new (window.AudioContext || window.webkitAudioContext)();
         this.analyser = this.context.createAnalyser();
