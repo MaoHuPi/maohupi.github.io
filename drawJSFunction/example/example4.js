@@ -1,3 +1,5 @@
+/* 聖誕布景(jingle bell音樂) */
+
 x => {
     let oscillatorType = ['sine', 'triangle', 'sawtooth'][Math.floor(time/2/(400*16)%3)];
     let maxVolume  = [0.4, 0.6, 0.15][Math.floor(time/2/(400*16)%3)];

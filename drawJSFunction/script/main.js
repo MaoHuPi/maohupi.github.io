@@ -175,19 +175,21 @@ function draw(){
         ctx.stroke();
         ctx.restore();
 
-        ctx.save();
-        ctx.strokeStyle = '#888800';
-        ctx.fillStyle = '#888800';
-        ctx.lineWidth = 5
-        ctx.shadowColor = '#888800';
-        ctx.shadowBlur = 15;
-        ctx.beginPath();
-        var x = waveX-viewRect[0];
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, cvs.height);
-        ctx.fillText('waveX', x + 10, cvs.height/2);
-        ctx.stroke();
-        ctx.restore();
+        if(waveFun){
+            ctx.save();
+            ctx.strokeStyle = '#888800';
+            ctx.fillStyle = '#888800';
+            ctx.lineWidth = 5
+            ctx.shadowColor = '#888800';
+            ctx.shadowBlur = 15;
+            ctx.beginPath();
+            var x = waveX-viewRect[0];
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, cvs.height);
+            ctx.fillText('waveX', x + 10, cvs.height/2);
+            ctx.stroke();
+            ctx.restore();
+        }
     }
     waveFun = false;
     waveX = 0;

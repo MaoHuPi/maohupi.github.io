@@ -1,3 +1,13 @@
+/* sigmoid拉鍊聲 */
+
+x => {
+    let oscillatorType = 'sawtooth';
+    let maxVolume  = 0.15;
+    (wavePlayer.oscillator.type != oscillatorType) && (wavePlayer.oscillator.type = oscillatorType);
+    (wavePlayer.maxVolume != maxVolume) && (wavePlayer.maxVolume = maxVolume);
+}
+%end
+
 function sigmoid(x, t, k = 1){
     k = 10;
     x = x-700;
