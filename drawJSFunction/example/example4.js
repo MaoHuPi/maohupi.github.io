@@ -62,6 +62,11 @@ x => {
 %color=#555555
 %end
 
+(x, t) => (Math.sin(x*100000 + t/1000)*100)/2 - 150
+%color=#fff5
+%note=decoration
+%end
+
 (x, t) => {window.var_change = t/1000}
 %end
 (x, t) => {window.var_treePos = Math.sin(window.var_change)*50 - 50}
@@ -113,4 +118,9 @@ x => x > -25 && x < 25 ? window.var_treePos : Math.abs(x) == 26 ? window.var_tre
 (x, t) => Math.sin(x/1000+t/1000)*50 - 50
 %note=floor
 %color=white
+%end
+
+(x) => Math.abs((x%2)*20000)-10000
+%color=rgba(255,255,255,${Math.abs(time/1000%2-1)*0.5})
+%note=snow
 %end
