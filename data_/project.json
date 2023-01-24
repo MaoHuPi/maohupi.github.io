@@ -3,6 +3,10 @@
     "name": "MaoHuPi｜貓虎皮個人網站", 
     "description": "貓虎皮的工具、遊戲、作品集！"
   }, 
+  "popupDino": {
+    "name": "Popup Dino｜彈出恐龍", 
+    "description": "用彈出視窗製作的dino小遊戲！"
+  }, 
   "jslib": {
     "name": "JSLib｜JS函式庫", 
     "description": "JSLib幫你美化、自動化身邊的事物！"
