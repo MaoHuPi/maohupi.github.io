@@ -185,6 +185,7 @@ function windowAni(){
             IMAGE.cvs.ctx.textAlign = 'right';
             let textPadding = 15;
             IMAGE.cvs.ctx.fillText(GAME.frame, IMAGE.cvs.width - textPadding, 50/2 + textPadding);
+            PARENT.postMessage({msg: 'score', from: NAME, value: GAME.frame}, location.origin);
             break;
         case 'dino':
             [X, Y, W, H] = [SH/5, SH/5*3, SH/5, SH/5];
@@ -201,7 +202,7 @@ function windowAni(){
                 [X, Y, W, H] = [SH/5, SH/5*3 - dinoBottom, SH/5, SH/5];
                 IMAGE.cvs.ctx.drawImage(IMAGE.dino, (IMAGE.cvs.width - IMAGE.dino.width*PXS)/2, (IMAGE.cvs.height - IMAGE.dino.height*PXS)/2, IMAGE.dino.width*PXS, IMAGE.dino.height*PXS);
                 if(IMAGE.dino.var.jump){
-                    PARENT.postMessage({msg: 'dinoBottom', from: NAME, pos: dinoBottom}, location.origin);
+                    PARENT.postMessage({msg: 'dinoBottom', from: NAME, value: dinoBottom}, location.origin);
                 }
             }
             break;
@@ -281,7 +282,7 @@ function main(){
                         IMAGE.dino.var.jumpFrameMax = 50;
                         IMAGE.dino.var.yPos = 0
                     }
-                    console.log(event.key)
+                    console.log(event.key);
                 }
             });
             break;
@@ -306,15 +307,16 @@ function main(){
                 }
             }
             else if(event.data?.msg == 'dinoBottom' && event.data?.from == 'dino'){
-                GAME.dinoBottom = event.data?.pos || 0;
+                GAME.dinoBottom = event.data?.value || 0;
+            }
+            else if(event.data?.msg == 'score' && event.data?.from == 'background'){
+                GAME.score = event.data?.value || 0;
             }
             else if(event.data?.msg == 'detect' && event.data?.from.indexOf('cactus') == 0){
                 if(GAME.dinoBottom < (SH/5*2 - 68)*0.75){
+                    GAME.mainPageFunc = gameOverPage.bind({score: GAME.score});
                     destroyAllWindow();
-                    if(GAME.run){
-                        GAME.run = false;
-                        GAME.mainPageFunc = gameOverPage.bind({score: GAME.frame});
-                    }
+                    GAME.run = false;
                 }
             }
         });
