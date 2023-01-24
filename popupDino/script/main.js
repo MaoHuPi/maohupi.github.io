@@ -1,3 +1,9 @@
+/*
+ * 2023 © MaoHuPi
+ * popupDino/main.js
+ * 玩一下幾乎不會用到的功能
+ */
+
 const SW = screen.width, 
     SH = screen.height, 
     NAME = $_GET['name'], 
@@ -245,6 +251,10 @@ function main(){
                 ELEMENT.cactus[1] = openWindow(`cactus2`);
                 ELEMENT.cactus[2] = openWindow(`cactus3`);
                 ELEMENT.dino = openWindow('dino');
+                if([null, undefined].indexOf(ELEMENT.dino) > -1){
+                    this.alert('Please allow popup window first!');
+                    return;
+                }
                 GAME.frame = 0;
                 GAME.run = true;
             });
