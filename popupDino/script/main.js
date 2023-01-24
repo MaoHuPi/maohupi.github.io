@@ -33,13 +33,12 @@ function destroyWindow(){
     window.open('', '_self');
     window.close();
 }
-function destroyAllWindow(){
+function destroyAllPopup(){
     for(let popup of POPUP){
         if(popup && 'postMessage' in popup){
             popup.postMessage({msg: 'destroy', from: NAME}, location.origin);
         }
     }
-    destroyWindow();
 }
 function loadImage(name){
     let image = new Image();
@@ -254,7 +253,7 @@ function main(){
                 ELEMENT.cactus[2] = openWindow(`cactus3`);
                 ELEMENT.dino = openWindow('dino');
                 if([null, undefined].indexOf(ELEMENT.dino) > -1){
-                    destroyAllWindow();
+                    destroyAllPopup();
                     this.alert('Please allow popup window first!');
                     return;
                 }
@@ -297,7 +296,7 @@ function main(){
             }
             console.log(event.data);
             if(event.data?.msg == 'exit' && event.data?.from == 'dino'){
-                destroyAllWindow();
+                destroyAllPopup();
                 if(GAME.run){
                     GAME.run = false;
                     GAME.mainPageFunc = startPage;
@@ -308,7 +307,7 @@ function main(){
             }
             else if(event.data?.msg == 'detect' && event.data?.from.indexOf('cactus') == 0){
                 if(GAME.dinoBottom < (SH/5*2 - 68)*0.75){
-                    destroyAllWindow();
+                    destroyAllPopup();
                     if(GAME.run){
                         GAME.run = false;
                         GAME.mainPageFunc = gameOverPage.bind({score: GAME.frame});
@@ -318,7 +317,7 @@ function main(){
         });
         setInterval(() => {
             if(ELEMENT.background?.closed || ELEMENT.dino?.closed){
-                destroyAllWindow();
+                destroyAllPopup();
                 if(GAME.run){
                     GAME.run = false;
                     GAME.mainPageFunc = startPage;
