@@ -35,7 +35,7 @@ function destroyWindow(){
 }
 function destroyAllWindow(){
     for(let popup of POPUP){
-        if('postMessage' in popup){
+        if(popup && 'postMessage' in popup){
             popup.postMessage({msg: 'destroy', from: NAME}, location.origin);
         }
     }
