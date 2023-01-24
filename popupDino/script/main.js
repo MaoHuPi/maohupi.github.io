@@ -252,9 +252,10 @@ function main(){
                 ELEMENT.cactus[1] = openWindow(`cactus2`);
                 ELEMENT.cactus[2] = openWindow(`cactus3`);
                 ELEMENT.dino = openWindow('dino');
-                if([null, undefined].indexOf(ELEMENT.dino) > -1){
+                if(!ELEMENT.dino){
                     destroyAllPopup();
                     // this.alert('Please allow popup window first!');
+                    GAME.mainPageFunc = startPage;
                     return;
                 }
                 GAME.frame = 0;
