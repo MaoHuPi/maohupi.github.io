@@ -35,7 +35,9 @@ function destroyWindow(){
 }
 function destroyAllWindow(){
     for(let popup of POPUP){
-        popup.postMessage({msg: 'destroy', from: NAME}, location.origin);
+        if('postMessage' in popup){
+            popup.postMessage({msg: 'destroy', from: NAME}, location.origin);
+        }
     }
     destroyWindow();
 }
@@ -252,6 +254,7 @@ function main(){
                 ELEMENT.cactus[2] = openWindow(`cactus3`);
                 ELEMENT.dino = openWindow('dino');
                 if([null, undefined].indexOf(ELEMENT.dino) > -1){
+                    destroyAllWindow();
                     this.alert('Please allow popup window first!');
                     return;
                 }
