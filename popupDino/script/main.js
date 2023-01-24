@@ -254,7 +254,7 @@ function main(){
                 ELEMENT.dino = openWindow('dino');
                 if([null, undefined].indexOf(ELEMENT.dino) > -1){
                     destroyAllPopup();
-                    this.alert('Please allow popup window first!');
+                    // this.alert('Please allow popup window first!');
                     return;
                 }
                 GAME.frame = 0;
