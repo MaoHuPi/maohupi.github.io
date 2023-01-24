@@ -23,7 +23,7 @@ function setWindowRect(x = 0, y = 0, w = 500, h = 300){
     window.outerHeight = h;
 }
 function openWindow(name = 'default'){
-    const settings = `popup=yes,scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=1,height=1,top=0,left=0`;
+    const settings = `popup=yes,scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=100,height=100,top=0,left=0`;
     let popup = window.open(`?name=${name}`, name, settings);
     POPUP.push(popup);
     return(popup);
@@ -33,12 +33,13 @@ function destroyWindow(){
     window.open('', '_self');
     window.close();
 }
-function destroyAllPopup(){
+function destroyAllWindow(){
     for(let popup of POPUP){
-        if(popup && 'postMessage' in popup){
+        try{
             popup.postMessage({msg: 'destroy', from: NAME}, location.origin);
-        }
+        }catch(e){};
     }
+    // destroyWindow();
 }
 function loadImage(name){
     let image = new Image();
@@ -207,7 +208,7 @@ function windowAni(){
         case 'cactus1':
         case 'cactus2':
         case 'cactus3':
-            [X, Y, W, H] = [0, 0, 0, 0];
+            [X, Y, W, H] = [0, 0, SH/5*0.5, 0];
             IMAGE.cvs.ctx.fillStyle = 'white';
             IMAGE.cvs.ctx.fillRect(0, 0, IMAGE.cvs.width, IMAGE.cvs.height);
             if(IMAGE.cactus?.loaded){
@@ -252,10 +253,11 @@ function main(){
                 ELEMENT.cactus[1] = openWindow(`cactus2`);
                 ELEMENT.cactus[2] = openWindow(`cactus3`);
                 ELEMENT.dino = openWindow('dino');
-                if(!ELEMENT.dino){
-                    destroyAllPopup();
+                if([null, undefined].indexOf(ELEMENT.dino) > -1){
+                    setTimeout(() => {
+                        destroyAllWindow();
+                    }, 0.5e3);
                     // this.alert('Please allow popup window first!');
-                    GAME.mainPageFunc = startPage;
                     return;
                 }
                 GAME.frame = 0;
@@ -297,7 +299,7 @@ function main(){
             }
             console.log(event.data);
             if(event.data?.msg == 'exit' && event.data?.from == 'dino'){
-                destroyAllPopup();
+                destroyAllWindow();
                 if(GAME.run){
                     GAME.run = false;
                     GAME.mainPageFunc = startPage;
@@ -308,7 +310,7 @@ function main(){
             }
             else if(event.data?.msg == 'detect' && event.data?.from.indexOf('cactus') == 0){
                 if(GAME.dinoBottom < (SH/5*2 - 68)*0.75){
-                    destroyAllPopup();
+                    destroyAllWindow();
                     if(GAME.run){
                         GAME.run = false;
                         GAME.mainPageFunc = gameOverPage.bind({score: GAME.frame});
@@ -318,7 +320,7 @@ function main(){
         });
         setInterval(() => {
             if(ELEMENT.background?.closed || ELEMENT.dino?.closed){
-                destroyAllPopup();
+                destroyAllWindow();
                 if(GAME.run){
                     GAME.run = false;
                     GAME.mainPageFunc = startPage;
