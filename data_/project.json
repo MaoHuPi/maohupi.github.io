@@ -3,6 +3,10 @@
     "name": "MaoHuPi｜貓虎皮個人網站", 
     "description": "貓虎皮的工具、遊戲、作品集！"
   }, 
+  "AStar": {
+    "name": "A Star｜尋路演算法", 
+    "description": "來看A Star尋路演算法的執行結果吧！"
+  }, 
   "popupDino": {
     "name": "Popup Dino｜彈出恐龍", 
     "description": "用彈出視窗製作的dino小遊戲！"
