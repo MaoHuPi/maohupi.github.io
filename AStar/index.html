@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <!-- 2023 © MaoHuPi -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>MaoHuPi - A Star</title>
+    <script src="script/basic.js"></script>
+    <script src="script/AStar.js"></script>
+    <style>
+        html, body {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 0px;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            overflow: hidden;
+        }
+        #view {
+            --ratio: 0.75;
+            width: 100vw;
+            height: calc(100vw * var(--ratio));
+            position: relative;
+            background-color: white;
+        }
+        @media screen and (max-height: 75vw) {
+            #view {
+                width: calc(100vh / var(--ratio));
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="view">
+        <canvas id="mainCvs"></canvas>
+    </div>
+    <script src="script/main.js"></script>
+</body>
+</html>
