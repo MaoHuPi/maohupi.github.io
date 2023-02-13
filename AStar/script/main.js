@@ -68,6 +68,17 @@ async function edit(){
                 gameVars.gridMap[iY][iX] = -1;
             }
             else{
+                for(let btnIndex of [0, 2]){
+                    if(gameVars.selectedBtn === btnIndex){
+                        for (let i = 0; i < gameVars.gridMap.length; i++) {
+                            for (let j = 0; j < gameVars.gridMap[i].length; j++) {
+                                if (gameVars.gridMap[i][j] === btnIndex) {
+                                    gameVars.gridMap[i][j] = -1;
+                                }
+                            }
+                        }
+                    }
+                }
                 gameVars.gridMap[iY][iX] = gameVars.selectedBtn;
             }
         }
