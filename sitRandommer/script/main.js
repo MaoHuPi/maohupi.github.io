@@ -109,6 +109,7 @@ viewBox.addEventListener('wheel', (event) => {
     viewBox.style.setProperty('--scale', viewBox.scale);
 });
 
+// controlBox content
 let contentTypes = ['empty', 'number', 'lock', 'disable'];
 let controlBox_content = $('#controlBox-content');
 for(let buttonName of contentTypes){
@@ -160,6 +161,8 @@ for(let buttonName of contentTypes){
 }
 $(`#content-type-${contentType}`).click();
 
+
+// sit map
 class Sit{
     constructor(num = 0, type = 'number'){
         this.num = num;
@@ -231,6 +234,12 @@ class SitMap{
             }
         }
     }
+    random(){
+        let ForceList = getForceList();
+        for(let sit of this.#array){
+            sit.num;
+        }
+    }
 }
 
 let sitMap = new SitMap(3, 2);
@@ -289,3 +298,62 @@ viewBox_table.addEventListener('click', function(event){
         viewBoxUpdate();
     }
 });
+
+// pages force
+let tabBox_pages_forceList = $('#tabBox-pages-force > div');
+function addForce(){
+    let div = $e('div'),
+        num1 = $e('input'), 
+        num2 = $e('input'), 
+        mode = $e('button'), 
+        forceValue = $e('input');
+    num1.type = 'number';
+    num1.className = 'num1';
+    num1.setAttribute('placeholder', 'num 1');
+    div.appendChild(num1);
+    num2.type = 'number';
+    num2.className = 'num2';
+    num2.setAttribute('placeholder', 'num 2');
+    div.appendChild(num2);
+    mode.className = 'mode';
+    mode.value = '+';
+    mode.addEventListener('click', () => {
+        mode.value = mode.value == '+' ? '-' : '+';
+    });
+    div.appendChild(mode);
+    forceValue.type = 'number';
+    forceValue.className = 'forceValue';
+    forceValue.setAttribute('placeholder', 'force value');
+    div.appendChild(forceValue);
+    tabBox_pages_forceList.appendChild(div);
+}
+$('#tabBox-pages-force .addBtn').addEventListener('click', addForce);
+function getForceList(){
+    forceList = [...tabBox_pages_forceList.children].map(n => {return({
+        num1: parseInt($('.num1', n).value), 
+        num2: parseInt($('.num2', n).value), 
+        forceValue: ($('.mode', n).value == '+' ? 1 : -1) * parseInt($('.forceValue', n).value), 
+    })});
+    return(forceList);
+}
+
+let tabBox = $('#tabBox');
+let tabBox_icons = $('#tabBox-icons');
+let pageNow = 'force';
+function changePage(page){
+    $(`#tabBox-pages-${pageNow}`).removeAttribute('show');
+    $(`#tabBox-pages-${pageNow}-icon`).removeAttribute('show');
+    pageNow = page;
+    $(`#tabBox-pages-${pageNow}`).setAttribute('show', '');
+    $(`#tabBox-pages-${pageNow}-icon`).setAttribute('show', '');
+}
+[...$('#tabBox-pages').children].forEach(page => {
+    let icon = $e('div');
+    icon.id = `${page.id}-icon`;
+    icon.style.setProperty('--bgi', `url('../image/page-${icon.id.split('-')[2]}.svg')`);
+    icon.addEventListener('click', () => {
+        changePage(icon.id.split('-')[2]);
+    });
+    tabBox_icons.appendChild(icon);
+});
+changePage(pageNow);
