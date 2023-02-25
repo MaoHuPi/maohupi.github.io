@@ -123,3 +123,22 @@ console.heightLightLog = function(text, regexp = /(null|undefined)/g, color = '#
     let colorArray = new Array(text.match(/%c/g).length).fill(0).map((n, i) => i%2 == 0 ? `color: ${color};` : 'color: white;')
     this.log(text, ...colorArray);
 }
+function deepCopy(obj){
+    return(JSON.parse(JSON.stringify(obj)));
+}
+function distance(p1, p2){
+    p1 = Object.values(p1);
+    p2 = Object.values(p2);
+    if(p1.length != p2.length){
+        return;
+    }
+    let d = 0;
+    for(let i = 0; i < p1.length; i++){
+        d = (d**2 + (p1[i] - p2[i])**2)**0.5
+    }
+    return(d);
+}
+function closest(p1, pList){
+    let p2 = pList.map(p => [distance(p1, p), p]).sort((a, b) => a[0] - b[0])[0][1];
+    return(p2);
+}

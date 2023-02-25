@@ -1,9 +1,25 @@
+/*
+ * 2023 © MaoHuPi
+ * sitRandommer/style/main.css
+ */
+
 * {
     margin: 0px;
     padding: 0px;
     outline: none;
     border: none;
     user-select: none;
+    scrollbar-color: #48484855 #88888855;
+    scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+    width: 0.53vw;
+    height: 0.53vw;
+    padding: 1vw;
+    background-color: #48484855;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #88888855;
 }
 ::placeholder {text-align: center;}
 ::-webkit-input-placeholder {text-align: center;}
@@ -29,7 +45,7 @@ body {
     --hBW: calc(var(--barWidth) / 2);
     display: grid;
     grid-template-columns: calc(var(--bar-vc_t) - var(--hBW)) var(--barWidth) calc(100vw - var(--bar-vc_t) - var(--hBW));
-    grid-template-rows: calc(var(--bar-v_c) - var(--hBW)) var(--barWidth) calc(100vw - var(--bar-v_c) - var(--hBW));
+    grid-template-rows: calc(var(--bar-v_c) - var(--hBW)) var(--barWidth) calc(100vh - var(--bar-v_c) - var(--hBW));
     width: 100vw;
     height: 100vh;
     background-color: #1e1e1e;
@@ -38,6 +54,9 @@ body {
 .bar {
     background-color: gray;
     user-select: none;
+}
+img {
+    pointer-events: none;
 }
 input[type="text"].empty {
     color: transparent !important;
@@ -74,6 +93,8 @@ input[type="text"].disable {
 #viewBox {
     --moveW: 0px;
     --moveH: 0px;
+    --rotateX: 0deg;
+    --rotateZ: 0deg;
     --scale: 1;
     grid-area: 1/1/2/2;
     overflow: hidden;
@@ -82,7 +103,7 @@ input[type="text"].disable {
     grid-area: 3/1/4/2;
     display: grid;
     grid-template-columns: 30% 30% 40%;
-    grid-template-rows: 2vw auto;
+    grid-template-rows: 2vw calc(100% - 2vw);
     overflow: hidden;
 }
 #tabBox {
@@ -116,7 +137,7 @@ input[type="text"].disable {
     border-style: solid;
     border-width: var(--cellGap);
     border-color: var(--lineColor);
-    transform: translateX(var(--moveW)) translateY(var(--moveH)) scale(var(--scale));
+    transform: translateX(var(--moveW)) translateY(var(--moveH)) scale(var(--scale)) rotateX(var(--rotateX)) rotateZ(var(--rotateZ));
 }
 #viewBox-table > * {
     display: flex;
@@ -279,6 +300,8 @@ input[type="text"].disable {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 #tabBox-pages > div[show] {
     display: var(--display);
@@ -297,6 +320,8 @@ input[type="text"].disable {
     grid-template-columns: 100%;
     grid-auto-rows: 1.5vw;
     gap: var(--gap);
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 #tabBox-pages-force > div > div {
     display: grid;
@@ -317,4 +342,53 @@ input[type="text"].disable {
 #tabBox-pages-force button.mode[value="-"] {
     background-color : var(--repelColor);
     box-shadow: 0.2vw 0.2vw 0px 0px var(--absorbColor);
+}
+#tabBox-pages-about {
+    color: white;
+}
+#tabBox-pages-about > code {
+    margin: 0.5vw;
+    padding: 0.5vw;
+    display: block;
+    color: #e1e1e1;
+    background-color: #88888888;
+    border-style: solid;
+    border-width: 0.2vw;
+    border-color: gray;
+}
+
+#dropMask {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    color: white;
+    font-size: 5vw;
+    font-weight: bold;
+    background-color: #1e1e1e88;
+    opacity: 0;
+    pointer-events: none;
+    transition: 1s;
+}
+#dropMask[dragover="true"] {
+    opacity: 1;
+}
+
+#message {
+    width: 100vw;
+    height: 5vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    color: black;
+    font-size: 2vw;
+    font-weight: bold;
+    background-color: #ffffff88;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+#message[message="show"] {
+    opacity: 1;
 }
