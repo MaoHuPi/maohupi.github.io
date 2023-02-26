@@ -1,0 +1,394 @@
+/*
+ * 2023 © MaoHuPi
+ * seatRandomizer/style/main.css
+ */
+
+* {
+    margin: 0px;
+    padding: 0px;
+    outline: none;
+    border: none;
+    user-select: none;
+    scrollbar-color: #48484855 #88888855;
+    scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+    width: 0.53vw;
+    height: 0.53vw;
+    padding: 1vw;
+    background-color: #48484855;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #88888855;
+}
+::placeholder {text-align: center;}
+::-webkit-input-placeholder {text-align: center;}
+:-moz-placeholder {text-align: center;}
+::-moz-placeholder {text-align: center;}
+:-ms-input-placeholder {text-align: center;}
+body {
+    --barWidth: 0.5vw;
+    --bar-v_c: 70%;
+    --bar-vc_t: 70%;
+    --gap: 1vw;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+.centerBoth {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#desk {
+    --hBW: calc(var(--barWidth) / 2);
+    display: grid;
+    grid-template-columns: calc(var(--bar-vc_t) - var(--hBW)) var(--barWidth) calc(100vw - var(--bar-vc_t) - var(--hBW));
+    grid-template-rows: calc(var(--bar-v_c) - var(--hBW)) var(--barWidth) calc(100vh - var(--bar-v_c) - var(--hBW));
+    width: 100vw;
+    height: 100vh;
+    background-color: #1e1e1e;
+    overflow: hidden;
+}
+.bar {
+    background-color: gray;
+    user-select: none;
+}
+img {
+    pointer-events: none;
+}
+input[type="text"].empty {
+    color: transparent !important;
+    background-color: #4e4e4e !important;
+    user-select: none;
+    cursor: default;
+}
+input[type="text"].number {
+    color: white !important;
+    background-color: #488a63 !important;
+    cursor: pointer;
+}
+input[type="text"].lock {
+    color: white !important;
+    background-color: #9d814c !important;
+    cursor: pointer;
+}
+input[type="text"].disable {
+    color: transparent !important;
+    background-color: #a34e48 !important;
+    user-select: none;
+    cursor: not-allowed;
+}
+.addBtn {
+    color: white;
+    font-size: 1.5vw;
+    font-weight: bold;
+    background: #808080;
+}
+:where(input, button) {
+    color: white;
+    background-color: gray;
+}
+#viewBox {
+    --moveW: 0px;
+    --moveH: 0px;
+    --rotateX: 0deg;
+    --rotateZ: 0deg;
+    --scale: 1;
+    grid-area: 1/1/2/2;
+    overflow: hidden;
+}
+#controlBox {
+    grid-area: 3/1/4/2;
+    display: grid;
+    grid-template-columns: 30% 30% 40%;
+    grid-template-rows: 2vw calc(100% - 2vw);
+    overflow: hidden;
+}
+#tabBox {
+    grid-area: 1/3/4/4;
+    display: grid;
+    grid-template-columns: calc(100% - 5vw) 5vw;
+    grid-template-rows: 100%;
+}
+#bar-v_c {
+    grid-area: 2/1/3/2;
+    cursor: n-resize;
+}
+#bar-vc_t {
+    grid-area: 1/2/4/3;
+    cursor: e-resize;
+}
+#viewBox-table {
+    --hNum: 3;
+    --vNum: 2;
+    --cellWidth: 5vw;
+    --cellHeight: 4vw;
+    --cellGap: 0.2vw;
+    --lineColor: #9e9e9e;
+    width: calc((var(--cellWidth) + var(--cellGap)) * var(--hNum) - var(--cellGap));
+    height: calc((var(--cellHeight) + var(--cellGap)) * var(--vNum) - var(--cellGap));
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--cellGap);
+    background-color: var(--lineColor);
+    border-style: solid;
+    border-width: var(--cellGap);
+    border-color: var(--lineColor);
+    transform: translateX(var(--moveW)) translateY(var(--moveH)) scale(var(--scale)) rotateX(var(--rotateX)) rotateZ(var(--rotateZ));
+}
+#viewBox-table > * {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: var(--cellWidth);
+    height: var(--cellHeight);
+    color: white;
+    text-align: center;
+    background-color: #4e4e4e;
+}
+#controlBox > .title {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1vw;
+    border-style: solid;
+    border-color: #4e4e4e;
+    border-width: 0px 0px 0.2vw 0px;
+}
+#controlBox > :not(.title) {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    border-style: solid;
+    border-color: #4e4e4e;
+    border-width: 0px 0.2vw 0px 0px;
+}
+[id^="controlBox-"] {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#controlBox-size {
+    display: grid;
+        grid-template-columns: calc(30% - var(--gap)/2*1) calc(70% - var(--gap)/2*1);
+    grid-auto-rows: 1.5vw;
+    gap: var(--gap);
+    padding: var(--gap);
+}
+#controlBox-size > label {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    color: white;
+    font-size: 1.5vw;
+    text-align: left;
+}
+#controlBox-size > input {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+#controlBox-content {
+    display: grid;
+        grid-template-columns: 100%;
+    grid-auto-rows: 1.5vw;
+    gap: var(--gap);
+    padding: var(--gap) 0px;
+}
+#controlBox-content > div {
+    display: grid;
+    grid-template-columns: calc(10% - var(--gap)/5*4) calc(30% - var(--gap)/5*4) calc(20% - var(--gap)/5*4) calc(20% - var(--gap)/5*4) calc(20% - var(--gap)/5*4);
+    grid-template-rows: 1.5vw;
+    gap: var(--gap);
+    padding: 0px var(--gap);
+}
+#controlBox-content :where(input[type="radio"], input[type="checkbox"]) {
+    display: none;
+    opacity: 0;
+}
+#controlBox-content .radioMark {
+    grid-area: 1/1/2/2;
+    color: white;
+    font-size: 1.5vw;
+    font-weight: bold;
+    opacity: 0;
+    transition: 0.5s;
+}
+#controlBox-content input[type="radio"]:checked ~ .radioMark {
+    color: white;
+    opacity: 1;
+}
+#controlBox-content > div:hover .radioMark {
+    color: #808080;
+    opacity: 1;
+}
+#controlBox-content label {
+    grid-area: 1/2/2/3;
+    color: white;
+    font-size: 1.5vw;
+    text-align: left;
+}
+#controlBox-content input[type="text"] {
+    grid-area: 1/3/2/4;
+    cursor: pointer !important;
+}
+#controlBox-content button.visibleBtn {
+    grid-area: 1/4/2/5;
+    color: white;
+    background-color: #808080;
+    transition: 0.5s;
+    cursor: pointer !important;
+}
+#controlBox-content input[type="checkbox"]:checked ~ button.visibleBtn {
+    color: black;
+    background-color: #77c58d;
+}
+#controlBox-content button.deleteBtn {
+    grid-area: 1/5/2/6;
+    color: black;
+    background-color: #f5675d;
+    cursor: pointer !important;
+}
+#controlBox-method {
+    display: grid;
+        grid-template-columns: 100%;
+    grid-auto-rows: 1.5vw;
+    gap: var(--gap);
+    padding: var(--gap);
+}
+
+#tabBox > input[type="radio"] {
+    display: none;
+    opacity: 0;
+}
+
+#tabBox-icons {
+    grid-area: 1/2/2/3;
+}
+#tabBox-icons > div {
+    width: 5vw;
+    height: 5vw;
+    background-image: var(--bgi);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border-radius: 0px;
+    transition: 0.5s;
+}
+#tabBox-icons > div[show] {
+    background-color: #6b6b6b;
+    border-radius: 1vw;
+}
+
+#tabBox-pages {
+    grid-area: 1/1/2/2;
+    height: 100vh;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+}
+#tabBox-pages > div {
+    display: none;
+    --display: black;
+    padding: var(--gap);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#tabBox-pages > div[show] {
+    display: var(--display);
+}
+#tabBox-pages-force {
+    --display: grid !important;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 2vw;
+    position: relative;
+}
+#tabBox-pages-force .addBtn {
+    grid-area: 2/1/3/2;
+}
+#tabBox-pages-force > div {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-auto-rows: 1.5vw;
+    gap: var(--gap);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#tabBox-pages-force > div > div {
+    display: grid;
+    grid-template-columns: calc(25% - var(--gap)/4*3) calc(25% - var(--gap)/4*3) calc(20% - var(--gap)/4*3) calc(30% - var(--gap)/4*3);
+    grid-template-rows: 100%;
+    gap: var(--gap);
+}
+#tabBox-pages-force button.mode {
+    --absorbColor: #eaab5d;
+    --repelColor: #5d8cea;
+    background-color : var(--absorbColor);
+    box-shadow: 0.2vw 0.2vw 0px 0px var(--repelColor);
+    transition: 0.5s;
+}
+#tabBox-pages-force button.mode::after {
+    content: attr(value);
+}
+#tabBox-pages-force button.mode[value="-"] {
+    background-color : var(--repelColor);
+    box-shadow: 0.2vw 0.2vw 0px 0px var(--absorbColor);
+}
+#tabBox-pages-about {
+    color: white;
+}
+#tabBox-pages-about > code {
+    margin: 0.5vw;
+    padding: 0.5vw;
+    display: block;
+    color: #e1e1e1;
+    background-color: #88888888;
+    border-style: solid;
+    border-width: 0.2vw;
+    border-color: gray;
+}
+
+#dropMask {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    color: white;
+    font-size: 5vw;
+    font-weight: bold;
+    background-color: #1e1e1e88;
+    opacity: 0;
+    pointer-events: none;
+    transition: 1s;
+}
+#dropMask[dragover="true"] {
+    opacity: 1;
+}
+
+#message {
+    width: 100vw;
+    height: 5vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    color: black;
+    font-size: 2vw;
+    font-weight: bold;
+    background-color: #ffffff88;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+#message[message="show"] {
+    opacity: 1;
+}

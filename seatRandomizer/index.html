@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 2023 © MaoHuPi -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Randomizer</title>
+    <link rel="stylesheet" href="style/main.css">
+    <script src="script/basic.js"></script>
+    <link rel="shortcut icon" href="image/logo.ico" type="image/x-icon">
+    <!-- <link rel="shortcut icon" href="image/logo.png" type="image/png"> -->
+</head>
+<body>
+    <div id="desk">
+        <div id="viewBox">
+            <div id="viewBox-table"></div>
+        </div>
+        <div id="controlBox">
+            <div class="title">size</div>
+            <div id="controlBox-size">
+                <label for="controlBox-size-width">columns</label><input id="controlBox-size-width" type="number" value="3">
+                <label for="controlBox-size-height">rows</label><input id="controlBox-size-height" type="number" value="2">
+            </div>
+            <div class="title">content</div>
+            <div id="controlBox-content">
+            </div>
+            <div class="title">method</div>
+            <div id="controlBox-method">
+                <button id="controlBox-method-random">random (no force)</button>
+                <button id="controlBox-method-force">random (with force)</button>
+                <button id="controlBox-method-saveImage">save seat map image</button>
+                <button id="controlBox-method-saveProject">save project file</button>
+                <button id="controlBox-method-openProject">open project file</button>
+            </div>
+        </div>
+        <div id="tabBox">
+            <div id="tabBox-pages">
+                <div id="tabBox-pages-about">
+                    <img src="image/logo.svg" alt="" width="100%">
+                    Tool name
+                    <code>Seat Randomizer</code>
+                    developed by
+                    <code>MaoHuPi</code>
+                </div>
+                <div id="tabBox-pages-force">
+                    <div></div>
+                    <button class="addBtn">+</button>
+                </div>
+            </div>
+            <div id="tabBox-icons"></div>
+        </div>
+        <div id="bar-v_c" class="bar" moveType="v"></div>
+        <div id="bar-vc_t" class="bar" moveType="h"></div>
+    </div>
+    <div id="dropMask" class="centerBoth">
+        Drop Project File Here!
+    </div>
+    <div id="message" class="centerBoth"></div>
+    <script src="script/main.js"></script>
+</body>
+</html>
