@@ -1,0 +1,23 @@
+/* html, body {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: gray;
+}
+.flexCenter {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+#cvs {
+    --cw100: min(calc(100vh*1920/1080), 100vw);
+    --ch100: min(calc(100vw/1920*1080), 100vh);
+    width: var(--cw100) !important;
+    height: var(--ch100) !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+} */
