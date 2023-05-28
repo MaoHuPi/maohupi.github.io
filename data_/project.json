@@ -3,6 +3,10 @@
     "name": "MaoHuPi｜貓虎皮個人網站", 
     "description": "貓虎皮的工具、遊戲、作品集！"
   }, 
+  "maohupiWireworldGame": {
+    "name": "Wireworld Game Playground｜導線世界", 
+    "description": "利用Wireworld的邏輯，玩出無限可能！"
+  }, 
   "seatRandomizer": {
     "name": "Seat Randomizer｜內定座位打亂器", 
     "description": "將自己的座位固定，並將好友拉至身邊，討厭的同學都給我滾！"
