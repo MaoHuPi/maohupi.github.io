@@ -534,7 +534,7 @@ function importImage(){
 							let cellType = -1;
 							let [r, g, b] = data.slice(i, i+3);
 							if(r >= 200 && b <= 200){
-								if(g >= 200) cellType = 0;
+								if(g >= 180) cellType = 0;
 								else cellType = 2;
 							}
 							else if(r <= 200 && g <= 200 && b >= 200) cellType = 1;
