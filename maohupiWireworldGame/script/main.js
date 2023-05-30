@@ -165,17 +165,15 @@ function drawSelectRect(){
 		viewCtx.fillRect(...rect);
 		viewCtx.strokeRect(rect[0] - lines.width/2, rect[1] - lines.width/2, rect[2] + lines.width, rect[3] + lines.width);
 		viewCtx.fillStyle = '#4CAF50';
-		viewCtx.font = '20px Georgia';
-		viewCtx.fillText('123', Math.min(rect[0], rect[0] + rect[2]), Math.min(rect[1], rect[1] + rect[4]));
-		if(!mouse.flagSelect){
+		viewCtx.font = '20px Zpix';
+		viewCtx.fillText(`${selectRect.endX - selectRect.x}, ${selectRect.endY - selectRect.y}`, Math.min(rect[0], rect[0] + rect[2]), Math.min(rect[1], rect[1] + rect[3]) - 10);
+		// if(!mouse.flagSelect){
 
-		}
+		// }
 	}
 }
-function viewUpdate(){
-	view.width = window.innerWidth;
-	view.height = window.innerHeight;
-	drawLines();
+function getSelectMap(){
+	let selectMap = {};
 	for(let cell in map){
 		let pos = cell.split(',');
 		pos = pos.map(n => parseInt(n));
@@ -190,11 +188,54 @@ function viewUpdate(){
 				pos[0] >= downSelectRect[0] && pos[0] < downSelectRect[2] && 
 				pos[1] >= downSelectRect[1] && pos[1] < downSelectRect[3]
 			){
-				pos[0] += -selectRect.oriX + selectRect.x;
-				pos[1] += -selectRect.oriY + selectRect.y;
-				console.log(-selectRect.oriX + selectRect.x, -selectRect.oriY + selectRect.y);
+				selectMap[cell] = map[cell];
+				continue;
 			}
 		}
+	}
+	return(selectMap);
+}
+function viewUpdate(){
+	view.width = window.innerWidth;
+	view.height = window.innerHeight;
+	drawLines();
+	let selectMap = {};
+	for(let cell in map){
+		let pos = cell.split(',');
+		pos = pos.map(n => parseInt(n));
+		if(selectRect.visible && !mouse.flagSelect){
+			let downSelectRect = [
+				selectRect.oriX, 
+				selectRect.oriY, 
+				selectRect.endX - selectRect.x + selectRect.oriX, 
+				selectRect.endY - selectRect.y + selectRect.oriY
+			];
+			if(
+				pos[0] >= downSelectRect[0] && pos[0] < downSelectRect[2] && 
+				pos[1] >= downSelectRect[1] && pos[1] < downSelectRect[3]
+			){
+				selectMap[cell] = map[cell];
+				continue;
+			}
+		}
+		pos = posMap2View(pos);
+		if(
+			pos[0]+transform.scaleZ > 0 && pos[0] < view.width && 
+			pos[1]+transform.scaleZ > 0 && pos[1] < view.height
+		){
+			viewCtx.fillStyle = cellColor[map[cell]];
+			viewCtx.fillRect(
+				...pos, 
+				1*transform.scaleZ, 
+				1*transform.scaleZ
+			);
+		}
+	}
+	for(let cell in selectMap){
+		let pos = cell.split(',');
+		pos = pos.map(n => parseInt(n));
+		pos[0] += -selectRect.oriX + selectRect.x;
+		pos[1] += -selectRect.oriY + selectRect.y;
 		pos = posMap2View(pos);
 		if(
 			pos[0]+transform.scaleZ > 0 && pos[0] < view.width && 
@@ -285,7 +326,6 @@ window.addEventListener('mousemove', event => {
 	}
 });
 view.addEventListener('mousedown', event => {
-	console.log(1);
 	[mouse.x, mouse.y] = [event.pageX, event.pageY];
 	[mouse.downX, mouse.downY] = [mouse.x, mouse.y];
 	if(event.ctrlKey){
@@ -439,6 +479,8 @@ playSpeedBox.addEventListener('change', () => {edit.playSpeed = parseInt(playSpe
 lineVisibleBox.addEventListener('click', lineVisibleChange);
 lineWidthBox.addEventListener('change', () => {lines.width = parseInt(lineWidthBox.value);});
 projectNameBox.addEventListener('change', () => {changeProjectName(projectNameBox.value);});
+$('#loadImageButton').addEventListener('click', () => {importImage();});
+$('#downloadImageButton').addEventListener('click', () => {exportImage();});
 
 $$(':where(input[type="text"], input[type="number"])').forEach(input => {
 	input.addEventListener('keydown', event => {
@@ -469,6 +511,80 @@ function downloadExport(){
 }
 $('#downloadExportButton').addEventListener('click', downloadExport);
 
+// import and export image
+function importImage(){
+	let input = $e('input');
+	input.type = 'file';
+	input.onchange = () => {
+		if(input.files.length > 0){
+			var file = input.files[0];
+			let reader = new FileReader();
+			reader.onloadend = () => {
+				let img = $e('img');
+				img.onload = () => {
+					let cvs = $e('canvas'), 
+						ctx = cvs.getContext('2d');
+					[cvs.width, cvs.height] = [img.width, img.height];
+					ctx.drawImage(img, 0, 0);
+					let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height), 
+						data = imgData.data;
+					let newMap = {};
+					for(let i = 0; i < data.length; i += 4){
+						if(data[i+3] !== 0){
+							let cellType = -1;
+							let [r, g, b] = data.slice(i, i+3);
+							if(r >= 200 && b <= 200){
+								if(g >= 200) cellType = 0;
+								else cellType = 2;
+							}
+							else if(r <= 200 && g <= 200 && b >= 200) cellType = 1;
+							if(cellType !== -1){
+								newMap[`${parseInt(Math.round(i/4)%cvs.width)},${parseInt(Math.floor((i/4)/cvs.width))}`] = cellType;
+							}
+						}
+					}
+					map = newMap;
+				};
+				img.src = reader.result;
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+	input.click();
+}
+function exportImage(flagIsSelect = false){
+	let processMap = {};
+	if(flagIsSelect){
+		processMap = getSelectMap();
+	}
+	else{
+		processMap = {...map};
+	}
+	var poss = Object.keys(processMap).map(cell => cell.split(',').map(n => parseInt(n)));
+	let xs = poss.map(l => l[0]), 
+		ys = poss.map(l => l[1]);
+	let startX = Math.min(...xs), 
+		endX = Math.max(...xs) + 1, 
+		startY = Math.min(...ys), 
+		endY = Math.max(...ys) + 1;
+	let cvs = $e('canvas'), 
+		ctx = cvs.getContext('2d'), 
+		dlLink = $e('a');
+	cvs.width = endX - startX;
+	cvs.height = endY - startY;
+	for(let cell in processMap){
+		let pos = cell.split(',');
+		pos = pos.map(n => parseInt(n));
+		pos[0] -= startX;
+		pos[1] -= startY;
+		ctx.fillStyle = cellColor[map[cell]];
+		ctx.fillRect(...pos, 1, 1);
+	}
+	var url = cvs.toDataURL();
+	dlLink.href = url;
+	dlLink.download = 'mapImage.png';
+	dlLink.click();
+}
 // pro
 function yellowAll(){
 	let newMap = {};
@@ -481,4 +597,3 @@ function hideLines(){
 	lines.width = 0;
 	lines.visible = false;
 }
-// view.get
