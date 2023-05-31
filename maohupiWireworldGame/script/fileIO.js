@@ -137,7 +137,7 @@ async function loadFile(jsonTextOrFile, type = 'text', fileName = 'gameMap'){
         }
     }
     else if(type == 'text'){
-		importMap(jsonTextOrFile);
+		importProject(jsonTextOrFile);
     }
 }
 async function updateLocalFile(entry, text) {
