@@ -169,3 +169,4 @@ function flatJson(json){
 function textOffset(text, delta = 1){
     return(text.split('\n').map(row => row.split('').map(char => String.fromCharCode(char.charCodeAt() + delta)).join('')).join('\n'));
 }
+function deepCopy(obj){return(JSON.parse(JSON.stringify(obj)));}

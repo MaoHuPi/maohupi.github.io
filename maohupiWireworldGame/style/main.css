@@ -1,7 +1,22 @@
 * {
 	user-select: none;
 	outline: none;
+	scrollbar-width: thin;
+	scrollbar-color: #00000055 #48484855;
 }
+*::-webkit-scrollbar {
+    background-color: #48484855;
+	--width: 0.5vw;
+	width: var(--width);
+	height: var(--width);
+	padding: 1vw;
+}
+*::-webkit-scrollbar-thumb {
+    background: #00000055;
+	border-radius: 100vw;
+	margin: 1px;
+}
+
 html, body {
 	margin: 0px;
 	padding: 0px;
