@@ -226,6 +226,11 @@ class RectElement{
 			this.mapValue[cell] = 0;
 		}
 	}
+	clearRect(){
+		for(let cell in this.mapValue){
+			delete this.mapValue[cell];
+		}
+	}
 }
 const selectRect = new RectElement({
 	fillColor: '#8bc34a55', 
@@ -458,7 +463,10 @@ function centered(processFunc, centerPos = [view.width/2, view.height/2]){
 	transform.translateY += (centerPos[1] - newCenterPos[1]);
 }
 function scale(rate, centerPos = [view.width/2, view.height/2]){
-	centered(() => {transform.scaleZ += rate;}, centerPos);
+	centered(() => {
+		transform.scaleZ += rate;
+		transform.scaleZ = Math.max(1, Math.min(transform.scaleZ, 100));
+	}, centerPos);
 }
 
 // event listener
@@ -540,10 +548,26 @@ window.addEventListener('mouseup', event => {
 	edit.cellType = edit.downCellType;
 	changeEditMode('draw');
 });
+view.addEventListener('wheel', event => {
+	[mouse.x, mouse.y] = [event.pageX, event.pageY];
+	event.preventDefault();
+	// console.log(JSON.stringify(['wheelDeltaX', 'wheelDeltaY', 'composed', 'ctrlKey'].map(k => event[k])));
+	// if(Math.abs(event.wheelDeltaY) == 120){
+	if(event.ctrlKey){
+		scale(event.deltaY * -0.1, [mouse.x, mouse.y]);
+	}
+	else{
+		transform.translateX += event.deltaX * -0.5;
+		transform.translateY += event.deltaY * -0.5;
+	}
+}, {passive: false});
 window.addEventListener('keydown', event => {
 	// console.log(event.key);
 	if(event.ctrlKey){
 		if(['t', 'n', 'l', 'a'].indexOf(event.key) == -1) event.preventDefault();
+	}
+	if(event.target.tagName.toLowerCase() == 'input') return;
+	if(event.ctrlKey){
 		switch(event.key){
 			case 's':
 				downloadExport();
@@ -555,14 +579,10 @@ window.addEventListener('keydown', event => {
 				transform.scaleZ = 10;
 				break;
 			case '=':
-				if(transform.scaleZ < 100){
-					scale(1);
-				};
+				if(transform.scaleZ < 100) scale(1);
 				break;
 			case '-':
-				if(transform.scaleZ > 1){
-					scale(-1);
-				};
+				if(transform.scaleZ > 1) scale(-1);
 				break;
 			case 'r':
 				yellowAll();	
@@ -581,6 +601,32 @@ window.addEventListener('keydown', event => {
 			edit.downCellType = targetType;
 			if(edit.cellType !== -1) edit.cellType = targetType;
 			selectButton($(`[id="typeSwitch-${targetType}"]`));
+		}
+		else{
+			console.log(event.key);
+			switch(event.key){
+				case 'Enter':
+				case 'Escape':
+					cancelSelection();
+					break;
+				case 'Delete':
+				case 'Backspace':
+					mouse.focusRect?.clearRect();
+					break;
+				case 'ArrowRight':
+				case 'ArrowLeft':
+				case 'ArrowUp':
+				case 'ArrowDown':
+					if(mouse.focusRect?.x){
+						deltaX = {'ArrowRight': 1, 'ArrowLeft': -1}[event.key] || 0;
+						deltaY = {'ArrowDown': 1, 'ArrowUp': -1}[event.key] || 0;
+						mouse.focusRect.x += deltaX;
+						mouse.focusRect.y += deltaY;
+						mouse.focusRect.endX += deltaX;
+						mouse.focusRect.endY += deltaY;
+					}
+					break;
+			}
 		}
 	}
 });
@@ -619,12 +665,8 @@ selectButton($(`[id="typeSwitch-${edit.cellType}"]`));
 playStatusBox.addEventListener('click', playStatusChange);
 playSpeedBox.addEventListener('change', function (){
 	let value = parseInt(this.value);
-	if(value < 0){
-		value = 0;
-		this.value = value;
-	}
-	else if(value > 1e3){
-		value = 1e3;
+	if(value < 0 || value > 1e3){
+		value = Math.max(0, Math.min(value, 1e3));
 		this.value = value;
 	}
 	edit.playSpeed = value;
