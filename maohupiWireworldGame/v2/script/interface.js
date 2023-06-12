@@ -12,11 +12,10 @@ const contentDividingLine = $('#contentDividingLine');
 const tabButtons = $('#tabButtons');
 const sideBox = $('#sideBox');
 
-const editModeBox = $('#editMode');
-const playSpeedBox = $('#playSpeed');
-const lineVisibleBox = $('#lineVisible');
-const lineWidthBox = $('#lineWidth');
-const projectNameBox = $('#projectName');
+const playSpeedInput = $('#playSpeedInput');
+const lineVisibleButton = $('#lineVisibleButton');
+const lineWidthInput = $('#lineWidthInput');
+const projectNameInput = $('#projectNameInput');
 
 {
 	// define
@@ -92,30 +91,10 @@ const projectNameBox = $('#projectName');
 // 	})
 // });
 // selectButton($(`[id="typeSwitch-${edit.cellType}"]`));
-// playSpeedBox.addEventListener('change', function (){
-// 	let value = parseInt(this.value);
-// 	if(value < 0 || value > 1e3){
-// 		value = Math.max(0, Math.min(value, 1e3));
-// 		this.value = value;
-// 	}
-// 	edit.playSpeed = value;
-// });
-// lineVisibleBox.addEventListener('click', lineVisibleChange);
-// lineWidthBox.addEventListener('change', function (){
-// 	let value = parseInt(this.value);
-// 	if(value < 0){
-// 		value = 0;
-// 		this.value = value;
-// 	}
-// 	else if(value > 10){
-// 		value = 10;
-// 		this.value = value;
-// 	}
-// 	centered(() => {lines.width = parseInt(value);});
-// });
-// projectNameBox.addEventListener('change', () => {changeProjectName(projectNameBox.value);});
-// $('#loadImageButton').addEventListener('click', () => {importImage();});
-// $('#downloadImageButton').addEventListener('click', () => {exportImage(map);});
+
+projectNameInput.addEventListener('change', () => {changeProjectName(projectNameInput.value);});
+$('#loadImageButton').addEventListener('click', () => {importImage();});
+$('#downloadImageButton').addEventListener('click', () => {exportImage(map);});
 
 // $$(':where(input[type="text"], input[type="number"])').forEach(input => {
 // 	input.addEventListener('keydown', event => {

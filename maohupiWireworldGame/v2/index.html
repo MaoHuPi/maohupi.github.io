@@ -15,7 +15,7 @@
 		<div id="topBar" class="stepAsideParent" info="top bar">
 			<div id="tabButtons">
 				<button info="file tab button">F</button>
-				<button info="export tab button">E</button>
+				<button info="edit tab button">E</button>
 				<button info="theme tab button">T</button>
 				<button info="settings tab button">S</button>
 				<button info="info tab button">I</button>
@@ -25,15 +25,40 @@
 			</div>
 		</div>
 		<div id="contentBox" info="content box">
-			<canvas id="view" info="operating area"></canvas>
+			<canvas id="view" info="operating area" info-template="operating area<a>{editMode}</a>"></canvas>
 			<div id="contentDividingLine" info="dividing line<a>(drag)</a>"></div>
 			<div id="sideBox" info="side box">
 				<div id="sideBoxPages">
-					<div>file page</div>
-					<div>export page</div>
-					<div>theme page</div>
-					<div>settings page</div>
-					<div>info page</div>
+					<div>&lt;file page&gt;
+						<fieldset>
+							<legend>project name</legend>
+							<input id="projectNameInput" type="text" style="width: 100%;">
+						</fieldset>
+						<fieldset>
+							<legend>project file</legend>
+							<button id="loadImportButton" class="smallInput" style="width: 100%;">open</button>
+							<button id="downloadExportButton" class="smallInput" style="width: 100%;">save</button>
+						</fieldset>
+						<fieldset>
+							<legend>image file</legend>
+							<button id="loadImageButton" class="smallInput" style="width: 100%;">import</button>
+							<button id="downloadImageButton" class="smallInput" style="width: 100%;">export</button>
+						</fieldset>
+					</div>
+					<div>&lt;edit page&gt;</div>
+					<div>&lt;theme page&gt;
+						<fieldset>
+							<legend>line visible</legend>
+							<button id="lineVisibleButton" class="bigInput">
+						</fieldset>
+						<fieldset>
+							<legend>line width</legend>
+								<input id="lineWidthInput" class="bigInput" type="number">
+						</fieldset>
+					</div>
+					<div>&lt;settings page&gt;
+					</div>
+					<div>&lt;info page&gt;</div>
 				</div>
 			</div>
 		</div>
@@ -42,6 +67,9 @@
 				<button id="undoButton" bgi="undoBtn" info="undo button<a>[Ctrl] + [Z]</a>">U</button>
 				<button id="redoButton" bgi="redoBtn" info="redo button<a>[Ctrl] + [Shift] + [Z]</a>">R</button>
 				<button id="playButton" bgi="playBtn" info="play/pause button<a>[Space]</a>">P</button>
+				<div class="inputParent" inputName="play speed">
+					<input id="playSpeedInput" class="bigInput" type="number" info="play speed input">
+				</div>
 			</div>
 			<div>
 				<button id="cutButton" bgi="cutBtn" info="cut button<a>[Ctrl] + [X]</a>">C</button>
@@ -70,7 +98,7 @@
 			<button id="playStatus" class="bigInput">
 		</div>
 		<div group="play speed">
-			<input id="playSpeed" class="bigInput" type="number">
+			<!-- <input id="playSpeed" class="bigInput" type="number"> -->
 		</div>
 		<div group="line visible">
 			<button id="lineVisible" class="bigInput">
@@ -78,16 +106,7 @@
 		<div group="line width">
 			<input id="lineWidth" class="bigInput" type="number">
 		</div>
-		<div group="project name">
-			<input id="projectName" class="bigInput" type="text">
-		</div>
-		<div group="game map i/o">
-			<button id="loadImportButton" class="smallInput" style="width: 100%;">open</button>
-			<button id="downloadExportButton" class="smallInput" style="width: 100%;">save</button>
-		</div>
 		<div group="image i/o">
-			<button id="loadImageButton" class="smallInput" style="width: 100%;">import</button>
-			<button id="downloadImageButton" class="smallInput" style="width: 100%;">export</button>
 		</div>
 		<div></div>
 	</div>

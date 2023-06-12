@@ -45,6 +45,39 @@ html {
 	justify-content: center;
 }
 
+/* input */
+input, #sideBoxPages button {
+	color: var(--yellow);
+	font-size: 20px;
+	text-align: center;
+	background-color: var(--darkGreen);
+	border-color: var(--yellow);
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 2px;
+}
+input::selection {
+	background-color: var(--lightGreen);
+}
+.inputParent {
+	display: flex;
+	justify-content: center;
+    align-items: center;
+	position: relative;
+}
+.inputParent::after {
+	position: absolute;
+	top: 14px;
+	left: 16px;
+	content: attr(inputName);
+	color: var(--lightGreen);
+	font-size: 10px;
+}
+.inputParent > input {
+	width: calc(100% - 12px * 2);
+	height: calc(100% - 12px * 2);
+}
+
 html, body {
 	margin: 0px;
 	padding: 0px;
@@ -269,8 +302,43 @@ html, body {
 #playButton[status="pause"] {
 	--bgi: url("../image/playBtn.png") !important;
 }
+#bottomBar .inputParent {
+	width: calc(2 * var(--bottomBarHeight));
+	height: var(--bottomBarHeight);
+}
 
 /* sideBox */
-#sideBox > div {
-
+#sideBox fieldset {
+	position: relative;
+}
+#sideBox fieldset .smallInput {
+	/* --shadowY: 0px; */
+	/* --shadowColor: white; */
+	padding: 0px;
+	width: var(--toolBar-buttonWidth);
+	height: var(--toolBar-buttonWidth);
+	font-size: 1vw;
+	/* background-color: white; */
+	border-style: solid;
+	/* border-color: black; */
+	border-radius: 0.2vw;
+	text-align: center;
+	box-shadow: 0px var(--shadowY) 0px 0px var(--shadowColor);
+	box-sizing: border-box;
+}
+#sideBox fieldset .smallInput:hover {
+	--shadowY: -0.5vw;
+	--shadowColor: var(--toolBar-backgroundColor);
+}
+#sideBox fieldset .smallInput[selected] {
+	--shadowY: -0.5vw;
+	--shadowColor: white;
+}
+#sideBox fieldset .bigInput {
+	width: 100%;
+	height: var(--toolBar-buttonWidth);
+	box-sizing: border-box;
+}
+#sideBox fieldset .bigInput[disabled] {
+	cursor: no-drop;
 }

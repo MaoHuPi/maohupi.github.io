@@ -306,23 +306,35 @@
 		lines.visible = !lines.visible;
 		lineVisibleBox.innerText = lines.visible ? 'visible' : 'invisible';
 	}
+	let flagEditModeUpdate = false;
 	function changeEditMode(mode){
-		edit.editMode = mode;
-		editModeBox.value = mode;
+		if(edit.editMode !== mode){
+			edit.editMode = mode;
+			view.setAttribute('info', 
+				view.getAttribute('info-template')?.replace('{editMode}', mode)
+			);
+			flagEditModeUpdate = true;
+		}
 	}
+	view.addEventListener('mousemove', () => {
+		if(flagEditModeUpdate){
+			flagEditModeUpdate = false;
+			hoverInfoBox.innerHTML = view.getAttribute('info') || '';
+		}
+	});
 	function changeProjectName(newName){
 		newName = newName.replaceAll('.json', '');
 		edit.projectName = newName;
-		projectNameBox.value = newName;
+		projectNameInput.value = newName;
 	}
 
 	// interface default value
 	changeEditMode(edit.editMode);
-	playSpeedBox.value = edit.playSpeed;
+	playSpeedInput.value = edit.playSpeed;
 	playStatusChange(false);
-	lineWidthBox.value = lines.width;
-	lineVisibleBox.innerText = lines.visible ? 'visible' : 'invisible';
-	projectNameBox.value = edit.projectName;
+	lineWidthInput.value = lines.width;
+	lineVisibleButton.innerText = lines.visible ? 'visible' : 'invisible';
+	projectNameInput.value = edit.projectName;
 
 	// game
 	function gameUpdate(){
@@ -657,7 +669,7 @@
 			if(targetType > -1){
 				edit.downCellType = targetType;
 				if(edit.cellType !== -1) edit.cellType = targetType;
-				selectButton($(`[id="typeSwitch-${targetType}"]`));
+				// selectButton($(`[id="typeSwitch-${targetType}"]`));
 			}
 			else if(keyValue == 'n') window.open(location.href, '_blank');
 			else{
@@ -974,4 +986,25 @@
 	cutButton.addEventListener('click', cut);
 	copyButton.addEventListener('click', copy);
 	pasteButton.addEventListener('click', paste);
+	playSpeedInput.addEventListener('change', function (){
+		let value = parseInt(this.value);
+		if(value < 0 || value > 1e3){
+			value = Math.max(0, Math.min(value, 1e3));
+			this.value = value;
+		}
+		edit.playSpeed = value;
+	});
+	lineWidthInput.addEventListener('change', function (){
+		let value = parseInt(this.value);
+		if(value < 0){
+			value = 0;
+			this.value = value;
+		}
+		else if(value > 10){
+			value = 10;
+			this.value = value;
+		}
+		centered(() => {lines.width = parseInt(value);});
+	});
+	lineVisibleButton.addEventListener('click', lineVisibleChange);
 }
