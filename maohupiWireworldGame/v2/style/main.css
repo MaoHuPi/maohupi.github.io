@@ -112,11 +112,11 @@ html, body {
     align-items: stretch;
     padding: 0vw;
 	position: fixed;
-	background-color: #00000088;
-	border-radius: 0.5vw;
+	background-color: var(--darkGreen);
 	border-style: solid;
-	border-color: #ffffff88;
+	border-color: var(--yellow);
 	border-width: 2px;
+	border-radius: 2px;
     overflow: hidden;
     opacity: 0;
     pointer-events: none;
@@ -126,11 +126,13 @@ html, body {
 	pointer-events: auto;
 }
 #contextmenu > button {
+	padding: 1px 5px;
+	color: var(--yellow);
+	font-size: 15px;
 	background-color: transparent;
 	border-style: solid;
 	border-width: 0px 0px 1px 0px;
-	border-color: #ffffff88;
-	color: #ffffff88;
+	border-color: var(--yellow);
 }
 
 /* interfaceBox */
