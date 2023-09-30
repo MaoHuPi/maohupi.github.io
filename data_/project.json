@@ -3,6 +3,10 @@
     "name": "MaoHuPi｜貓虎皮個人網站", 
     "description": "貓虎皮的工具、遊戲、作品集！"
   }, 
+  "c0CodeOCR": {
+    "name": "C0 Code OCR｜攜零程式碼提取器", 
+    "description": "按鈕一按，電腦課作業輕鬆完成！"
+  }, 
   "maohupiWireworldGame": {
     "name": "Wireworld Game Playground｜導線世界", 
     "description": "利用Wireworld的邏輯，玩出無限可能！"
