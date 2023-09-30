@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- 2023 © MaoHuPi -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval' data:;" />
+	<title>C0 Code OCR</title>
+	<link rel="stylesheet" href="style/main.css">
+	<link rel="stylesheet" href="style/code.css">
+	<link rel="stylesheet" href="style/floatAlert.css">
+	<link rel="shortcut icon" href="image/logo.ico" type="image/x-icon">
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js" integrity="sha256-RJn/k21P1WKtylpcvlEtwZ64CULu6GGNr7zrxPeXS9s=" crossorigin="anonymous"></script> -->
+	<script src="script/ocr.js"></script>
+	<script src="script/statistics.js"></script>
+	<script src="script/component.js"></script>
+	<script src="script/preset.js"></script>
+	<script src="script/floatAlert.js"></script>
+	<script src="script/highlight.js_11.8.0_highlight.min.js"></script>
+</head>
+<body>
+	<div id="gridBox" class="box">
+		<div id="topLeftBox" class="box">
+			<div id="imagePreviewBox">
+				<canvas></canvas>
+				<div id="codeRect">
+					<rectDot component type="left"></rectDot>
+					<rectDot component type="right"></rectDot>
+					<rectDot component type="top"></rectDot>
+					<rectDot component type="bottom"></rectDot>
+				</div>
+			</div>
+		</div>
+		<div id="topRightBox" class="box">
+			<div>
+				<h2>File Input</h2>
+				<label for="uploadInput" class="optionRow">Open Image</label>
+				<input id="uploadInput"type="file" accept="image/*" hidden>
+				
+				<h2>Basic Settings</h2>
+				<advinp component id="preset" title="Preset" type="select" class="optionRow">
+					<!-- <option value="devcpp-c">Dev-C++ C</option> -->
+				</advinp>
+
+				<h2>Data Process</h2>
+				<advinp component id="codeLanguage" title="Code Language" type="text" class="optionRow"></advinp>
+				<advinp component id="fontName" title="Font Name" type="text" class="optionRow"></advinp>
+				<advinp component id="fontDataRange" title="Font Data Range" type="text" class="optionRow"></advinp>
+				<advinp component id="samplingLevel" title="Sampling Level" type="number" min="32" max="128" step="1" class="optionRow"></advinp>
+
+				<h2>Code Color Filter</h2>
+				<advinp component id="codeColorRange-hue" title="Hue" type="range" min="0" max="360" step="1" class="optionRow" inverse></advinp>
+				<advinp component id="codeColorRange-saturation" title="Saturation" type="range" min="0" max="100" step="1" class="optionRow" inverse></advinp>
+				<advinp component id="codeColorRange-lightness" title="Lightness" type="range" min="0" max="100" step="1" class="optionRow" inverse></advinp>
+				
+				<h2>OCR Method</h2>
+				<button id="getCodeButton_v1" class="optionRow">Get Code v1</button>
+				<button id="getCodeButton_v2" class="optionRow">Get Code v2</button>
+
+				<h2>Result Output</h2>
+				<button id="downloadCode" class="optionRow">Download File</button>
+				<button id="copyCode" class="optionRow">Copy Code</button>
+			</div>
+		</div>
+		<div id="bottomBox" class="box">
+			<pre id="codeOutput">No extracted text output has been produced yet.</pre>
+		</div>
+		<slider component id="tl_tr_slide" type="horizontal"></slider>
+		<slider component id="t_b_slide" type="vertical"></slider>
+	</div>
+	<div id="alerts"></div>
+	<script src="script/main.js"></script>
+</body>
+</html>

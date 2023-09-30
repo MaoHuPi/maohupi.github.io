@@ -1,0 +1,284 @@
+/*
+ * 2023 © MaoHuPi
+ * 基本頁面樣式
+ * c0CodeOCR > style > main.css
+ */
+
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	user-select: none;
+	font-family: "consolas", "monospace";
+	scrollbar-color: #00c5e8 black;
+	outline: none;
+}
+*::-webkit-scrollbar-thumb {
+	background: #00c5e8;
+}
+*::-webkit-scrollbar {
+	width: 0.2vw;
+	height: 0.2vw;
+	padding: 1vw;
+    background-color: black;
+}
+*::selection {
+	color: white;
+	background: #00c5e888;
+}
+html, body {
+	width: 100vw;
+	height: 100vh;
+	background: linear-gradient(to bottom left, #2c363e 20%, #2e3032 50%, #0d0d0d 100%);
+}
+
+#alerts {
+	--alert-width: 30vw;
+	--alert-height: 5vw;
+	width: calc(var(--alert-width) + 2vw);
+	height: 100vh;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	pointer-events: none;
+}
+
+.box {
+	position: relative;
+}
+#gridBox {
+	display: grid;
+	--tl_tr_slide: 0.65;
+	--t_b_slide: 0.6;
+	--slideThickness: 0.5vw;
+	grid-template-columns: calc(var(--tl_tr_slide) * 100vw - var(--slideThickness)/2) var(--slideThickness) calc((1 - var(--tl_tr_slide)) * 100vw - var(--slideThickness)/2);
+	grid-template-rows: calc(var(--t_b_slide) * 100vh - var(--slideThickness)/2) var(--slideThickness) calc((1 - var(--t_b_slide)) * 100vh - var(--slideThickness)/2);
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+#topLeftBox {
+	--boxWidth: calc(var(--tl_tr_slide) * 100vw - var(--slideThickness)/2);
+	--boxHeight: calc(var(--t_b_slide) * 100vh - var(--slideThickness)/2);
+	grid-area: 1/1/2/2;
+	overflow: hidden;
+}
+#topRightBox {
+	--boxWidth: calc((1 - var(--tl_tr_slide)) * 100vw - var(--slideThickness)/2);
+	--boxHeight: calc(var(--t_b_slide) * 100vh - var(--slideThickness)/2);
+	grid-area: 1/3/2/4;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#bottomBox {
+	--boxWidth: 100vw;
+	--boxHeight: calc((1 - var(--t_b_slide)) * 100vh - var(--slideThickness)/2);
+	grid-area: 3/1/4/4;
+	overflow: auto;
+}
+
+.slider {
+	background-color: #49bccc;
+	opacity: 0.2;
+	transition: opacity 0.5s;
+}
+.slider:hover {
+	opacity: 1;
+}
+#tl_tr_slide {
+	grid-area: 1/2/2/3;
+	cursor: ew-resize;
+}
+#t_b_slide {
+	grid-area: 2/1/3/4;
+	cursor: ns-resize;
+}
+
+#imagePreviewBox {
+	--width: 1920;
+	--height: 1080;
+    width: min(calc(var(--boxHeight)*var(--width)/var(--height)), var(--boxWidth));
+    height: min(calc(var(--boxWidth)/var(--width)*var(--height)), var(--boxHeight));
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+#imagePreviewBox > * {
+	width: 100%;
+    height: 100%;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+#codeRect {
+	--left: 0%;
+	--top: 0%;
+	--right: 100%;
+	--bottom: 100%;
+	width: calc(var(--right) - var(--left));
+	height: calc(var(--bottom) - var(--top));
+	position: absolute;
+	left: var(--left);
+	top: var(--top);
+	border-radius: 0px;
+	border-width: 0.1vw;
+	border-color: #0084c1;
+	border-style: solid;
+}
+[class*="rectDot"] {
+	width: 0.5vw;
+	height: 0.5vw;
+	background-color: white;
+	position: absolute;
+	border-radius: 0px;
+	border-width: 0.1vw;
+	border-color: #0084c1;
+	border-style: solid;
+}
+.rectDot-top {
+	left: 50%; top: 0px;
+	transform: translateX(-50%) translateY(-50%);
+	cursor: ns-resize;
+}
+.rectDot-bottom {
+	left: 50%; bottom: 0px;
+	transform: translateX(-50%) translateY(50%);
+	cursor: ns-resize;
+}
+.rectDot-left {
+	left: 0px; top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	cursor: ew-resize;
+}
+.rectDot-right {
+	right: 0px; top: 50%;
+	transform: translateX(50%) translateY(-50%);
+	cursor: ew-resize;
+}
+
+#topRightBox > div {
+	width: 100%;
+	padding: 1vw;
+}
+#topRightBox > div label[for], button, select {
+	cursor: pointer;
+}
+#topRightBox > div > h2 {
+	margin: 1.5vw 0px 0.5vw 0px;
+	font-size: 1.5vw;
+	color: #ffffff88;
+	text-align: center;
+}
+#topRightBox > div .optionRow {
+	--borderWidth: 0.2vw;
+	--height: 2vw;
+	margin: 0px 0px 1vw 0px;
+	display: block;
+	width: 100%;
+	height: var(--height);
+	color: #49bccc;
+	line-height: calc(var(--height) - var(--borderWidth)*2);
+	text-align: center;
+	font-size: 1.2vw;
+	font-weight: bold;
+	text-wrap: nowrap;
+	background-color: #ffffff1e;
+	border-radius: 0.5vw;
+	border-width: var(--borderWidth);
+	border-color: #37708b;
+	border-style: solid;
+	opacity: 0.8;
+	box-shadow: 0px 0px 0px 0px transparent;
+	transition: opacity 0.5s, box-shadow 0.5s;
+}
+#topRightBox > div .optionRow:hover {
+	color: white;
+	opacity: 1;
+	box-shadow: none;
+}
+#topRightBox > div .optionRow:where([for], button):hover {
+	color: white;
+	opacity: 1;
+	box-shadow: 0px 0px 0px 0.2vw white;
+}
+#topRightBox > div > *:first-child {
+	margin-top: 0px;
+}
+#topRightBox > div > *:last-child {
+	margin-bottom: 0px;
+}
+#topRightBox > div .advinp {
+	display: grid;
+	grid-template-rows: 100%;
+	grid-template-columns: 35% auto 2vw;
+	gap: 0.5vw;
+	padding: 0px 1vw;
+}
+#topRightBox > div .advinp .advinp-title {
+	grid-area: 1/1/2/2;
+	/* padding: 0px 0.5vw; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#topRightBox > div .advinp .advinp-input {
+	grid-area: 1/2/2/4;
+	margin: auto 0px;
+	padding: 0px 0.5vw;
+    width: 100%;
+    height: 70%;
+    position: relative;
+	color: white;
+	font-size: 0.8vw;
+	background: black;
+	border-style: solid;
+	border-width: 0.1vw;
+	border-color: #49bccc;
+}
+#topRightBox > div .advinp .advinp-bar {
+	--foreground: #49bccc;
+	--background: linear-gradient(to bottom, black 35%, white 35%, white 65%, black 65%);
+	/* --background: black; */
+	grid-area: 1/2/2/4;
+	margin: auto 0px;
+    width: 100%;
+    height: 0.5vw;
+    position: relative;
+	background: var(--background);
+}
+#topRightBox > div .advinp [type="checkbox"] ~ .advinp-bar {
+	grid-area: 1/2/2/3;
+}
+#topRightBox > div .advinp [type="checkbox"]:checked ~ .advinp-bar {
+	background: var(--foreground);
+}
+#topRightBox > div .advinp .advinp-value {
+	--left: 0%;
+	--right: 100%;
+	width: calc(var(--right) - var(--left));
+	height: 100%;
+	position: absolute;
+	left: var(--left);
+	background: #49bccc;
+	background: var(--foreground);
+}
+#topRightBox > div .advinp [type="checkbox"]:checked ~ .advinp-bar .advinp-value {
+	background: var(--background);
+}
+#topRightBox > div .advinp .advinp-inverse {
+	grid-area: 1/3/2/4;
+	font-size: 0.5vw;
+}
+
+#codeOutput {
+	padding: 1vw;
+	width: 100%;
+	min-height: 100%;
+    color: white;
+    text-wrap: wrap;
+    overflow-x: hidden;
+    overflow-y: auto;
+	user-select: text;
+}
+#codeOutput * {
+	user-select: text;
+}

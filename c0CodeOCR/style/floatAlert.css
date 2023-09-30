@@ -1,0 +1,64 @@
+/*
+ * 2023 © MaoHuPi
+ * 浮動式提示框樣式
+ * c0CodeOCR > style > floatAlert.css
+ */
+
+.FloatAlert_animationElement {
+	/* --height: var(--alert-height); */
+	--opacity: 0.8;
+	margin: 1vw;
+	padding: 1vw;
+	width: var(--alert-width);
+	/* height: calc(var(--height) * 1); */
+	color: var(--text-color1);
+	font-size: 1.4vw;
+	font-weight: bold;
+	background-color: var(--header-backgroundColor);
+	border-style: solid;
+	border-color: var(--text-color1);
+	border-width: 0.1vw;
+	border-radius: 0.5vw;
+	box-sizing: border-box;
+	pointer-events: none;
+	animation-name: FloatAlert_ani1;
+	animation-duration: 5s;
+	opacity: calc(0 * var(--opacity));
+}
+.FloatAlert_animationElement.compleat {
+	color: white;
+	background-color: #338798;
+}
+.FloatAlert_animationElement.warning {
+	background-color: #fff09e;
+}
+.FloatAlert_animationElement.error {
+	background-color: #ffa0a0;
+}
+@keyframes FloatAlert_ani1 {
+	0% {
+		height: calc(var(--height) * 1);
+		opacity: calc(0 * var(--opacity));
+		transform: translateX(200%);
+	}
+	10% {
+		height: calc(var(--height) * 1);
+		opacity: calc(1 * var(--opacity));
+		transform: translateX(0px);
+	}
+	80% {
+		height: calc(var(--height) * 1);
+		opacity: calc(1 * var(--opacity));
+		transform: translateX(0px);
+	}
+	90% {
+		height: calc(var(--height) * 1);
+		opacity: calc(0 * var(--opacity));
+		transform: translateX(0px);
+	}
+	100% {
+		height: calc(var(--height) * 0);
+		opacity: calc(0 * var(--opacity));
+		transform: translateX(0px);
+	}
+}
