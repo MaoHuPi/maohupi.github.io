@@ -87,7 +87,6 @@ class OCR {
 		let imageRect = [dPX[0], dPY[0], dPX[dPX_l]-dPX[0], dPY[dPY_l]-dPY[0]];
 		data = OCR.cutImage(data, width, height, ...imageRect);
 		data = OCR.stretchImage(data, imageRect[2], imageRect[3], samplingLevel, samplingLevel);
-		// data = OCR.stretchImage(data, width, height, samplingLevel, samplingLevel);
 		let max = 0, min = 255, charData = [];
 		for(let i = 0; i < data.length; i += 4){
 			let pixelValue = (data[i] + data[i+1] + data[i+2])/3;
@@ -95,9 +94,14 @@ class OCR {
 			if(pixelValue < min) min = pixelValue;
 			charData.push(pixelValue);
 		}
-		for(let i = 0; i < charData.length; i++){
-			charData[i] = (charData[i] - min)/(max - min)*255;
-			charData[i] = charData[i] > 127.5 ? 255-(255-charData[i])*0.5 : charData[i]*0.5; // 不完全型二值化，用於減少元圖像像素代少所導致的「縮放結果方角化」問題，使得大小寫p能正常辨識。
+		if(min == max){
+			charData.fill(0);
+		}
+		else{
+			for(let i = 0; i < charData.length; i++){
+				charData[i] = (charData[i] - min)/(max - min)*255;
+				charData[i] = charData[i] > 127.5 ? 255-(255-charData[i])*0.5 : charData[i]*0.5; // 不完全型二值化，用於減少元圖像像素代少所導致的「縮放結果方角化」問題，使得大小寫p能正常辨識。
+			}
 		}
 		let charM = Math.atan2(dPY[dPY_l]-dPY[0], dPX[dPX_l]-dPX[0]);
 		return {data: charData, m: charM, heightRate: (dPY[dPY_l]-dPY[0])/height};

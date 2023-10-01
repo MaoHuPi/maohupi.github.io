@@ -155,6 +155,10 @@ function renderDebugFontDataImage(font, charName){
 }
 
 function ocrProcess_v1(cvs){
+	if(debugMode){
+		document.body.append(cvs);
+	}
+	
 	let detectCount = 0;
 	function detectChar(data, width, height){
 		let charData = OCR.getCharData(data, width, height, options.samplingLevel);
@@ -172,17 +176,16 @@ function ocrProcess_v1(cvs){
 		let deltaMin = Math.min(...deltaData.map(l => l[1]));
 		let usableChars = deltaData.filter(l => l[1] <= deltaMin+0.04).sort((l1, l2) => l1[1] - l2[1]);
 
-		usableCount = {};
-		for(let char of usableChars.map(s => s[0].split('%comma%')[1])){
-			if(usableCount[char] === undefined){
-				usableCount[char] = 0;
-			}
-			usableCount[char]++;
-		}
+		// usableCount = {};
+		// for(let char of usableChars.map(s => s[0].split('%comma%')[1])){
+		// 	if(usableCount[char] === undefined){
+		// 		usableCount[char] = 0;
+		// 	}
+		// 	usableCount[char]++;
+		// }
 
 		// console.log(usableChars.map(s => `${s[0].split('%comma%')[1]} ${s[1]}`).join(' '));
 		// let resemblanceChar = usableChars[Math.floor(usableChars.length * Math.random())];
-		console.log(usableChars);
 		let resemblanceChar = usableChars[0];
 		resemblanceChar = resemblanceChar[0].split('%comma%');
 		detectCount++;
@@ -305,8 +308,10 @@ function ocrProcess_v1(cvs){
 			let charRect = [linesCharsX[l][c][0], linesY[l][0], linesCharsX[l][c][1]-linesCharsX[l][c][0], linesY[l][1] - linesY[l][0]];
 			codeLine += detectChar(OCR.cutImage(data, cvs.width, cvs.height, ...charRect), charRect[2], charRect[3]);
 
-			// ctx.strokeStyle = '#00ff00';
-			// ctx.strokeRect(...charData);
+			if(debugMode){
+				ctx.strokeStyle = '#00ff00';
+				ctx.strokeRect(...charRect);
+			}
 		}
 		codeContent.push(codeLine);
 	}
@@ -557,42 +562,48 @@ function main(){
 	[inputs.getCodeButton_v1, inputs.getCodeButton_v2].forEach(button => {
 		button.addEventListener('click', () => {
 			if(cvs.imageLoaded){
-				/* data process */
-				if(options.samplingLevel !== inputs.samplingLevel.value || options.fontName !== inputs.fontName.value || options.fontDataRange !== inputs.fontDataRange.value){
-					options.samplingLevel = inputs.samplingLevel.value;
-					options.fontName = inputs.fontName.value;
-					options.fontDataRange = inputs.fontDataRange.value;
-					let fontNameList = options.fontName.replace(/ *, */g, ',').split(',');
-					let fontDataRange = JSON.parse(options.fontDataRange);
-					for(let key in fontData){
-						delete fontData[key];
+				try{
+					/* data process */
+					if(options.samplingLevel !== inputs.samplingLevel.value || options.fontName !== inputs.fontName.value || options.fontDataRange !== inputs.fontDataRange.value){
+						options.samplingLevel = inputs.samplingLevel.value;
+						options.fontName = inputs.fontName.value;
+						options.fontDataRange = inputs.fontDataRange.value;
+						let fontNameList = options.fontName.replace(/ *, */g, ',').split(',');
+						let fontDataRange = JSON.parse(options.fontDataRange);
+						for(let key in fontData){
+							delete fontData[key];
+						}
+						for(let fontName of fontNameList){
+							if(fontName in fontDataRange){
+								fontDataGenerateFunctionList.custom(fontName, fontDataRange[fontName]);
+							}
+							else if(fontName in fontDataGenerateFunctionList){
+								fontDataGenerateFunctionList[fontName]();
+							}
+							else{
+								fontDataGenerateFunctionList.default(fontName);
+							}
+						}
 					}
-					for(let fontName of fontNameList){
-						if(fontName in fontDataRange){
-							fontDataGenerateFunctionList.custom(fontName, fontDataRange[fontName]);
-						}
-						else if(fontName in fontDataGenerateFunctionList){
-							fontDataGenerateFunctionList[fontName]();
-						}
-						else{
-							fontDataGenerateFunctionList.default(fontName);
-						}
-					}
+					options.codeLanguage = inputs.codeLanguage.value;
+					/* OCR */
+					const codeRect = document.getElementById('codeRect');
+					let rectData = [codeRect['rectDot-left']*cvs.width, codeRect['rectDot-top']*cvs.height, codeRect['rectDot-right']*cvs.width, codeRect['rectDot-bottom']*cvs.height].map(n => Math.floor(n));
+					const newCvs = document.createElement('canvas');
+					const newCtx = newCvs.getContext('2d');
+					newCvs.width = rectData[2] - rectData[0];
+					newCvs.height = rectData[3] - rectData[1];
+					newCtx.drawImage(cvs, -rectData[0],  -rectData[1]);
+					// document.getElementById('bottomBox').appendChild(newCvs);
+					let codeContent;
+					codeContent = ([ocrProcess_v1, ocrProcess_v2][button.id.split('_v')[1] - 1])(newCvs);
+					document.getElementById('codeOutput').innerHTML = hljs.highlight(codeContent, {language: options.codeLanguage}).value;
+					outputs.push(codeContent);
+					alert('Code extraction completed.', 'compleat');
 				}
-				options.codeLanguage = inputs.codeLanguage.value;
-				/* OCR */
-				const codeRect = document.getElementById('codeRect');
-				let rectData = [codeRect['rectDot-left']*cvs.width, codeRect['rectDot-top']*cvs.height, codeRect['rectDot-right']*cvs.width, codeRect['rectDot-bottom']*cvs.height].map(n => Math.floor(n));
-				const newCvs = document.createElement('canvas');
-				const newCtx = newCvs.getContext('2d');
-				newCvs.width = rectData[2] - rectData[0];
-				newCvs.height = rectData[3] - rectData[1];
-				newCtx.drawImage(cvs, -rectData[0],  -rectData[1]);
-				// document.getElementById('bottomBox').appendChild(newCvs);
-				let codeContent = ([ocrProcess_v1, ocrProcess_v2][button.id.split('_v')[1] - 1])(newCvs);
-				document.getElementById('codeOutput').innerHTML = hljs.highlight(codeContent, {language: options.codeLanguage}).value;
-				outputs.push(codeContent);
-				alert('Code extraction completed.', 'compleat');
+				catch(error){
+					alert(error.toString(), 'error');
+				}
 			}
 			else alert('Please open an image first!', 'warning');
 		});

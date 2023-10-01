@@ -58,6 +58,34 @@ class Component{
 			});
 			return rectDot;
 		}, 
+		selectrect: (attr) => {
+			let selectRect = Component.e('div'), 
+				rectDotLeft = Component.e('rectDot'), 
+				rectDotRight = Component.e('rectDot'), 
+				rectDotTop = Component.e('rectDot'), 
+				rectDotBottom = Component.e('rectDot');
+			selectRect.id = attr.id;
+			selectRect.className = (attr.class ? attr.class + ' ' : '') + 'selectRect';
+			[[rectDotLeft, 'left'], [rectDotRight, 'right'], [rectDotTop, 'top'], [rectDotBottom, 'bottom']].forEach(([rectDot, type]) => {
+				rectDot.setAttribute('type', type);
+				selectRect.appendChild(rectDot);
+				rectDot = Component.generate(rectDot);
+				selectRect.appendChild(rectDot);
+			});
+			selectRect.addEventListener('change', () => {
+				selectRect.value = {left: selectRect['rectDot-left'], right: selectRect['rectDot-right'], top: selectRect['rectDot-top'], bottom: selectRect['rectDot-bottom']};
+			})
+			selectRect.dispatchEvent(new Event('change'));
+			selectRect.setValue = v => {
+				selectRect.value = {...v};
+				let {left, right, top, bottom} = v;
+				[selectRect['rectDot-left'], selectRect['rectDot-right'], selectRect['rectDot-top'], selectRect['rectDot-bottom']] = [left, right, top, bottom];
+				['left', 'right', 'top', 'bottom'].forEach(type => {
+					selectRect.style.setProperty(`--${type}`, `${selectRect[`rectDot-${type}`]*100}%`);
+				});
+			};
+			return selectRect;
+		}, 
 		advinp: (attr, oldElement) => {
 			let advinp = Component.e('div'), 
 				title = Component.e('label'), 
