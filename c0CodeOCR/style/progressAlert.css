@@ -1,0 +1,139 @@
+/*
+ * 2023 © MaoHuPi
+ * 帶進度條的遮罩型提示框樣式
+ * c0CodeOCR > style > floatAlert.css
+ */
+
+.ProgressAlert_mask {
+	--bg_airColor: white;
+	--bg_waterColor: #49bccc;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-color: #00000088;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 1s;
+}
+.ProgressAlert_mask[show] {
+	opacity: 1;
+	pointer-events: auto;
+}
+.ProgressAlert_mask[cancelHovered] {
+	--bg_waterColor: #8d8d8d;
+}
+.ProgressAlert_box {
+	--width: 30vmin;
+	width: var(--width);
+    height: var(--width);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+	border-style: solid;
+	border-width: 1vmin;
+	border-color: #404950;
+    border-radius: 4vmin;
+	box-shadow: 0px 0px 5vmin 0px var(--bg_waterColor);
+    transform: translateX(-50%) translateY(-50%) rotateZ(45deg);
+	overflow: hidden;
+	transition: box-shadow 0.5s;
+}
+.ProgressAlert_box::after {
+	content: ' ';
+	width: 50%;
+	height: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	background: #151617;
+    border-style: solid;
+    border-width: 1vmin;
+    border-color: #404950;
+    border-radius: 1vmin;
+	box-shadow: 0px 0px 1vmin 0px var(--bg_waterColor);
+	transform: translateX(-50%) translateY(-50%);
+	z-index: 0;
+	transition: box-shadow 0.5s;
+}
+.ProgressAlert_bar {
+	--value: 0;
+	--bg_offsetX: 0%;
+	/* --bg_lineRotateZ: 139deg;
+	--bg_lineTranslateX: 21.5%;
+	--bg_circleWidth: 2vmin; */
+	--bg_lineRotateZ: 156deg;
+    --bg_lineTranslateX: 21.5%;
+    --bg_circleWidth: 4vmin;
+	width: 142%; /* 1.414... */
+    height: calc(142% + 8vmin);
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background:
+		radial-gradient(var(--bg_circleWidth) 2vmin, var(--bg_airColor) 100%, transparent 100%) calc(var(--bg_circleWidth)*-1.5 + var(--bg_offsetX)) 0px, 
+		radial-gradient(var(--bg_circleWidth) 2vmin, var(--bg_waterColor) 100%, transparent 100%) calc(var(--bg_circleWidth)*1.5 + var(--bg_offsetX)) 0px, 
+		
+		linear-gradient(to bottom, var(--bg_airColor) 30%, transparent 30%) var(--bg_offsetX) 0px, 
+		linear-gradient(calc(-1 * var(--bg_lineRotateZ)), var(--bg_airColor) var(--bg_lineTranslateX), transparent var(--bg_lineTranslateX)) var(--bg_offsetX) 0px, 
+		linear-gradient(var(--bg_lineRotateZ), transparent 50%, var(--bg_waterColor) 50%) var(--bg_offsetX) 0px, 
+		
+		linear-gradient(to bottom, transparent 70%, var(--bg_waterColor) 70%) var(--bg_offsetX) 0px, 
+		linear-gradient(calc(-1 * var(--bg_lineRotateZ)), transparent calc(100% - var(--bg_lineTranslateX)), var(--bg_waterColor) calc(100% - var(--bg_lineTranslateX))) var(--bg_offsetX) 0px, 
+		linear-gradient(var(--bg_lineRotateZ), var(--bg_airColor) 50%, transparent 50%) var(--bg_offsetX) 0px, 
+		linear-gradient(to bottom, var(--bg_airColor) 50%, var(--bg_waterColor) 50%) var(--bg_offsetX) 0px, 
+		var(--bg_airColor);
+	background-size: calc(var(--bg_circleWidth)*6) 8vmin;
+	background-color: var(--bg_waterColor);
+	background-repeat: repeat-x;
+	animation: ProgressAlert_bar__bg_offsetX 1s;
+	/* transform-origin: top center; */
+	transform: translateY(-4vmin) rotateZ(-45deg) translateY(calc(100% * (1 - var(--value)) - 12vmin));
+	z-index: -1;
+	filter: grayscale(0);
+	transition: filter 0.5s, transform 0.2s;
+}
+[cancelHovered] .ProgressAlert_bar {
+	filter: grayscale(1);
+}
+.ProgressAlert_text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	color: white;
+	font-weight: bold;
+	font-size: 3.5vmin;
+	transform: translateX(-50%) translateY(-50%) rotateZ(-45deg) translateY(-0.5vmin);
+	z-index: 1;
+}
+.ProgressAlert_cancel {
+	--height: 40%;
+	width: 50%;
+	height: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	background-color: gray;
+	clip-path: polygon(100% calc(100% - var(--height)), calc(100% - var(--height)) 100%, 100% 100%);
+    border-radius: 0px;
+	border-style: none;
+	transform: translateX(-50%) translateY(-50%);
+	z-index: 1;
+	transition: background-color 0.5s;
+}
+.ProgressAlert_cancel::after {
+	content: 'cancel';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    font-weight: normal;
+    font-size: 0.5vmin;
+    transform: translateX(-50%) translateY(-50%) rotate(-45deg) translateY(6.7vmin);
+    z-index: 2;
+}
+.ProgressAlert_cancel:hover {
+	background-color: #b73333;
+}

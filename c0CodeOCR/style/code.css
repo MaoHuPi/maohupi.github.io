@@ -1,0 +1,273 @@
+/*
+ * 2023 © MaoHuPi
+ * highlight輸出之程式碼套色
+ * c0CodeOCR > style > code.css
+ */
+
+/* highlight.js style */
+.hljs-mark {
+	color: #000000;
+}
+pre code.hljs * {
+	font-family: var(--code-font);
+	font-weight: bold;
+}
+pre code.hljs {
+	display: block;
+	overflow-x: auto;
+	padding: 1em;
+	font-family: var(--code-font);
+	font-weight: bold;
+}
+code.hljs {
+	padding: 3px 5px;
+}
+pre.codeBlock {
+	background-color: #fbfbfb;
+}
+pre.codeBlock .hljs {
+	color: #5494b5;
+}
+.hljs.language-html {
+	color: #444444;
+}
+.hljs-comment {
+	color: #3e5946;
+}
+:where(.hljs-punctuation, .hljs-tag) {
+	color: #686868;
+}
+.hljs-tag .hljs-name {
+	color: #3e4f6a;
+}
+.hljs-tag .hljs-attr {
+	color: #5494b5;
+}
+.hljs-tag .hljs-mark {
+	color: inherit;
+}
+:where(.hljs-tag .hljs-attr, .hljs-tag .hljs-name) {
+	color: #3e4f6a;
+}
+:where(
+	.hljs-attribute,
+	.hljs-doctag,
+	.hljs-keyword,
+	.hljs-meta .hljs-keyword,
+	.hljs-name,
+	.hljs-selector-tag
+) {
+	/* font-weight: 700; */
+}
+.hljs-keyword {
+	color: #2d4475;
+}
+.hljs-keyword.notDeclare_ {
+	color: #752d74;
+}
+.hljs-subst {
+	color: #5494b5;
+}
+.hljs-subst .hljs-mark {
+	color: #48789a;
+}
+:where(
+	.hljs-deletion,
+	.hljs-number,
+	.hljs-quote,
+	.hljs-selector-class,
+	.hljs-selector-id,
+	.hljs-string,
+	.hljs-template-tag,
+	.hljs-type
+) {
+	color: #902d2d;
+}
+.hljs-number {
+	color: #64916c;
+}
+.hljs-type {
+	color: #2d4475;
+}
+:where(.hljs-section, .hljs-title) {
+	color: #5da86b;
+}
+.hljs-title.class_ {
+	color: #5da86b;
+}
+.hljs-title.function_ {
+	color: #c88c00;
+}
+:where(
+	.hljs-link,
+	.hljs-operator,
+	.hljs-regexp,
+	.hljs-selector-attr,
+	.hljs-selector-pseudo,
+	.hljs-symbol,
+	.hljs-template-variable,
+	.hljs-variable
+) {
+	color: #7d4c38;
+}
+.hljs-literal {
+	color: #414c6e;
+}
+.hljs-variable {
+	color: #104fa1;
+}
+.hljs-regexp {
+	color: #850b0b;
+}
+:where(
+	.hljs-addition,
+	.hljs-built_in,
+	.hljs-bullet,
+	.hljs-code
+) {
+	color: #c88c00;
+}
+.hljs-meta {
+	color: #2d4475;
+}
+.language-js .hljs-meta {
+	color: #902d2d;
+}
+.hljs-meta .hljs-string {
+	color: #902d2d;
+}
+.hljs-emphasis {
+	font-style: italic;
+}
+.hljs-strong {
+	font-weight: 700;
+}
+:where(.language-text, .language-txt) {
+	color: #000000 !important;
+}
+.hljs-mark{
+	color: #dcdfe4;
+}
+pre.codeBlock {
+	background-color: #212121;
+}
+pre.codeBlock .hljs {
+	color: #9cdcfe;
+}
+.hljs.language-html {
+	color: #dcdfe4;
+}
+.hljs-comment {
+	color: #6a9949;
+}
+:where(.hljs-punctuation, .hljs-tag) {
+	color: #808080;
+}
+.hljs-tag .hljs-name {
+	color: #569cd6;
+}
+.hljs-tag .hljs-attr {
+	color: #9cdcfe;
+}
+.hljs-tag .hljs-mark {
+	color: inherit;
+}
+:where(
+	.hljs-attribute,
+	.hljs-doctag,
+	.hljs-keyword,
+	.hljs-meta .hljs-keyword,
+	.hljs-name,
+	.hljs-selector-tag
+) {
+	/* font-weight: 700; */
+}
+.hljs-keyword {
+	color: #569cd6;
+}
+.hljs-keyword.notDeclare_ {
+	color: #c586c0;
+}
+.hljs-subst {
+	color: #9cdcfe;
+}
+.hljs-subst .hljs-mark {
+	color: #1b9fff;
+}
+:where(
+	.hljs-deletion,
+	.hljs-number,
+	.hljs-quote,
+	.hljs-selector-class,
+	.hljs-selector-id,
+	.hljs-string,
+	.hljs-template-tag,
+	.hljs-type
+) {
+	color: #ce9178;
+}
+.hljs-number {
+	color: #b5cea8;
+}
+.hljs-string {
+	color: #ce9178 !important;
+}
+.hljs-type {
+	color: #569cd6;
+}
+:where(.hljs-section, .hljs-title) {
+	color: #4ec9b0;
+}
+.hljs-title.class_ {
+	color: #4ec9b0;
+}
+.hljs-title.function_ {
+	color: #dcdcaa;
+}
+:where(
+	.hljs-link,
+	.hljs-operator,
+	.hljs-regexp,
+	.hljs-selector-attr,
+	.hljs-selector-pseudo,
+	.hljs-symbol,
+	.hljs-template-variable,
+	.hljs-variable
+) {
+	color: #7d4c38;
+}
+.hljs-literal {
+	color: #2e7bd6;
+}
+.hljs-variable {
+	color: #9cdcfe;
+}
+.hljs-regexp {
+	color: #d16969 !important;
+}
+.hljs-property {
+	color: #9cdcfe;
+}
+:where(
+	.hljs-addition,
+	.hljs-built_in,
+	.hljs-bullet,
+	.hljs-code
+) {
+	color: #dcdcaa;
+}
+.hljs-meta {
+	color: #569cd6;
+}
+.language-js .hljs-meta {
+	color: #ce9178;
+}
+.hljs-meta .hljs-string {
+	color: #ce9178;
+}
+.hljs-emphasis {
+	font-style: italic;
+}
+:where(.language-text, .language-txt) {
+	color: #dcdfe4 !important;
+}
