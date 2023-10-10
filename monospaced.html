@@ -1,0 +1,18 @@
+<pre id="textBox" style="font-family: consolas, monospace;"></pre>
+<script>
+  const $_GET = {};
+  location.search.replace('?', '').split('&').forEach(kv => {
+    kv = kv.replace('=', '{:equ:}').split('{:equ:}');
+    $_GET[kv[0]] = kv[1];
+  });
+
+  const pre = document.getElementById('textBox');
+  pre.innerText = $_GET['text'] === undefined ? 'Nothing' : 
+  	decodeURI($_GET['text'])
+		.replace(/\\s[1-9]/g, s => {
+			let length = parseInt(s.replace('\\s', ''));
+			return new Array(length <= 3 ? length + 10 : length).fill(' ').join('');
+		})
+		.replaceAll('\\n', '\n')
+		.replaceAll('\\\\', '\\');
+</script>
