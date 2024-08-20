@@ -3,6 +3,10 @@
     "name": "MaoHuPi｜貓虎皮個人網站", 
     "description": "貓虎皮的工具、遊戲、作品集！"
   }, 
+  "nonlinearWorld": {
+    "name": "Non-linear World｜非線性光線渲染", 
+    "description": "就...一點點數學。"
+  }, 
   "POWGameManager": {
     "name": "POW Game Manager｜類文字獄遊戲劇情檔編輯器", 
     "description": "透過節點拖拉，建立各種複雜邏輯。快來製作自己的「文字獄」吧！"
