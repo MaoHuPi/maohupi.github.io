@@ -1,10 +1,48 @@
 const DEBUG = false;
-const bgc = [0, 0, 255];
+const SQRT3 = Math.sqrt(3);
+
+const bgc = [0, 0, 0];
 
 const cvs = document.getElementById('view'),
 	ctx = cvs.getContext('2d');
 [cvs.width, cvs.height] = [500, 500];
+const cvsTemp = document.createElement('canvas'),
+	ctxTemp = cvsTemp.getContext('2d');
 
+// let scene = [
+// 	{
+// 		points: [
+// 			[-0.5, 10, -10],
+// 			[-0.5, 10, 10],
+// 			[-0.5, -10, -10]
+// 		],
+// 		texture: {
+// 			type: 'colors',
+// 			colors: [
+// 				[255, 0, 0],
+// 				[0, 0, 255],
+// 				[0, 255, 0],
+// 			],
+// 			opacity: [1.0, 1.0, 1.0]
+// 		}
+// 	},
+// 	{
+// 		points: [
+// 			[-0.5, -10, 10],
+// 			[-0.5, -10, -10],
+// 			[-0.5, 10, 10]
+// 		],
+// 		texture: {
+// 			type: 'colors',
+// 			colors: [
+// 				[255, 0, 0],
+// 				[0, 255, 0],
+// 				[0, 0, 255],
+// 			],
+// 			opacity: [1.0, 1.0, 1.0]
+// 		}
+// 	}
+// ]
 let scene = [
 	{
 		points: [
@@ -12,8 +50,15 @@ let scene = [
 			[-0.5, 10, 10],
 			[-0.5, -10, -10]
 		],
-		color: [255, 0, 0],
-		opacity: 0.8
+		texture: {
+			type: 'image',
+			url: 'image/maohupi_logo.jpg',
+			anchors: [
+				[911, 911],
+				[911, 0],
+				[0, 911],
+			]
+		}
 	},
 	{
 		points: [
@@ -21,15 +66,47 @@ let scene = [
 			[-0.5, -10, -10],
 			[-0.5, 10, 10]
 		],
-		color: [0, 255, 0],
-		opacity: 0.8
+		texture: {
+			type: 'image',
+			url: 'image/maohupi_logo.jpg',
+			anchors: [
+				[0, 0],
+				[0, 911],
+				[911, 0],
+			]
+		}
 	}
-]
+];
 
 let [xm, ym] = [cvs.width / 2, cvs.height / 2];
 let [px, py, pz] = [0, 0, 0];
 let [theta1, theta2] = [0, 0];
-let alpha = 1;
+let alpha = 0.01;
+
+function h2rgb(h) {
+	let c = 0.5, m = 0,
+		x = 1 - Math.abs((h / 60) % 2 - 1);
+	let [r, g, b] =
+		0 <= h && h < 60 ? [c, x, 0] :
+			60 <= h && h < 120 ? [x, c, 0] :
+				120 <= h && h < 180 ? [0, c, x] :
+					180 <= h && h < 240 ? [0, x, c] :
+						240 <= h && h < 300 ? [x, 0, c] :
+							300 <= h && h <= 360 ? [c, 0, x] :
+								[0, 0, 0];
+	return [r, g, b].map(a => (a + m) * 255);
+}
+function rgb2h(r, g, b) {
+	[r, g, b] = [r, g, b].map(a => a / 255);
+	let cMax = Math.max(r, g, b),
+		cMin = Math.min(r, g, b),
+		delta = cMax - cMin;
+	return delta == 0 ? 0 :
+		cMax == r ? 60 * (((g - b) / delta) % 6) :
+			cMax == g ? 60 * ((b - r) / delta + 2) :
+				cMax == b ? 60 * ((r - g) / delta + 4) :
+					0
+}
 
 function render() {
 	for (let xi = 0; xi < cvs.width; xi++) {
@@ -47,7 +124,7 @@ function render() {
 			let [drd_x, drd_y, drd_z] = [-dy * s2 + dz * s1 * c2, dy * c2 + dz * s1 * s2, dz * c1],
 				[d_x, d_y, d_z] = [-c1 * c2, -c1 * s2, s1];
 
-			function convergeDistance(xi, yi, [A, B, C], [px, py, pz], [theta1, theta2], alpha) {
+			function convergeDistance_color_opacity(xi, yi, [A, B, C], texture, [px, py, pz], [theta1, theta2], alpha) {
 				let [ax, ay, az] = A,
 					[bx, by, bz] = B,
 					[cx, cy, cz] = C;
@@ -103,13 +180,57 @@ function render() {
 				if (DEBUG) console.log(u, v);
 
 				// step 4: filter
-				if (DEBUG) console.log((u >= 0 && v >= 0 && u + v <= 1 && d >= 0) ? d : undefined);
-				return (u >= 0 && v >= 0 && u + v <= 1 && d >= 0) ? d : undefined;
+				d = (u >= 0 && v >= 0 && u + v <= 1 && d >= 0) ? d : undefined;
+				if (DEBUG) console.log(d);
+
+				// return
+				let color = [0, 0, 0], opacity = 0;
+				switch (texture.type) {
+					case 'color':
+						color = texture.color;
+						opacity = texture.opacity;
+						break;
+					case 'colors':
+						let standardizedBase = [
+							[SQRT3 / 2, -1 / 2],
+							[-SQRT3 / 2, -1 / 2],
+							[0, 1]
+						];
+						let standardizedPos = [SQRT3 / 2 - u * SQRT3 - v * SQRT3 / 2, -1 / 2 + v * 3 / 2];
+						let standardizedTotalDistance = 0;
+						// let totalRgb = [0, 0, 0];
+						for (let i = 0; i < 3; i++) {
+							let standardizedDistance = SQRT3 - Math.sqrt((standardizedBase[i][0] - standardizedPos[0]) ** 2 + (standardizedBase[i][1] - standardizedPos[1]) ** 2);
+							// let rgb = h2rgb(texture.colors[i][0])
+							// for (let j = 0; j < 3; j++) { totalRgb[j] += rgb[j] * standardizedDistance; }
+							color[0] += texture.colors[i][0] * standardizedDistance;
+							color[1] += texture.colors[i][1] * standardizedDistance;
+							color[2] += texture.colors[i][2] * standardizedDistance;
+							opacity += texture.opacity[i] * standardizedDistance;
+							standardizedTotalDistance += standardizedDistance;
+						}
+						// color[0] = rgb2h(...totalRgb.map(a => a / standardizedTotalDistance));
+						color[0] /= standardizedTotalDistance;
+						color[1] /= standardizedTotalDistance;
+						color[2] /= standardizedTotalDistance;
+						opacity /= standardizedTotalDistance;
+						break;
+					case 'image':
+						let [dataX, dataY] = [
+							texture.anchors[0][0] + u * (texture.anchors[1][0] - texture.anchors[0][0]) + v * (texture.anchors[2][0] - texture.anchors[0][0]),
+							texture.anchors[0][1] + u * (texture.anchors[1][1] - texture.anchors[0][1]) + v * (texture.anchors[2][1] - texture.anchors[0][1])
+						],
+							dataIndex = (Math.floor(dataX) + Math.floor(dataY) * texture.imageWidth) * 4;
+						color = [texture.data[dataIndex]/255, texture.data[dataIndex + 1]/255, texture.data[dataIndex + 2]/255];
+						opacity = texture.data[dataIndex + 3];
+						break;
+				}
+				return { d, color, opacity };
 			}
 			for (let tri of scene) {
-				let d = convergeDistance(xi, yi, tri.points, [px, py, pz], [theta1, theta2], alpha);
+				let { d, color, opacity } = convergeDistance_color_opacity(xi, yi, tri.points, tri.texture, [px, py, pz], [theta1, theta2], alpha);
 				if (Number.isFinite(d)) {
-					colorList.push({ d: d, color: tri.color, opacity: tri.opacity });
+					colorList.push({ d, color, opacity });
 				}
 			}
 			// step 5: set color
@@ -127,8 +248,10 @@ function render() {
 				color[0] += bgc[0] * opacity;
 				color[1] += bgc[1] * opacity;
 				color[2] += bgc[2] * opacity;
+				// ctx.fillStyle = `hsl(${color[0]}, ${color[1]}%, ${color[2]}%)`; // temp
 				ctx.fillStyle = `rgb(${color.join(',')})`; // temp
 			} else {
+				// ctx.fillStyle = `hsl(${bgc[0]}, ${bgc[1]}%, ${bgc[2]}%)`;
 				ctx.fillStyle = `rgb(${bgc.join(',')})`;
 			}
 			ctx.fillRect(xi, yi, 1, 1);
@@ -181,4 +304,24 @@ document.addEventListener('keydown', event => {
 	render();
 });
 
-render();
+function loadImage(src) {
+	return new Promise(solve => {
+		let image = new Image();
+		image.onload = () => {
+			solve(image);
+		}
+		image.src = src;
+	});
+}
+async function main() {
+	for (let tri of scene) {
+		let image = await loadImage(tri.texture.url);
+		[cvsTemp.width, cvsTemp.height] = [image.width, image.height];
+		ctxTemp.drawImage(image, 0, 0);
+		tri.texture.data = ctxTemp.getImageData(0, 0, cvsTemp.width, cvsTemp.height).data;
+		tri.texture.imageWidth = image.width;
+	}
+
+	render();
+}
+main();
