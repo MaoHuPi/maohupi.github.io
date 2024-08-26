@@ -1,0 +1,72 @@
+* {
+    /* --timeline_color: #c5c5c5; */
+    --timeline_color: white;
+}
+html, body {
+    background-color: black;
+}
+#timeline-box {
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%, transparent var(--line-action),
+            var(--timeline_color) var(--line-action), var(--timeline_color) var(--line-end),
+            transparent var(--line-end), transparent 100%
+        ), 
+        black
+    ;
+}
+.timeline-block .dot {
+    background-color: var(--timeline_color);
+}
+.timeline-block .box:hover ~ .dot {
+    --transform-scale: 1.3;
+    box-shadow: 0px 0px 1vw 0px white;
+}
+.timeline-block .box {
+    background-color: #c3c3c3;
+    border-color: white;
+}
+.timeline-block .box:hover {
+    box-shadow: 0px 0px 2vw 0px white;
+}
+.timeline-block .box .mask {
+    background: 
+        linear-gradient(to right, black 0%, black 15%, #00000000 100%)
+    ;
+}
+.timeline-block .box .title {
+    color: white;
+}
+.timeline-block .box .time {
+    color: white;
+}
+#introduction-box {
+    --border-color: white;
+    background-color: #c3c3c3;
+    border-color: white;
+}
+#introduction-box .mask {
+    background: 
+        linear-gradient(to right, black 0%, black 15%, #00000000 100%)
+    ;
+}
+#introduction-box .title {
+    color: white;
+}
+#introduction-box .time {
+    color: white;
+}
+#introduction-box .introduction {
+    color: white;
+}
+#album-button {
+    background-color: white;
+    background-image: url('../image/perm_media_dark.svg');
+}
+#album-button:hover {
+    box-shadow: 0px 0px 2vw 0px white;
+}
+#album-box {
+    background-color: white;
+}

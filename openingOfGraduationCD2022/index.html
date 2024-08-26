@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>318</title>
+    <link rel="shortcut icon" href="image/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+    <link rel="stylesheet" type="text/css" media="(prefers-color-scheme: light)" href="style/light.css">
+    <link rel="stylesheet" type="text/css" media="(prefers-color-scheme: dark)" href="style/dark.css">
+    <link rel="stylesheet" type="text/css" href="style/album-template.css">
+    <script src="script/basic.js"></script>
+    <script src="script/album-template.js"></script>
+    <div id="fonts"></div>
+</head>
+<body>
+    <div id="timeline-box"></div>
+    <div id="introduction-mask" hidden></div>
+    <div id="introduction-box" hidden>
+        <div class="background"></div>
+        <div class="mask"></div>
+        <span class="title"></span>
+        <span class="time"></span>
+        <span class="introduction"></span>
+    </div>
+    <div id="album-button"></div>
+    <div id="album-box" hidden>
+        <div id="album-row"></div>
+    </div>
+    <div id="preamble-box" hide>
+        <canvas id="preamble-cvs"></canvas>
+    </div>
+    <div id="animation-mask" hidden></div>
+    <script src="script/preamble.js"></script>
+    <script src="script/main.js"></script>
+</body>
+</html>

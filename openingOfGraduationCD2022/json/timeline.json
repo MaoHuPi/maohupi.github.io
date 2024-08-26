@@ -1,0 +1,81 @@
+{
+    "points": [
+        {
+            "name": "遊戲發售",
+            "date": "2022-01-21",
+            "days": 1,
+            "cover": {
+                "url": "image/%date/channels4_banner.jpg",
+                "position-y": "center"
+            },
+            "introduction": "",
+            "album-url": {
+                "cover": "https://www.youtube.com/@team9collective", 
+                "content": "https://wordgame.cc/"
+            },
+            "album": [
+                {
+                    "images": [
+                        "image/20220121/Screenshot 2024-08-26 211835.png", 
+                        "image/20220121/Screenshot 2024-08-26 211849.png", 
+                        "image/20220121/Screenshot 2024-08-26 211903.png", 
+                        "image/20220121/Screenshot 2024-08-26 211920.png", 
+                        "image/20220121/Screenshot 2024-08-26 211931.png", 
+                        "image/20220121/Screenshot 2024-08-26 212027.png", 
+                        "image/20220121/Screenshot 2024-08-26 212127.png", 
+                        "image/20220121/Screenshot 2024-08-26 212139.png", 
+                        "image/20220121/Screenshot 2024-08-26 212144.png", 
+                        "image/20220121/Screenshot 2024-08-26 212150.png", 
+                        "image/20220121/Screenshot 2024-08-26 212156.png", 
+                        "image/20220121/Screenshot 2024-08-26 212202.png", 
+                        "image/20220121/Screenshot 2024-08-26 212524.png", 
+                        "image/20220121/Screenshot 2024-08-26 212428.png", 
+                        "image/20220121/Screenshot 2024-08-26 212436.png", 
+                        "image/20220121/Screenshot 2024-08-26 212444.png", 
+                        "image/20220121/Screenshot 2024-08-26 212451.png", 
+                        "image/20220121/Screenshot 2024-08-26 212459.png", 
+                        "image/20220121/Screenshot 2024-08-26 212505.png", 
+                        "image/20220121/Screenshot 2024-08-26 212514.png", 
+                        "image/20220121/Screenshot 2024-08-26 212722.png", 
+                        "image/20220121/Screenshot 2024-08-26 212710.png", 
+                        "image/20220121/Screenshot 2024-08-26 212716.png", 
+                        "image/20220121/Screenshot 2024-08-26 212817.png", 
+                        "image/20220121/Screenshot 2024-08-26 212810.png", 
+                        "image/20220121/Screenshot 2024-08-26 212931.png", 
+                        "image/20220121/Screenshot 2024-08-26 213143.png", 
+                        "image/20220121/Screenshot 2024-08-26 213046.png", 
+                        "image/20220121/Screenshot 2024-08-26 213052.png", 
+                        "image/20220121/Screenshot 2024-08-26 213101.png", 
+                        "image/20220121/Screenshot 2024-08-26 213112.png", 
+                        "image/20220121/Screenshot 2024-08-26 213129.png", 
+                        "image/20220121/Screenshot 2024-08-26 211340.png",
+                        "image/20220121/Screenshot 2024-08-26 211746.png", 
+                        "image/20220121/Screenshot 2024-08-26 213318.png", 
+                        "image/20220121/Screenshot 2024-08-26 211511.png"
+                    ],
+                    "texts": [
+                        "~ 文字遊戲 ~", 
+                        "勇闖未知，挑戰經典！"
+                    ],
+                    "type": "preset_boxs"
+                },
+                {
+                    "images": [
+                        "image/20220121/Screenshot 2024-08-26 211340.png",
+                        "image/20220121/Screenshot 2024-08-26 211746.png"
+                    ], 
+                    "texts": [
+                        "~ 得獎紀錄 ~"
+                    ], 
+                    "type": "preset_a"
+                },
+                {
+                    "images": [
+                        "image/20220121/Screenshot 2024-08-26 211511.png"
+                    ],
+                    "type": "preset_fall"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,249 @@
+* {
+    --timeline_left: 10%;
+    --timeline-block-box_padding: 0.5vw;
+    --timeline-block-box-title_font-style: 4vw;
+    --timeline-block-box-time_font-style: 1.5vw;
+
+    --introduction-box_padding: 4vw;
+    --introduction-box-title_font-style: 5vw;
+    --introduction-box-time_font-style: 1.5vw;
+
+    margin: 0px;
+    transition: 0.5s;
+    /* transition: 5s; */
+    user-select: none;
+}
+*::-webkit-scrollbar {
+    display: none;
+}
+* {
+    scrollbar-width: none;
+}
+[hide] {
+    opacity: 0;
+    pointer-events: none;
+}
+[blur] {
+    -webkit-filter: blur(--blur-core);
+    -moz-filter: blur(--blur-core);
+    -o-filter: blur(--blur-core);
+    -ms-filter: blur(--blur-core);
+    filter: blur(--blur-core);
+    /* please use setBlur function */
+}
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+#timeline-box {
+    --line-action: calc(var(--timeline_left) / 2 - 0.5%);
+    --line-end: calc(var(--timeline_left) / 2 + 0.5%);
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.timeline-block {
+    width: 100%;
+    height: 10vw;
+    position: relative;
+    display: grid;
+    grid-auto-columns: var(--timeline_left) auto;
+    grid-template-rows: 100%;
+}
+.timeline-block .dot {
+    --transform-scale: 1;
+    width: 2vw;
+    height: 2vw;
+    margin: auto;
+    border-radius: 50%;
+    grid-area: 0/0/1/1;
+    transform: scale(var(--transform-scale));
+}
+/* .timeline-block .dot:hover {
+    --transform-scale: 1.3;
+    box-shadow: 0px 0px 1vw 0px white;
+} */
+.timeline-block .box:hover ~ .dot {
+    --transform-scale: 1.3;
+    box-shadow: 0px 0px 1vw 0px white;
+}
+.timeline-block .box {
+    /* padding: var(--timeline-block-box_padding); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    position: relative;
+    margin: 1vw 2vw 1vw 0px;
+    border-radius: 1vw;
+    grid-area: 1/2/2/3;
+    overflow: hidden;
+}
+.timeline-block .box .mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.timeline-block .box .title {
+    font-weight: bold;
+    font-size: var(--timeline-block-box-title_font-style);
+    position: absolute;
+    top: var(--timeline-block-box_padding);
+    left: var(--timeline-block-box_padding);
+}
+.timeline-block .box .time {
+    font-weight: bold;
+    font-size: var(--timeline-block-box-time_font-style);
+    position: absolute;
+    bottom: var(--timeline-block-box_padding);
+    left: var(--timeline-block-box_padding);
+}
+#introduction-box {
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 1px;
+}
+#introduction-box .background {
+    --blur-core: 0.5vw;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+#introduction-box .mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#introduction-box .title {
+    font-weight: bold;
+    font-size: 5vw;
+    position: absolute;
+    top: var(--introduction-box_padding);
+    left: var(--introduction-box_padding);
+    position: absolute;
+}
+#introduction-box .time {
+    font-weight: bold;
+    font-size: 1.5vw;
+    position: absolute;
+    bottom: var(--introduction-box_padding);
+    left: var(--introduction-box_padding);
+    position: absolute;
+}
+#introduction-box .introduction {
+    /* font-weight: bold; */
+    font-size: 2vw;
+    width: 50vw;
+    height: calc(100% - (var(--introduction-box_padding)*4 + var(--introduction-box-title_font-style) + var(--introduction-box-time_font-style)));
+    position: absolute;
+    top: calc(var(--introduction-box_padding)*2 + 5vw);
+    left: 40vw;
+    word-wrap: break-word;
+    overflow-y: auto;
+}
+#introduction-mask {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: 0s;
+}
+#album-button {
+    --radius: 10vw;
+    opacity: 0;
+    /* 使用transform不然會很卡 */
+    transform: scale(0.5);
+    width: var(--radius);
+    height: var(--radius);
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    background-image: url('../image/perm_media.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+    border-radius: 50%;
+    transition: 0.5s;
+    /* transition: 5s; */
+}
+#album-button:hover {
+    transform: scale(1);
+    border-radius: 100vw 0px 0px 0px;
+    background-position: 65% 65%;
+    background-size: 40%;
+}
+#album-box {
+    --radius: 10vw;
+    width: var(--radius);
+    height: var(--radius);
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    border-radius: 100vw 0px 0px 0px;
+    transition: 0.5s;
+    /* transition: 5s; */
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+#album-row {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-auto-rows: 100vh;
+}
+[group-type] {
+    grid-row: 1;
+    /* pointer-events: none; */
+}
+#animation-mask {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10000000000000000;
+}
+#preamble-box {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    transition: 0s;
+}
+#preamble-cvs {
+    width: 100vw;
+    height: calc(100vw/1536*1024);
+    background-color: beige;
+    transition: 0s;
+}
