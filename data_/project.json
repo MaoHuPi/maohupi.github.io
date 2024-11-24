@@ -3,6 +3,10 @@
     "name": "MaoHuPi｜貓虎皮個人網站", 
     "description": "貓虎皮的工具、遊戲、作品集！"
   }, 
+  "flong/example": {
+    "name": "Flong｜長小數計算工具", 
+    "description": "不服化學的計算簡化，那就數值解！"
+  },   
   "nonlinearWorld": {
     "name": "Non-linear World｜非線性光線渲染", 
     "description": "就...一點點數學。"
